@@ -20,8 +20,8 @@ module.exports = {
   //   // require('@tailwindcss/container-queries'),
   //   require("daisyui"),
   // ],
-  daisyui: {
-    themes: ["light", "dark", "coporate", "pastel"],
-    darkTheme: "coporate", // name of one of the included themes for dark mode
-  },
+  // daisyui: {
+  //   themes: ["light", "dark", "coporate", "pastel"],
+  //   darkTheme: "coporate", // name of one of the included themes for dark mode
+  // },
 };
