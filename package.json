@@ -15,7 +15,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky"
+    "prepare": "husky",
+    "setup": "bun install && husky install && bundle install && bin/rails tailwindcss:install"
   },
   "author": "",
   "license": "ISC"
