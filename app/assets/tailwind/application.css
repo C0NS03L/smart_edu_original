@@ -6,6 +6,10 @@
   darkTheme: coporate;
 }
 
+@theme {
+  --font-sans: InterVariable, sans-serif;
+}
+
 
 @config '../../../config/tailwind.config.js';
 
