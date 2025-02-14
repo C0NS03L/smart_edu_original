@@ -19,3 +19,4 @@ bundle exec rails_best_practices || true
 
 # Done
 echo "\033[1;32mPre-commit checks complete! Ready to commit.\033[0m"
+
