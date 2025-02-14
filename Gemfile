@@ -56,6 +56,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem "rails_live_reload"
 end
 
 group :test do
@@ -69,7 +70,7 @@ gem "rqrcode", "~> 2.0"
 
 
 gem "pagy", "~> 9.3" # omit patch digit
-gem "tailwindcss-rails", "~> 3.3"
+gem "tailwindcss-rails", "~> 4.0"
 
 gem "ransack", "~> 4.3"
 
