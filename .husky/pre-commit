@@ -13,6 +13,13 @@ bundle exec brakeman --skip-libs --output /dev/null
 echo "\033[1;36mStaging modified files...\033[0m"
 git add $(git diff --name-only --cached)
 
+# Running Unit Tests
+echo "\033[1;34mRunning Unit Tests...\033[0m"
+rails test
+
+echo "\033[1;34mRunning System Tests...\033[0m"
+rails test:system
+
 # Running Rails Best Practices (doesn't affect commit)
 echo "\033[1;35mRunning Rails Best Practices (Does not affect commit)...\033[0m"
 bundle exec rails_best_practices || true
