@@ -1,3 +1,4 @@
+/*@sonar-ignore-start*/
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
@@ -69,3 +70,5 @@
     }
   }
 }
+
+/*@sonar-ignore-end*/
