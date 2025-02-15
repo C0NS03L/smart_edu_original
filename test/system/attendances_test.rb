@@ -8,7 +8,7 @@ class AttendancesTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit attendances_url
-    assert_selector "h2 span", text: "Attendances"
+    assert_selector "h4 span", text: "Attendances"
   end
 
   test "searches attendances by student id" do

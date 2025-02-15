@@ -8,6 +8,6 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     fill_in "email_address", with: @user.email_address
     fill_in "password", with: "password"
     click_on "Sign in"
-    assert_selector "h2 span", text: "Dashboard"
+    assert_selector "h4 span", text: "Dashboard"
   end
 end

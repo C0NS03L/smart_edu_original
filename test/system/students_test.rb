@@ -7,7 +7,7 @@ class StudentsTest < ApplicationSystemTestCase
     fill_in "email_address", with: @user.email_address
     fill_in "password", with: "password"
     click_on "Sign in"
-    assert_selector "h2 span", text: "Dashboard"
+    assert_selector "h4 span", text: "Dashboard"
   end
 
   setup do
@@ -17,7 +17,7 @@ class StudentsTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit students_url
-    assert_selector "h2", text: "Students"
+    assert_selector "h4", text: "Students"
   end
 
   test "should create student" do
@@ -30,7 +30,7 @@ class StudentsTest < ApplicationSystemTestCase
 
   test "searches students by name" do
     visit students_path
-    fill_in "Name", with: @student.name
+    fill_in "Search by name", with: @student.name
     assert_text @student.name, wait: 1
   end
 
