@@ -28,6 +28,12 @@ class StudentsTest < ApplicationSystemTestCase
     assert_text "Student was successfully created"
   end
 
+  test "searches students by name" do
+    visit students_path
+    fill_in "Name", with: @student.name
+    assert_text @student.name, wait: 1
+  end
+
   test "should update Student" do
     visit student_url(@student)
     click_on "Edit this student", match: :first
