@@ -1,31 +1,39 @@
-<%= form_with(model: attendance) do |form| %>
-  <%= form_for(attendance) do |form| %>
-    <div style="color: red">
-      <h2><%= pluralize(attendance.errors.count, "error") %> prohibited this attendance from being saved:</h2>
-      <ul>
-        <% attendance.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<%= form_with(model: attendance, class: "w-full max-w-lg mx-auto p-4") do |form| %>
+  <% if attendance.errors.any? %>
+    <div class="alert alert-error shadow-lg mb-4">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <div class="">
+          <h3 class="font-bold"><%= pluralize(attendance.errors.count, "error") %> prohibited this attendance from being saved:</h3>
+          <ul class="list-disc list-inside">
+            <% attendance.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
   <% end %>
-  <div>
-    <%= form.label :student_id, style: "display: block" %>
-    <%= form.text_field :student_id %>
-  </div>
-  <div>
-    <%= form.label :timestamp, style: "display: block" %>
-    <%= form.datetime_field :timestamp %>
-  </div>
-  <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
-  </div>
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
-  </div>
-  <div>
-    <%= form.submit %>
-  </div>
+  <fieldset class="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box">
+    <%# <legend class="fieldset-legend">Attendance Details</legend> %>
+    <div class="form-control w-full mb-4">
+      <%= form.label :student_id, class: "fieldset-label" %>
+      <%= form.text_field :student_id, class: "input input-bordered w-full" %>
+    </div>
+    <div class="form-control w-full mb-4">
+      <%= form.label :timestamp, class: "fieldset-label" %>
+      <%= form.datetime_field :timestamp, class: "input input-bordered w-full" %>
+    </div>
+    <div class="form-control w-full mb-4">
+      <%= form.label :user_id, class: "fieldset-label" %>
+      <%= form.text_field :user_id, class: "input input-bordered w-full" %>
+    </div>
+    <div class="form-control w-full mb-4">
+      <%= form.label :status, class: "fieldset-label" %>
+      <%= form.text_field :status, class: "input input-bordered w-full" %>
+    </div>
+    <div class="form-control mt-6">
+      <%= form.submit class: "btn btn-primary w-full" %>
+    </div>
+  </fieldset>
 <% end %>

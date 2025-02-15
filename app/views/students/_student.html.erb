@@ -1,10 +1,13 @@
-<div class="p-4 card w-1/2 shadow-xl bg-neutral-200">
-  <div class="card-body">
-    <h2 class="card-title">Name: <%= student.name %> </h2>
-    <p>ID: <%= student.id %></p>
-    <p>UID: <%= student.uid %></p>
+<div class="card shadow-xl bg-neutral-200 max-w-sm mx-auto p-4">
+  <div class="card-body p-4">
+    <h2 class="card-title text-lg">Name: <%= student.name %></h2>
+    <p class="text-sm">ID: <%= student.id %></p>
+    <p class="text-sm">UID: <%= student.uid %></p>
   </div>
-  <figure class="p-5">
-    <%= raw RQRCode::QRCode.new(student.uid).as_svg %>
+  <figure class="p-4">
+    <%= raw RQRCode::QRCode.new(student.uid).as_svg(
+      size: 120,
+      viewbox: true
+    ) %>
   </figure>
 </div>
