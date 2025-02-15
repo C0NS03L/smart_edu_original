@@ -2,12 +2,16 @@ class AttendancesController < ApplicationController
   before_action :set_attendance, only: %i[ show edit update destroy ]
   include Pagy::Backend
 
-  # GET /attendances or /attendances.json
-  #
-  def index
-    @q = Attendance.ransack(params[:q])
-    @pagy, @attendances = pagy(@q.result(distinct: true))
+# GET /attendances or /attendances.json
+#
+def index
+  @q = Attendance.ransack(params[:q])
+  @pagy, @attendances = pagy(@q.result)
+  respond_to do |format|
+    format.html
+    format.js { render partial: "attendances/table", locals: { attendances: @attendances, q: @q }, layout: false }
   end
+end
 
 
   # GET /attendances/1 or /attendances/1.json
