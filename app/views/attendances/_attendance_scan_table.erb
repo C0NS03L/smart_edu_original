@@ -1,44 +1,52 @@
-<div class="flex flex-row justify-around items-start mt-4">
-  <div class="bg-accent p-4 rounded-md w-fit">
-    <h1 class="text-xl">Students</h1>
-    <table class="table table-zebra p-20">
-      <thead>
-        <tr>
-          <th>Student Name</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @students.each do |student| %>
-          <tr class="hover" data-content="<%= student.name %>">
-            <td><%= highlight(student.name, params.dig(:q, :name_cont)) %></td>
-            <td><%= submit_tag "Check-in", name: "check_in", 
-              formaction: attendances_path(student_id: student.id),
-              formmethod: :post,
-              class: "btn btn-primary btn-xs",
-              data: {turbo_frame: "students" }%></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+<div class="flex flex-col md:flex-row gap-4 p-4">
+  <div class="card bg-base-200 shadow-xl flex-1">
+    <div class="card-body">
+      <h2 class="card-title">Students</h2>
+      <div class="overflow-x-auto">
+        <table class="table table-zebra w-full">
+          <thead>
+            <tr>
+              <th>Student Name</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @students.each do |student| %>
+              <tr class="hover" data-content="<%= student.name %>">
+                <td><%= highlight(student.name, params.dig(:q, :name_cont)) %></td>
+                <td><%= submit_tag "Check-in", name: "check_in", 
+                  formaction: attendances_path(student_id: student.id),
+                  formmethod: :post,
+                  class: "btn btn-primary btn-sm",
+                  data: {turbo_frame: "students" }%></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-  <div class="bg-yellow-200 p-4 rounded-md w-fit">
-    <h1 class="text-xl">Checked-in Students</h1>
-    <table id="latest-attendances" class="table table-zebra p-20">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Time</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @attendances.each do |attendance| %>
-          <tr class="hover">
-            <td><%= attendance.student.name %></td>
-            <td><%= attendance.timestamp.strftime('%Y-%m-%d %H:%M') %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <div class="card bg-base-200 shadow-xl flex-1">
+    <div class="card-body">
+      <h2 class="card-title">Checked-in Students</h2>
+      <div class="overflow-x-auto">
+        <table id="latest-attendances" class="table table-zebra w-full">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @attendances.each do |attendance| %>
+              <tr class="hover">
+                <td><%= attendance.student.name %></td>
+                <td><%= attendance.timestamp.strftime('%Y-%m-%d %H:%M') %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
