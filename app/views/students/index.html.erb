@@ -18,12 +18,10 @@
             action: "input->search#search"
           }
         } do |f| %>
-      <div class="flex items-center space-x-2">
-        <%= f.label :name_cont, "Name" %>
-        <%= f.search_field :name_cont, 
-            class: "form-control border-2 border-gray-300 rounded p-2",
+      <%= f.search_field :name_cont,
+            placeholder: "Search by name",
+            class: "input",
             autocomplete: "off" %>
-      </div>
     <% end %>
     <div data-search-target="results">
       <%= render "table", students: @students, q: @q %>
