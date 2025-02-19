@@ -16,36 +16,37 @@ This README documents the steps necessary to get the Smart Edu application up an
 ## Configuration
 
 1. Clone the repository:
-    ```sh
-    git clone https://github.com/C0NS03L/smart_edu_original
-    cd smart_edu_original
-    ```
+
+   ```sh
+   git clone https://github.com/C0NS03L/smart_edu_original
+   cd smart_edu_original
+   ```
 
 2. Run the setup scripts:
-    ```sh
-    bun setup
-    ```
+   ```sh
+   bun setup
+   ```
 
 ## Database Creation
 
 1. Create and set up the database:
-    ```sh
-    bin/rails db:create
-    bin/rails db:migrate
-    ```
+   ```sh
+   bin/rails db:create
+   bin/rails db:migrate
+   ```
 
 ## Database Initialization
 
 1. Seed the database with initial data:
-    ```sh
-    bin/rails db:seed
-    ```
+   ```sh
+   bin/rails db:seed
+   ```
 
 ## How to Run the Test Suite
 
 1. Run the tests:
-    ```sh
-    bin/rails test
-    ```
+   ```sh
+   bin/rails test
+   ```
 
 ## Deployment Instructions

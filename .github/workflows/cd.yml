@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies
         run: |
           gem install specific_install
-          gem specific_install https://github.com/basecamp/kamal.git 
+          gem specific_install https://github.com/basecamp/kamal.git
 
       - uses: webfactory/ssh-agent@v0.7.0
         with:
@@ -39,6 +39,6 @@ jobs:
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v2
-    
+
       - name: Run deploy command
         run: kamal deploy

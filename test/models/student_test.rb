@@ -11,7 +11,7 @@
 #
 #  index_students_on_discarded_at  (discarded_at)
 #
-require "test_helper"
+require 'test_helper'
 
 class StudentTest < ActiveSupport::TestCase
   # test "the truth" do

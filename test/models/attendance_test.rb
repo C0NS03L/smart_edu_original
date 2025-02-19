@@ -19,7 +19,7 @@
 #  student_id  (student_id => students.id)
 #  user_id     (user_id => users.id)
 #
-require "test_helper"
+require 'test_helper'
 
 class AttendanceTest < ActiveSupport::TestCase
   # test "the truth" do

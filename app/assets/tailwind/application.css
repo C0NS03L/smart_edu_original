@@ -4,13 +4,12 @@
 
 @plugin 'daisyui' {
   themes: light, dark, coporate, pastel;
-  darkTheme: coporate;
+  darktheme: coporate;
 }
 
 @theme {
   --font-sans: InterVariable, sans-serif;
 }
-
 
 @config '../../../config/tailwind.config.js';
 
@@ -23,7 +22,6 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
-
   *,
   ::after,
   ::before,
@@ -43,10 +41,10 @@
 
 */
 .pagy {
-  @apply flex space-x-1 font-semibold text-sm text-gray-500;
+  @apply flex space-x-1 text-sm font-semibold text-gray-500;
 
   a:not(.gap) {
-    @apply block rounded-lg px-3 py-1 bg-gray-200;
+    @apply block rounded-lg bg-gray-200 px-3 py-1;
 
     &:hover {
       @apply bg-gray-300;
@@ -54,19 +52,19 @@
 
     &:not([href]) {
       /* disabled links */
-      @apply text-gray-300 bg-gray-100 cursor-default;
+      @apply cursor-default bg-gray-100 text-gray-300;
     }
 
     &.current {
-      @apply text-white bg-gray-400;
+      @apply bg-gray-400 text-white;
     }
   }
 
   label {
-    @apply inline-block whitespace-nowrap bg-gray-200 rounded-lg px-3 py-0.5;
+    @apply inline-block whitespace-nowrap rounded-lg bg-gray-200 px-3 py-0.5;
 
     input {
-      @apply bg-gray-100 border-none rounded-md;
+      @apply rounded-md border-none bg-gray-100;
     }
   }
 }

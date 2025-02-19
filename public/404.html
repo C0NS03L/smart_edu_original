@@ -1,134 +1,132 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Page Not Found</title>
+    <style>
+      /* General Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404 - Page Not Found</title>
-  <style>
-    /* General Styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+      body {
+        background: radial-gradient(circle at top, #0a0f2d, #320f20);
+        color: white;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+        overflow: hidden;
+      }
 
-    body {
-      background: radial-gradient(circle at top, #0a0f2d, #320f20);
-      color: white;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-      overflow: hidden;
-    }
+      /* Container */
+      .container {
+        position: relative;
+        max-width: 600px;
+      }
 
-    /* Container */
-    .container {
-      position: relative;
-      max-width: 600px;
-    }
-
-    /* 404 Text */
-    .error {
-      font-size: 8rem;
-      font-weight: bold;
-      letter-spacing: 5px;
-      text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-      animation: glow 1.5s infinite alternate;
-    }
-
-    /* Subtitle */
-    .message {
-      font-size: 1.5rem;
-      margin: 10px 0;
-      opacity: 0.8;
-    }
-
-    /* Button */
-    .home-btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 24px;
-      font-size: 1.2rem;
-      color: white;
-      background: rgba(255, 0, 0, 0.7);
-      border-radius: 50px;
-      text-decoration: none;
-      transition: 0.3s ease-in-out;
-    }
-
-    .home-btn:hover {
-      background: rgba(255, 0, 0, 1);
-      transform: scale(1.1);
-    }
-
-    /* Floating Circles Animation */
-    .circle {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
-      animation: float 6s infinite ease-in-out alternate;
-    }
-
-    .circle.small {
-      width: 50px;
-      height: 50px;
-      top: 10%;
-      left: 20%;
-      animation-duration: 4s;
-    }
-
-    .circle.medium {
-      width: 80px;
-      height: 80px;
-      top: 60%;
-      left: 70%;
-    }
-
-    .circle.large {
-      width: 120px;
-      height: 120px;
-      top: 40%;
-      left: 30%;
-      animation-duration: 8s;
-    }
-
-    /* Animations */
-    @keyframes glow {
-      from {
+      /* 404 Text */
+      .error {
+        font-size: 8rem;
+        font-weight: bold;
+        letter-spacing: 5px;
         text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        animation: glow 1.5s infinite alternate;
       }
 
-      to {
-        text-shadow: 0 0 30px rgba(255, 0, 0, 0.9);
-      }
-    }
-
-    @keyframes float {
-      from {
-        transform: translateY(0px);
+      /* Subtitle */
+      .message {
+        font-size: 1.5rem;
+        margin: 10px 0;
+        opacity: 0.8;
       }
 
-      to {
-        transform: translateY(-20px);
+      /* Button */
+      .home-btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 24px;
+        font-size: 1.2rem;
+        color: white;
+        background: rgba(255, 0, 0, 0.7);
+        border-radius: 50px;
+        text-decoration: none;
+        transition: 0.3s ease-in-out;
       }
-    }
-  </style>
-</head>
 
-<body>
-  <div class="container">
-    <div class="error">404</div>
-    <p class="message">Oops! The page you're looking for doesn't exist.</p>
-    <a href="/" class="home-btn">Go Home</a>
-    <!-- Floating Circles -->
-    <div class="circle small"></div>
-    <div class="circle medium"></div>
-    <div class="circle large"></div>
-  </div>
-</body>
+      .home-btn:hover {
+        background: rgba(255, 0, 0, 1);
+        transform: scale(1.1);
+      }
 
+      /* Floating Circles Animation */
+      .circle {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        animation: float 6s infinite ease-in-out alternate;
+      }
+
+      .circle.small {
+        width: 50px;
+        height: 50px;
+        top: 10%;
+        left: 20%;
+        animation-duration: 4s;
+      }
+
+      .circle.medium {
+        width: 80px;
+        height: 80px;
+        top: 60%;
+        left: 70%;
+      }
+
+      .circle.large {
+        width: 120px;
+        height: 120px;
+        top: 40%;
+        left: 30%;
+        animation-duration: 8s;
+      }
+
+      /* Animations */
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+
+        to {
+          text-shadow: 0 0 30px rgba(255, 0, 0, 0.9);
+        }
+      }
+
+      @keyframes float {
+        from {
+          transform: translateY(0px);
+        }
+
+        to {
+          transform: translateY(-20px);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="error">404</div>
+      <p class="message">Oops! The page you're looking for doesn't exist.</p>
+      <a href="/" class="home-btn">Go Home</a>
+      <!-- Floating Circles -->
+      <div class="circle small"></div>
+      <div class="circle medium"></div>
+      <div class="circle large"></div>
+    </div>
+  </body>
 </html>

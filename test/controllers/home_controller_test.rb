@@ -1,11 +1,11 @@
-require "test_helper"
+require 'test_helper'
 
 class HomeControllerTest < ActionDispatch::IntegrationTest
-  test "should get index when logged in" do
+  test 'should get index when logged in' do
     sign_in
     get root_path
     assert status, 200
-    assert_includes @response.body, "Total Students"
+    assert_includes @response.body, 'Total Students'
   end
 
   # test "not logged in should get redirected to login" do

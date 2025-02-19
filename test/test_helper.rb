@@ -1,15 +1,15 @@
-ENV["RAILS_ENV"] ||= "test"
-require_relative "../config/environment"
-require "rails/test_help"
-require "./test/helpers/authentication_helper"
+ENV['RAILS_ENV'] ||= 'test'
+require_relative '../config/environment'
+require 'rails/test_help'
+require './test/helpers/authentication_helper'
 
 def ci?
-  ENV["CI"] == "true"
+  ENV['CI'] == 'true'
 end
 module SignInHelper
   def sign_in
     user = users(:one)
-    post session_url, params: { email_address: user.email_address, password: "password" }
+    post session_url, params: { email_address: user.email_address, password: 'password' }
   end
 end
 
