@@ -8,11 +8,8 @@
       <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", class: "input input-bordered input-primary w-full mt-2" %><br>
       <%= form.submit "Sign in", class: "btn btn-primary btn-wide mt-4 w-full" %>
     <% end %>
-    <div class="text-center py-4">
-      or
-    </div>
     <div>
-      <%= link_to "Sign up", new_signup_path, method: :get, class: "btn btn-secondary btn-wide w-full" %>
+      <%= link_to "Sign up", new_signup_path, method: :get, class: "btn btn-secondary btn-wide w-full mt-4" %>
     </div>
     <div class="pt-4">
       <%= link_to "Forgot password?", new_password_path, class: "link link-info" %>

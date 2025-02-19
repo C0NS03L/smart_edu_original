@@ -4,11 +4,15 @@ class StudentsController < ApplicationController
   attr_reader :student # helps with testing
   attr_reader :students
   include Pagy::Backend
-  # GET /students or /students.json
-  def index
-    @q = Student.kept.ransack(params[:q])
-    @pagy, @students = pagy(@q.result(distinct: true))
+# GET /students or /students.json
+def index
+  @q = Student.kept.ransack(params[:q])
+  @pagy, @students = pagy(@q.result(distinct: true))
+  respond_to do |format|
+    format.html
+    format.js { render partial: "students/table", locals: { students: @students, q: @q }, layout: false }
   end
+end
 
 
   # GET /students/1 or /students/1.json

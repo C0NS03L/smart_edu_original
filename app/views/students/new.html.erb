@@ -1,10 +1,10 @@
 <% content_for :title, "New student" %>
-<div class="flex items-center justify-center min-h-[calc(100vh-64px)]">
-  <div class="p-4 bg-neutral-100 min-w-[32rem]">
+<div class="flex items-center justify-center min-h-[calc(100vh-64px)] p-4">
+  <div class="p-4 bg-neutral-100 w-full max-w-[32rem]">
     <h1 class="text-3xl font-bold mb-4">New student</h1>
     <%= render "form", student: @student %>
     <div class="mt-4">
-      <%= link_to "Back to students", students_path, class: "link-primary" %>
+      <%= link_to "Back to students", students_path, class: "btn btn-secondary w-full" %>
     </div>
   </div>
 </div>
