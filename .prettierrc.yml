@@ -2,6 +2,7 @@ tabWidth: 2
 semi: false
 singleQuote: true
 trailingComma: "none"
+printWidth: 120
 
 plugins:
   - "@prettier/plugin-ruby"
@@ -13,14 +14,3 @@ rubyHashLabel: true
 rubyModifier: true
 rubySingleQuote: true
 rubyToProc: false
-
-overrides:
-  - files: '*.erb'
-    options:
-      parser: 'html'
-  - files: "erb"
-    options:
-      parser: "html"
-  - files: "*.html.erb"
-    options:
-      parser: "html"
