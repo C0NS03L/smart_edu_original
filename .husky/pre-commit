@@ -1,10 +1,6 @@
 # Pre-commit hook started
 echo "\033[1;34mRunning pre-commit hook...\033[0m"
 
-#Running htmlbeautifier
-echo "\033[1;32mRunning htmlbeautifier...\033[0m"
-git diff --name-only --cached | grep '\.html\.erb$' | xargs bundle exec htmlbeautifier
-
 # Running Rubocop
 echo "\033[1;32mRunning RuboCop...\033[0m"
 bundle exec rubocop --autocorrect
