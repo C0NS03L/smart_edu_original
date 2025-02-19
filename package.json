@@ -14,6 +14,7 @@
     "@prettier/plugin-ruby": "^4.0.4",
     "daisyui": "^5.0.0-beta.7",
     "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
     "prettier": "^3.5.1",
     "prettier-plugin-tailwindcss": "^0.6.11"
   },
@@ -21,6 +22,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky",
     "setup": "bun install && husky install && bundle install && bin/rails tailwindcss:install"
+  },
+  "lint-staged": {
+    "*.js": "prettier --write",
+    "*.rb": [
+      "bun exec 'bundle exec rubocop --autocorrect'",
+      "bun exec 'brakeman --skip-libs --output /dev/null'"
+    ],
+    "*.html.erb": "prettier --write"
   },
   "author": "",
   "license": "ISC"
