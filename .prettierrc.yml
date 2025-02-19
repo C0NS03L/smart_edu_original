@@ -1,16 +1,12 @@
 tabWidth: 2
 semi: false
 singleQuote: true
-trailingComma: "none"
+trailingComma: 'none'
 printWidth: 120
 
 plugins:
-  - "@prettier/plugin-ruby"
-  - "@4az/prettier-plugin-html-erb"
-  - "prettier-plugin-tailwindcss"
+  - '@prettier/plugin-ruby'
+  - '@4az/prettier-plugin-html-erb'
+  - 'prettier-plugin-tailwindcss'
 
-rubyArrayLiteral: true
-rubyHashLabel: true
-rubyModifier: true
 rubySingleQuote: true
-rubyToProc: false
