@@ -1,12 +1,12 @@
-<% content_for :title, "Editing attendance" %>
+<% content_for :title, 'Editing attendance' %>
 <div class="container mx-auto px-4 py-8">
   <%# <h1 class="text-3xl font-bold mb-6">Editing attendance</h1> %>
   <div class="card bg-base-100 shadow-xl">
     <div class="card-body">
-      <%= render "form", attendance: @attendance %>
-      <div class="card-actions justify-end mt-6 space-x-2">
-        <%= link_to "Show this attendance", @attendance, class: "btn btn-primary" %>
-        <%= link_to "Back to attendances", attendances_path, class: "btn btn-ghost" %>
+      <%= render 'form', attendance: @attendance %>
+      <div class="card-actions mt-6 justify-end space-x-2">
+        <%= link_to 'Show this attendance', @attendance, class: 'btn btn-primary' %>
+        <%= link_to 'Back to attendances', attendances_path, class: 'btn btn-ghost' %>
       </div>
     </div>
   </div>

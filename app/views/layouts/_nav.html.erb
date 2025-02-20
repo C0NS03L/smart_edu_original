@@ -1,19 +1,23 @@
 <div class="navbar bg-base-100">
   <div class="flex-none">
     <label for="my-drawer" class="btn drawer-button">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-5 w-5 stroke-current">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        class="inline-block h-5 w-5 stroke-current"
+      >
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
       </svg>
     </label>
   </div>
-  <div class="pl-2 flex-1">
+  <div class="flex-1 pl-2">
     <span class="prose no-wrap">
       <h4 class="sm:text-3xl">
-        <%= render "shared/logo_text" %><i class="fas fa-chevron-right px-1"></i>
+        <%= render 'shared/logo_text' %><i class="fas fa-chevron-right px-1"></i>
         <span class="font-bold"><%= content_for :title %></span>
       </h4>
     </span>
   </div>
-  <div class="flex-none">
-  </div>
+  <div class="flex-none"></div>
 </div>

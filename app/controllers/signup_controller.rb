@@ -1,5 +1,5 @@
 class SignupController < ApplicationController
-  allow_unauthenticated_access only: %i[ new create ]
+  allow_unauthenticated_access only: %i[new create]
 
   def new
     @user = User.new
@@ -16,6 +16,7 @@ class SignupController < ApplicationController
   end
 
   private
+
   def user_params
     params.require(:user).permit(:email_address, :password, :password_confirmation)
   end

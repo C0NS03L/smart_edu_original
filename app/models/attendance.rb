@@ -21,7 +21,7 @@
 #
 class Attendance < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
-    [ "created_at", "id", "student_id", "timestamp", "updated_at", "user_id" ]
+    %w[created_at id student_id timestamp updated_at user_id]
   end
 
   belongs_to :student
