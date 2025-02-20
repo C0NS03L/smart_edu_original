@@ -182,3 +182,5 @@ dist
 
 .idea
 .vscode
+
+config/deploy.yml
