@@ -1,0 +1,297 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/attendances":
+    get:
+      summary: Render attendances page
+      tags:
+      - Attendances
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create attendance
+      tags:
+      - Attendances
+      parameters: []
+      responses:
+        '201':
+          description: created
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                student_id:
+                  type: integer
+              required:
+              - student_id
+  "/attendances/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show attendance
+      tags:
+      - Attendances
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update attendance
+      tags:
+      - Attendances
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                student_id:
+                  type: integer
+              required:
+              - student_id
+    delete:
+      summary: delete attendance
+      tags:
+      - Attendances
+      responses:
+        '204':
+          description: no content
+  "/passwords/new":
+    get:
+      summary: Render forget password page
+      tags:
+      - Passwords
+      responses:
+        '200':
+          description: successful
+  "/passwords":
+    post:
+      summary: create password reset
+      tags:
+      - Passwords
+      parameters: []
+      responses:
+        '302':
+          description: redirect to new session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email_address:
+                  type: string
+              required:
+              - email_address
+  "/passwords/{token}/edit":
+    parameters:
+    - name: token
+      in: path
+      description: Reset token
+      required: true
+      schema:
+        type: string
+    get:
+      summary: edit password
+      tags:
+      - Passwords
+      responses:
+        '200':
+          description: successful
+  "/passwords/{token}":
+    parameters:
+    - name: token
+      in: path
+      description: Reset token
+      required: true
+      schema:
+        type: string
+    patch:
+      summary: update password
+      tags:
+      - Passwords
+      parameters: []
+      responses:
+        '302':
+          description: redirect to new session
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                password_confirmation:
+                  type: string
+              required:
+              - password
+              - password_confirmation
+  "/sessions/new":
+    get:
+      summary: Render new session page
+      tags:
+      - Sessions
+      responses:
+        '200':
+          description: successful
+  "/sessions":
+    post:
+      summary: create session
+      tags:
+      - Sessions
+      parameters: []
+      responses:
+        '302':
+          description: authentication failed, redirect to new session path
+        '429':
+          description: rate limit exceeded
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email_address:
+                  type: string
+                password:
+                  type: string
+              required:
+              - email_address
+              - password
+    delete:
+      summary: destroy session
+      tags:
+      - Sessions
+      responses:
+        '302':
+          description: session terminated, redirect to new session path
+  "/signup/new":
+    get:
+      summary: Render signup page
+      tags:
+      - Signup
+      responses:
+        '200':
+          description: successful
+  "/signup":
+    post:
+      summary: create signup
+      tags:
+      - Signup
+      parameters: []
+      responses:
+        '302':
+          description: redirect to after authentication url
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email_address:
+                  type: string
+                password:
+                  type: string
+                password_confirmation:
+                  type: string
+              required:
+              - email_address
+              - password
+              - password_confirmation
+  "/students":
+    get:
+      summary: Render student page
+      tags:
+      - Students
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create student
+      tags:
+      - Students
+      parameters: []
+      responses:
+        '201':
+          description: created
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+  "/students/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: Student ID
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show student
+      tags:
+      - Students
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update student
+      tags:
+      - Students
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+    delete:
+      summary: delete student
+      tags:
+      - Students
+      responses:
+        '204':
+          description: no content
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: aaa.buggycode.space
+- url: http://127.0.0.1:3000

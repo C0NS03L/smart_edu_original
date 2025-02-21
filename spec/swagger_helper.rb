@@ -25,7 +25,7 @@ RSpec.configure do |config|
       },
       servers: [
         { url: 'https://{defaultHost}', variables: { defaultHost: { default: 'aaa.buggycode.space' } } },
-        { url: 'http://localhost:3000' }
+        { url: 'http://127.0.0.1:3000' }
       ]
     }
   }
