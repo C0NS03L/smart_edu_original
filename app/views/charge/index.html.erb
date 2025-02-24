@@ -1,0 +1,34 @@
+<form id="checkoutForm" method="POST" action="/charge">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %> 4111 1111 1114 0011
+  <input type="hidden" name="omiseToken" />
+  <input type="hidden" name="omiseSource" />
+  <button type="submit" id="checkoutButton">Checkout</button>
+</form>
+
+<script type="text/javascript" src="https://cdn.omise.co/omise.js"></script>
+
+<script>
+  OmiseCard.configure({
+    publicKey: 'pkey_test_62unknn2ef7aol8k7nm'
+  })
+
+  var button = document.querySelector('#checkoutButton')
+  var form = document.querySelector('#checkoutForm')
+
+  button.addEventListener('click', (event) => {
+    event.preventDefault()
+    OmiseCard.open({
+      amount: 12345,
+      currency: 'THB',
+      defaultPaymentMethod: 'credit_card',
+      onCreateTokenSuccess: (nonce) => {
+        if (nonce.startsWith('tokn_')) {
+          form.omiseToken.value = nonce
+        } else {
+          form.omiseSource.value = nonce
+        }
+        form.submit()
+      }
+    })
+  })
+</script>
