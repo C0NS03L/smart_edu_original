@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_23_222157) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_23_235716) do
   create_table "attendances", force: :cascade do |t|
     t.integer "student_id", null: false
     t.datetime "timestamp"
@@ -24,11 +24,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_23_222157) do
   create_table "principals", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email_address", null: false
+    t.string "password_digest", null: false
+    t.string "name", null: false
+    t.index ["email_address"], name: "index_principals_on_email_address", unique: true
   end
 
   create_table "schools", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name", null: false
+    t.string "address", null: false
+    t.string "country", null: false
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -111,6 +118,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_23_222157) do
   create_table "staffs", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email_address", null: false
+    t.string "password_digest", null: false
+    t.string "name", null: false
+    t.index ["email_address"], name: "index_staffs_on_email_address", unique: true
   end
 
   create_table "students", force: :cascade do |t|
@@ -126,11 +137,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_23_222157) do
   create_table "system_admins", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email_address", null: false
+    t.string "password_digest", null: false
+    t.string "name", null: false
+    t.index ["email_address"], name: "index_system_admins_on_email_address", unique: true
   end
 
   create_table "teachers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email_address", null: false
+    t.string "password_digest", null: false
+    t.string "name", null: false
+    t.index ["email_address"], name: "index_teachers_on_email_address", unique: true
   end
 
   create_table "users", force: :cascade do |t|
