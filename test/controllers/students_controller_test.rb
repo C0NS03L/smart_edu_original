@@ -15,7 +15,15 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
     get new_student_url
     assert_response :success
   end
-
+  # TODO: Fix this test,
+  # School must exist
+  # Password can't be blank
+  # Email address can't be blank
+  # Email address has already been taken
+  # Email address is invalid
+  # Password can't be blank
+  # Password is too short (minimum is 8 characters)
+  # Name is too short (minimum is 5 characters)
   # test 'should create student' do
   #   assert_difference('Student.count') { post students_url, params: { student: { name: 'newstudent' } } }
 

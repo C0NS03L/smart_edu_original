@@ -8,10 +8,16 @@
 #  password_digest :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  school_id       :integer
 #
 # Indexes
 #
 #  index_teachers_on_email_address  (email_address) UNIQUE
+#  index_teachers_on_school_id      (school_id)
+#
+# Foreign Keys
+#
+#  school_id  (school_id => schools.id)
 #
 class Teacher < ApplicationRecord
   belongs_to :school
