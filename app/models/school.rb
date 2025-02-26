@@ -10,9 +10,9 @@
 #  updated_at :datetime         not null
 #
 class School < ApplicationRecord
-    has_many :students
-    has_many :users
-    has_many :principals
-    has_many :staff
-    has_many :teachers
+  has_many :students
+  has_many :users
+  has_many :principals
+  has_many :staff
+  has_many :teachers
 end
