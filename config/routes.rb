@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', :as => :rails_health_check
   root 'home#index'
   resources :charge
+  get 'subscriptions', to: 'subscriptions#index'
   post 'charge', to: 'charge#create'
 end

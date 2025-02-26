@@ -12,10 +12,10 @@ class ChargeController < ApplicationController
 
     if charge.paid
       # handle success
-      render plain: 'thanks'
+      render json: { status: 'success', message: 'Payment successful!' }
     else
       # handle failure
-      render plain: charge.failure_code, status: :payment_required
+      render json: { status: 'failure', message: "Payment failed: #{charge.failure_code}" }, status: :payment_required
     end
   end
 end
