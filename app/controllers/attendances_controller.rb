@@ -1,11 +1,12 @@
 class AttendancesController < ApplicationController
+  include SchoolScopable
   before_action :set_attendance, only: %i[show edit update destroy]
   include Pagy::Backend
 
   # GET /attendances or /attendances.json
   #
   def index
-    @q = Attendance.ransack(params[:q])
+    @q = scope_to_school(Attendance).includes(:student).ransack(params[:q])
     @pagy, @attendances = pagy(@q.result)
     respond_to do |format|
       format.html
@@ -19,9 +20,9 @@ class AttendancesController < ApplicationController
 
   # GET /attendances/new
   def new
-    @q = Student.ransack(params[:q])
+    @q = scope_to_school(Student).ransack(params[:q])
     @students = @q.result(distinct: true)
-    @attendances = Attendance.order(timestamp: :desc).limit(20).includes(:student)
+    @attendances = scope_to_school(Attendance).order(timestamp: :desc).limit(20).includes(:student)
     respond_to do |format|
       format.html # For normal page loads
       format.turbo_stream # For Turbo-powered live updates
@@ -34,7 +35,8 @@ class AttendancesController < ApplicationController
 
   # POST /attendances or /attendances.json
   def create
-    p = params.permit(:student_id).merge(user_id: Current.user.id, timestamp: Time.zone.now)
+    p =
+      params.permit(:student_id).merge(user_id: Current.user.id, timestamp: Time.zone.now, school_id: current_school.id)
     @attendance = Attendance.new(p)
     @attendance.save!
     respond_to do |format|
@@ -75,6 +77,9 @@ class AttendancesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def attendance_params
-    params.expect(attendance: %i[student_id timestamp user_id])
+    params
+      .require(:attendance)
+      .permit(:student_id, :timestamp)
+      .merge(user_id: Current.user.id, school_id: current_school.id)
   end
 end

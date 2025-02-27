@@ -3,6 +3,7 @@ class SignupController < ApplicationController
 
   def new
     @user = User.new
+    @schools = School.order(:name)
   end
 
   def create
@@ -11,6 +12,7 @@ class SignupController < ApplicationController
       start_new_session_for @user
       redirect_to after_authentication_url
     else
+      @schools = School.order(:name)
       render :new, status: :unprocessable_entity
     end
   end
@@ -18,6 +20,6 @@ class SignupController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email_address, :password, :password_confirmation)
+    params.require(:user).permit(:email_address, :password, :password_confirmation, :school_id)
   end
 end
