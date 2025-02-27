@@ -30,5 +30,6 @@ attendance_<%= i %>:
   student: student_<%= i %>
   timestamp: <%= Time.now - (i * 60) %> # Adding a minute difference for each record
   user: one
+  school: school_1
 <% end %>
 

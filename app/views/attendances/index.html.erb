@@ -16,8 +16,7 @@
                           }
                         } do |f| %>
       <div class="flex items-center space-x-2">
-        <%= f.label :student_name_cont, 'Student ID', class: 'mr-2' %>
-        <%= f.search_field :student_name_cont, class: 'form-control border-2 border-gray-300 rounded p-2' %>
+        <%= f.search_field :student_name_cont, class: 'input', placeholder: 'Search by name' %>
       </div>
     <% end %>
     <div data-search-target="results"><%= render 'table', attendances: @attendances, q: @q %></div>

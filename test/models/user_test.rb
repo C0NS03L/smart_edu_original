@@ -22,34 +22,39 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   test 'should save user' do
-    user = User.new email_address: 'a3333@bbb.com', password: 'password'
+    user = User.new email_address: 'a3333@bbb.com', password: 'password', school: schools(:school_1)
     assert user.save
   end
 
   test 'should not save user without email' do
-    user = User.new email_address: '', password: 'password'
+    user = User.new email_address: '', password: 'password', school: schools(:school_1)
     assert_not user.save
   end
 
   test 'should not save user short password' do
-    user = User.new email_address: 'a@a.com', password: '123567'
+    user = User.new email_address: 'a@a.com', password: '123567', school: schools(:school_1)
     assert_not user.save
   end
 
   test 'should not save user with stupidly long password password' do
-    user = User.new email_address: 'a@a.com', password: '123456789012345678901'
+    user = User.new email_address: 'a@a.com', password: '123456789012345678901', school: schools(:school_1)
     assert_not user.save
   end
 
   test 'should not save invalid email' do
-    user = User.new email_address: 'a.com', password: '12345678'
+    user = User.new email_address: 'a.com', password: '12345678', school: schools(:school_1)
     assert_not user.save
   end
 
   test 'should not save user with duplicated email' do
-    user = User.new email_address: 'a222@bbb.com', password: 'password'
+    user = User.new email_address: 'a222@bbb.com', password: 'password', school: schools(:school_1)
     assert user.save
-    user = User.new email_address: 'a222@bbb.com', password: 'password'
+    user = User.new email_address: 'a222@bbb.com', password: 'password', school: schools(:school_1)
+    assert_not user.save
+  end
+
+  test 'should not save user without school' do
+    user = User.new email_address: 'a2222312@bbb.com', password: 'password'
     assert_not user.save
   end
 end
