@@ -32,5 +32,8 @@
     "*.html.erb": "prettier --write"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "smart_edu": "file:"
+  }
 }

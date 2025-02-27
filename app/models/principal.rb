@@ -26,4 +26,7 @@ class Principal < ApplicationRecord
   normalizes :email_address, with: ->(e) { e.strip.downcase }
   validates :email_address, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, presence: true, length: { minimum: 8, maximum: 20 }
+  validates :name, presence: true
+  validates :phone_number, presence: true
+  validates :enrollment_code, presence: true
 end
