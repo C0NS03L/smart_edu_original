@@ -6,6 +6,7 @@
 #
 #  id              :integer          not null, primary key
 #  email_address   :string           not null
+#  is_active       :boolean          default(TRUE)
 #  password_digest :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -14,14 +15,14 @@
 #
 #  index_users_on_email_address  (email_address) UNIQUE
 #
-one:
+user_1:
   email_address: one@example.com
   password_digest: <%= password_digest %>
 
-two:
+user_2:
   email_address: two@example.com
   password_digest: <%= password_digest %>
 
-three:
-  email_address: a@a.com
+user_3:
+  email_address: three@example.com
   password_digest: <%= password_digest %>

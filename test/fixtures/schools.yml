@@ -10,6 +10,7 @@
 #  updated_at :datetime         not null
 #
 school_1:
-  name: "Default School"
-  country: "USA"
-  address: "123 Main St."
+  id: 1
+  name: "MUIC"
+  country: "Thailand"
+  address: "Street Road St."

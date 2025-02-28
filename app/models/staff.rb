@@ -9,15 +9,18 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  school_id       :integer
+#  user_id         :integer          not null
 #
 # Indexes
 #
-#  index_staffs_on_email_address  (email_address) UNIQUE
-#  index_staffs_on_school_id      (school_id)
+#  index_staff_on_email_address  (email_address) UNIQUE
+#  index_staff_on_school_id      (school_id)
+#  index_staff_on_user_id        (user_id)
 #
 # Foreign Keys
 #
 #  school_id  (school_id => schools.id)
+#  user_id    (user_id => users.id)
 #
 class Staff < ApplicationRecord
   belongs_to :school

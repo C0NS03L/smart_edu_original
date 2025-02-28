@@ -8,22 +8,25 @@
 #  name            :string
 #  password_digest :string
 #  uid             :string           not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
 #  school_id       :integer          not null
+#  user_id         :integer          not null
 #
 # Indexes
 #
 #  index_students_on_discarded_at   (discarded_at)
 #  index_students_on_email_address  (email_address) UNIQUE
 #  index_students_on_school_id      (school_id)
+#  index_students_on_user_id        (user_id)
 #
 # Foreign Keys
 #
 #  school_id  (school_id => schools.id)
+#  user_id    (user_id => users.id)
 #
 class Student < ApplicationRecord
   belongs_to :school
+  belongs_to :user
+  has_many :attendances, dependent: :destroy
   has_secure_password
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
