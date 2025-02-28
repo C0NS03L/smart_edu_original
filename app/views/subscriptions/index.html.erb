@@ -1,3 +1,5 @@
+<% content_for :title, 'Subscriptions' %>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,15 +10,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-gray-100">
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto mt-20 px-4 py-10">
       <h1 class="mb-6 text-center text-3xl font-bold">Select Your Subscription Plan</h1>
       <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-        <div class="rounded-lg bg-white p-6 text-center shadow-md">
+        <div class="rounded-lg border border-green-500 bg-white p-6 text-center shadow-md">
           <h2 class="text-xl font-semibold">Free Trial</h2>
           <p class="text-gray-600">Try our service for free for 30 days.</p>
-          <p class="text-gray-500">Access for up to 10 students, 1 teacher, and 2 classes.</p>
+          <p class="text-gray-500">Up to 200 Students</p>
           <button
-            class="select-tier mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+            class="select-tier mt-4 rounded bg-green-500 px-4 py-2 text-white"
             data-amount="0"
             data-tier="free_trial"
           >
@@ -24,21 +26,25 @@
           </button>
         </div>
         <div class="rounded-lg border border-blue-500 bg-white p-6 text-center shadow-md">
-          <h2 class="text-xl font-semibold">Basic Plan</h2>
-          <p class="text-gray-600">Get access to basic features for $9.99/month.</p>
-          <p class="text-gray-500">Access for up to 50 students, 5 teachers, and 10 classes.</p>
-          <button class="select-tier mt-4 rounded bg-blue-500 px-4 py-2 text-white" data-amount="999" data-tier="basic">
+          <h2 class="text-xl font-semibold">Plan for 500 Students</h2>
+          <p class="text-gray-600">Get access for up to 500 students for $500/month.</p>
+          <p class="text-gray-500">$1.00 Per Student.</p>
+          <button
+            class="select-tier mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+            data-amount="45000"
+            data-tier="500_students"
+          >
             Select
           </button>
         </div>
-        <div class="rounded-lg border border-green-500 bg-white p-6 text-center shadow-md">
-          <h2 class="text-xl font-semibold">Premium Plan</h2>
-          <p class="text-gray-600">Get access to all features for $19.99/month.</p>
-          <p class="text-gray-500">Access for unlimited students, teachers, and classes.</p>
+        <div class="rounded-lg border border-blue-500 bg-white p-6 text-center shadow-md">
+          <h2 class="text-xl font-semibold">Plan for 1000 Students</h2>
+          <p class="text-gray-600">Get access for up to 1000 students for $800/month.</p>
+          <p class="text-gray-500">$0.80 per student.</p>
           <button
-            class="select-tier mt-4 rounded bg-green-500 px-4 py-2 text-white"
-            data-amount="1999"
-            data-tier="premium"
+            class="select-tier mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+            data-amount="80000"
+            data-tier="1000_students"
           >
             Select
           </button>
@@ -78,7 +84,7 @@
           document.getElementById('amount').value = amount
           document.getElementById('tier').value = tier
 
-          if (amount == 0) {
+          if (amount === 0) {
             document.getElementById('checkoutForm').submit()
           } else {
             OmiseCard.open({
