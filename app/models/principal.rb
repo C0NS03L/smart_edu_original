@@ -4,8 +4,10 @@
 #
 #  id              :integer          not null, primary key
 #  email_address   :string           not null
+#  enrollment_code :string
 #  name            :string           not null
 #  password_digest :string           not null
+#  phone_number    :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  school_id       :integer
@@ -28,5 +30,4 @@ class Principal < ApplicationRecord
   validates :password, presence: true, length: { minimum: 8, maximum: 20 }
   validates :name, presence: true
   validates :phone_number, presence: true
-  validates :enrollment_code, presence: true
 end

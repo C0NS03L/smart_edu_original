@@ -1,0 +1,10 @@
+<%= render 'shared/single_box' do %>
+  <h1 class="break-words pb-4 text-center text-3xl font-bold">
+    <%= render 'shared/logo_text' %> <span class="inline-block">Choose Role</span>
+  </h1>
+  <%= form_with url: set_role_path, method: :post, class: 'form-control mt-4' do |form| %>
+    <%= form.select :role, options_for_select([%w[Principal principal]]), class: 'input input-bordered w-full mt-2' %>
+    <%= form.submit 'Continue', class: 'btn btn-primary w-full mt-2' %>
+  <% end %>
+  <%= link_to 'Back to Sign In', new_session_path, class: 'btn btn-ghost w-full mt-2' %>
+<% end %>

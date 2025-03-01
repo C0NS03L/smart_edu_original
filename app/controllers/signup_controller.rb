@@ -1,18 +1,39 @@
 class SignupController < ApplicationController
-  allow_unauthenticated_access only: %i[new create new_principal create_principal]
+  allow_unauthenticated_access only: %i[new create set_role choose_role new_principal create_principal] 
 
   def new
+    @role = params[:role] || ""
     @user = User.new
   end
 
   def create
+    @role = params[:role] || ""
+    puts "Role: #{@role}"
     @user = User.new(user_params)
     if @user.save
-      redirect_to root_path, notice: 'User was successfully created.'
+      start_new_session_for @user
+      redirect_to after_authentication_url
     else
       render :new, status: :unprocessable_entity
     end
   end
+
+  def choose_role
+  end
+
+  def set_role
+    role = params[:role]
+    #TODO: Check if role is valid
+    # redirect based on role, use switch case to redirect to different paths
+    case role
+    when "student"
+      redirect_to new_signup_path(role: role)
+    when "principal"
+      redirect_to new_principal_signup_path(role: role)
+    else
+      redirect_to choose_role_path, notice: "Invalid role"
+    end
+  end 
 
   def new_principal
     @principal = Principal.new
@@ -21,7 +42,8 @@ class SignupController < ApplicationController
   def create_principal
     @principal = Principal.new(principal_params)
     if @principal.save
-      redirect_to root_path, notice: 'Principal was successfully created.'
+      # start_new_session_for @principal
+      redirect_to after_authentication_url
     else
       render :new_principal
     end
@@ -34,6 +56,7 @@ class SignupController < ApplicationController
   end
 
   def principal_params
-    params.require(:principal).permit(:name, :email, :phone_number, :password, :enrollment_code)
+    params.require(:principal).permit(:school_id, :name, :email_address, :phone_number, :password, 
+:password_confirmation)
   end
 end

@@ -20,7 +20,9 @@
         }
       ) do |form| %>
     <%= form.text_field :name, class: 'input input-bordered w-full mt-2', placeholder: 'Name', required: true, autofocus: true %>
-    <%= form.email_field :email,
+    <%# TODO: figure out school id/enrollment how it works etc %>
+    <%= form.hidden_field :school_id, value: 1 %>
+    <%= form.email_field :email_address,
                          class: 'input input-bordered w-full mt-2',
                          placeholder: 'Email',
                          required: true,
@@ -34,10 +36,10 @@
                             placeholder: 'Password',
                             required: true,
                             autocomplete: 'new-password' %>
-    <%= form.text_field :enrollment_code,
-                        class: 'input input-bordered w-full mt-2',
-                        placeholder: 'Enrollment Code',
-                        required: true %>
+    <%= form.password_field :password_confirmation,
+                            class: 'input input-bordered w-full mt-2',
+                            placeholder: 'Confirm Password',
+                            autocomplete: 'new-password' %>
     <%= form.submit 'Sign Up as Principal', class: 'btn btn-primary w-full mt-2' %>
   <% end %>
   <%= link_to 'Back to Sign Up', new_signup_path, class: 'btn btn-ghost w-full mt-2' %>
