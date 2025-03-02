@@ -14,5 +14,4 @@ class School < ApplicationRecord
   has_many :users
   has_one :principals
   has_many :staff
-  has_many :teachers
 end
