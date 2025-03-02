@@ -7,7 +7,7 @@ on:
 
 jobs:
   Deploy:
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') }}
     runs-on: ubuntu-latest
 
     env:
@@ -16,6 +16,10 @@ jobs:
       RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
       KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
       KAMAL_REGISTRY_USERNAME: ${{ secrets.KAMAL_REGISTRY_USERNAME }}
+      KAMAL_SERVICE_NAME: ${{ github.ref_name == 'main' && 'smart_edu' || 'smart_edu_dev'}}
+      KAMAL_IMAGE_NAME: ${{github.ref == 'refs/heads/main' && 'c0ns03l/smartedu_a' || 'c0ns03l/smartedu_d'}}
+      KAMAL_HOSTNAME: ${{github.ref == 'refs/heads/main' && 'aaa.buggycode.space' || 'dev.aaa.buggycode.space'}}
+      VOLUME_PATH: ${{github.ref == 'refs/heads/main' && 'smart_edu_storage:/rails/storage' || 'smart_edu_storage_dev:/rails/storage'}}
 
     steps:
       - name: Checkout code
