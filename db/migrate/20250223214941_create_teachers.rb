@@ -1,9 +1,5 @@
-class DropTeachersTable < ActiveRecord::Migration[8.0]
-  def up
-    drop_table :teachers
-  end
-
-  def down
+class CreateTeachers < ActiveRecord::Migration[8.0]
+  def change
     create_table :teachers do |t|
       t.string :email_address, null: false
       t.string :password_digest, null: false
