@@ -1,4 +1,19 @@
-<div>
-  <h1 class="text-4xl font-bold">Principal#generate_code</h1>
-  <p>Find me in app/views/principal/generate_code.html.erb</p>
+<% content_for :title, 'Code Generation' %>
+<div class="flex flex-col min-h-[calc(100vh-64px)] items-center justify-center space-y-8">
+  <div class="text-center">
+    <h2 class="text-3xl font-bold mb-4">Teacher Code</h2>
+    <div class="border p-4 rounded shadow-sm">
+      <label for="teacher-uses" class="block text-lg font-medium mb-2">Number of Accounts Required</label>
+      <input type="number" id="teacher-uses" class="input input-bordered w-full mb-4" placeholder="Enter Number" />
+      <button class="btn btn-primary w-full">Generate</button>
+    </div>
+  </div>
+  <div class="text-center">
+    <h2 class="text-3xl font-bold mb-4">Student Code</h2>
+    <div class="border p-4 rounded shadow-sm">
+      <label for="student-uses" class="block text-lg font-medium mb-2">Number of Accounts Required</label>
+      <input type="number" id="student-uses" class="input input-bordered w-full mb-4" placeholder="Enter Number" />
+      <button class="btn btn-primary w-full">Generate</button>
+    </div>
+  </div>
 </div>

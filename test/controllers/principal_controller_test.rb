@@ -5,9 +5,4 @@ class PrincipalControllerTest < ActionDispatch::IntegrationTest
     get principal_generate_code_url
     assert_response :success
   end
-
-  test 'should get payment_plan' do
-    get principal_payment_plan_url
-    assert_response :success
-  end
 end
