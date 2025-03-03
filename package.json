@@ -32,5 +32,8 @@
     "*.html.erb": "prettier --write"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "html5-qrcode": "^2.3.8"
+  }
 }

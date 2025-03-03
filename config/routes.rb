@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   resources :students
   get 'up' => 'rails/health#show', :as => :rails_health_check
   root 'home#index'
+  get "qr", to:"qr#index"
 end

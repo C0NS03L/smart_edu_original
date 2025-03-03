@@ -1,0 +1,32 @@
+<!-- include the library -->
+<script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script>
+
+<div id="qr-reader" style="width: 600px"></div>
+
+<script>
+  function onScanSuccess(decodedText, decodedResult) {
+    fetch('/attendances', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+      },
+      body: JSON.stringify({ attendance: { student_uid: decodedText } })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert('Attendance recorded successfully!')
+        } else {
+          alert('Error recording attendance!')
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error)
+        alert('Error recording attendance!')
+      })
+  }
+
+  var html5QrcodeScanner = new Html5QrcodeScanner('qr-reader', { fps: 10, qrbox: 250 })
+  html5QrcodeScanner.render(onScanSuccess)
+</script>
