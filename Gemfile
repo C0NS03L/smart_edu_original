@@ -73,7 +73,7 @@ gem 'annotaterb', '~> 4.13'
 gem 'rqrcode', '~> 2.0'
 
 gem 'pagy', '~> 9.3' # omit patch digit
-gem 'tailwindcss-rails', '~> 4.0'
+gem 'tailwindcss-rails', '~> 4.2'
 
 gem 'ransack', '~> 4.3'
 
