@@ -12,6 +12,6 @@ Rails.application.routes.draw do
   get 'signup/choose_role', as: 'choose_role'
   post 'set_role', to: 'signup#set_role', as: 'set_role'
 
-  get 'up' => 'rails/health#show', as: :rails_health_check
+  get 'up' => 'rails/health#show', :as => :rails_health_check
   root 'home#index'
 end
