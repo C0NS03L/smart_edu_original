@@ -11,10 +11,10 @@ class ChargeController < ApplicationController
     charge = Omise::Charge.create({ amount: 1_000_00, currency: 'thb', card: params[:omiseToken] })
 
     if charge.paid
-      render partial: 'success_modal'
+      render '_success_modal'
     else
       # handle failure, send error message to user
-      render partial: 'fail_modal'
+      render '_fail_modal'
     end
   end
 end
