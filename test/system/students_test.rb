@@ -20,6 +20,7 @@ class StudentsTest < ApplicationSystemTestCase
     assert_selector 'h4', text: 'Students'
   end
 
+  ## TODO: Fix this test
   # test 'should create student' do
   #   visit students_url
   #   click_on 'New student'
@@ -34,6 +35,7 @@ class StudentsTest < ApplicationSystemTestCase
     assert_text @student.name, wait: 1
   end
 
+  ## TODO: Fix this test
   # test 'should update Student' do
   #   visit student_url(@student)
   #   click_on 'Edit this student', match: :first
