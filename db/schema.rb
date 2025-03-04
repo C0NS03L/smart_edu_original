@@ -49,7 +49,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_02_152904) do
     t.string 'address'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.string 'country', null: false
+    t.string 'country', default: 'Unknown', null: false
   end
 
   create_table 'sessions', force: :cascade do |t|
@@ -69,14 +69,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_02_152904) do
     t.datetime 'updated_at', null: false
     t.string 'name', null: false
     t.integer 'user_id', null: false
-    t.index ['email_address'], name: 'index_staff_on_email_address', unique: true
-    t.index ['school_id'], name: 'index_staff_on_school_id'
-    t.index ['user_id'], name: 'index_staff_on_user_id'
+    t.index ['email_address'], name: 'index_staffs_on_email_address', unique: true
+    t.index ['school_id'], name: 'index_staffs_on_school_id'
+    t.index ['user_id'], name: 'index_staffs_on_user_id'
   end
 
   create_table 'students', force: :cascade do |t|
     t.string 'name'
     t.string 'uid', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
     t.datetime 'discarded_at'
     t.integer 'school_id', null: false
     t.string 'email_address'
@@ -111,7 +113,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_02_152904) do
   create_table 'users', force: :cascade do |t|
     t.string 'email_address', null: false
     t.string 'password_digest', null: false
-    t.boolean 'is_active', default: true
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['email_address'], name: 'index_users_on_email_address', unique: true

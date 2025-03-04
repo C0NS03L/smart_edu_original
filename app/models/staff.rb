@@ -13,9 +13,9 @@
 #
 # Indexes
 #
-#  index_staff_on_email_address  (email_address) UNIQUE
-#  index_staff_on_school_id      (school_id)
-#  index_staff_on_user_id        (user_id)
+#  index_staffs_on_email_address  (email_address) UNIQUE
+#  index_staffs_on_school_id      (school_id)
+#  index_staffs_on_user_id        (user_id)
 #
 # Foreign Keys
 #
