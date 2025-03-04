@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'principal/generate_code'
+  get 'principal/payment_plan'
   resources :attendances
   resources :students
   get 'home/index'

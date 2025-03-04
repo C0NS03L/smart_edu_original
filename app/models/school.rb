@@ -12,7 +12,6 @@
 class School < ApplicationRecord
   has_many :students
   has_many :users
-  has_many :principals
+  has_one :principals
   has_many :staff
-  has_many :teachers
 end

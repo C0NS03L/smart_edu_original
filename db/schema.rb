@@ -99,17 +99,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_02_152904) do
     t.index ['email_address'], name: 'index_system_admins_on_email_address', unique: true
   end
 
-  create_table 'teachers', force: :cascade do |t|
-    t.string 'email_address', null: false
-    t.string 'password_digest', null: false
-    t.integer 'school_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.string 'name', null: false
-    t.index ['email_address'], name: 'index_teachers_on_email_address', unique: true
-    t.index ['school_id'], name: 'index_teachers_on_school_id'
-  end
-
   create_table 'users', force: :cascade do |t|
     t.string 'email_address', null: false
     t.string 'password_digest', null: false
@@ -127,5 +116,4 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_02_152904) do
   add_foreign_key 'staffs', 'users'
   add_foreign_key 'students', 'schools'
   add_foreign_key 'students', 'users'
-  add_foreign_key 'teachers', 'schools'
 end
