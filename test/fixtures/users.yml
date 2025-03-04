@@ -14,14 +14,27 @@
 #
 #  index_users_on_email_address  (email_address) UNIQUE
 #
-user_1:
+
+<% for i in 1..40 do %>
+user_<%= i %>:
+  id: <%= i %>
+  email_address: user<%= i %>@example.com
+  password_digest: <%= password_digest %>
+<% end %>
+
+one:
+  id: 1000
   email_address: one@example.com
   password_digest: <%= password_digest %>
 
-user_2:
-  email_address: two@example.com
-  password_digest: <%= password_digest %>
+# user_1:
+#   email_address: one@example.com
+#   password_digest: <%= password_digest %>
 
-user_3:
-  email_address: three@example.com
-  password_digest: <%= password_digest %>
+# user_2:
+#   email_address: two@example.com
+#   password_digest: <%= password_digest %>
+
+# user_3:
+#   email_address: three@example.com
+#   password_digest: <%= password_digest %>
