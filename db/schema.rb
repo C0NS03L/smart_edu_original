@@ -116,5 +116,4 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_02_152904) do
   add_foreign_key 'staffs', 'users'
   add_foreign_key 'students', 'schools'
   add_foreign_key 'students', 'users'
-  add_foreign_key 'teachers', 'schools'
 end
