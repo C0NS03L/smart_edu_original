@@ -9,7 +9,6 @@ This README documents the steps necessary to get the Smart Edu application up an
 ## System Dependencies
 
 - Rails 8.0.1
-- PostgreSQL
 - Node.js
 - Bun
 
@@ -27,6 +26,13 @@ This README documents the steps necessary to get the Smart Edu application up an
    bun setup
    ```
 
+## Repo setup
+
+1. Install chrome driver:
+   ```sh
+   sudo apt-get install chromium-chromedriver
+   ```
+
 ## Database Creation
 
 1. Create and set up the database:
@@ -35,18 +41,15 @@ This README documents the steps necessary to get the Smart Edu application up an
    bin/rails db:migrate
    ```
 
-## Database Initialization
-
-1. Seed the database with initial data:
-   ```sh
-   bin/rails db:seed
-   ```
-
 ## How to Run the Test Suite
 
-1. Run the tests:
+1. Run the unit tests:
+
    ```sh
    bin/rails test
    ```
 
-## Deployment Instructions
+2. Run the system tests:
+   ```sh
+   bin/rails test:system
+   ```
