@@ -13,19 +13,16 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  school_id       :integer          not null
-#  user_id         :integer          not null
 #
 # Indexes
 #
 #  index_students_on_discarded_at   (discarded_at)
 #  index_students_on_email_address  (email_address) UNIQUE
 #  index_students_on_school_id      (school_id)
-#  index_students_on_user_id        (user_id)
 #
 # Foreign Keys
 #
 #  school_id  (school_id => schools.id)
-#  user_id    (user_id => users.id)
 #
 
 <% for i in 1..40 do %>

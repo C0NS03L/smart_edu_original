@@ -36,21 +36,42 @@ module Authentication
   end
 
   def after_authentication_url
-    session.delete(:return_to_after_authenticating) || root_url
+    if Current.session.user
+      user_dashboard_path
+    elsif Current.session.principal
+      principal_dashboard_path
+    elsif Current.session.staff
+      staff_dashboard_path
+    elsif Current.session.student
+      student_dashboard_path
+    elsif Current.session.system_admin
+      admin_dashboard_path
+    else
+      root_url
+    end
   end
 
-  def start_new_session_for(user)
-    user
-      .sessions
-      .create!(user_agent: request.user_agent, ip_address: request.remote_ip)
-      .tap do |session|
-        Current.session = session
-        cookies.signed.permanent[:session_id] = { value: session.id, httponly: true, same_site: :lax }
+  def start_new_session_for(account)
+    session =
+      case account
+      when User
+        account.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip)
+      when Principal
+        account.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip, principal: account)
+      when Staff
+        account.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip, staff: account)
+      when Student
+        account.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip, student: account)
+      when SystemAdmin
+        account.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip, system_admin: account)
       end
+    Current.session = session
+    cookies.signed.permanent[:session_id] = { value: session.id, httponly: true, same_site: :lax }
   end
 
   def terminate_session
     Current.session.destroy
     cookies.delete(:session_id)
+    cookies.delete(:account_type)
   end
 end
