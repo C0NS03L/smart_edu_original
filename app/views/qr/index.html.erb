@@ -1,32 +1,71 @@
 <!-- include the library -->
 <script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script>
+<style>
+  main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-<div id="qr-reader" style="width: 600px"></div>
+  #reader {
+    width: 600px;
+  }
+
+  #result {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+</style>
+
+<main>
+  <div id="reader"></div>
+  <div id="result"></div>
+</main>
 
 <script>
+  const scanner = new Html5QrcodeScanner('reader', {
+    qrbox: {
+      width: 250,
+      height: 250
+    },
+    fps: 20
+  })
+
+  scanner.render(onScanSuccess, onScanError)
+
   function onScanSuccess(decodedText, decodedResult) {
-    fetch('/attendances', {
+    console.log('Decoded text: ', decodedText)
+
+    fetch('/attendances/qr_attendance', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
       },
       body: JSON.stringify({ attendance: { student_uid: decodedText } })
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          alert('Attendance recorded successfully!')
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
         } else {
-          alert('Error recording attendance!')
+          return response.text().then((text) => {
+            throw new Error(text)
+          })
         }
+      })
+      .then((data) => {
+        document.getElementById('result').innerText = data.message
       })
       .catch((error) => {
         console.error('Error:', error)
-        alert('Error recording attendance!')
+        document.getElementById('result').innerText = 'Error recording attendance: ' + error.message
       })
+
+    scanner.clear()
+    document.getElementById('reader').remove()
   }
 
-  var html5QrcodeScanner = new Html5QrcodeScanner('qr-reader', { fps: 10, qrbox: 250 })
-  html5QrcodeScanner.render(onScanSuccess)
+  function onScanError(error) {
+    console.error('Scan error:', error)
+  }
 </script>

@@ -40,6 +40,29 @@ class AttendancesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to new_attendance_path(request.parameters) } # For normal page loads
       format.turbo_stream { redirect_to new_attendance_path(request.parameters) } # For Turbo-powered live updates
+      # console log the recorded uid
+      logger.info("Recorded attendance for student with uid: #{p[:student_id]}")
+    end
+  end
+
+  # POST /attendances/qr_attendance
+  def qr_attendance
+    student = Student.find_by(uid: params[:attendance][:student_uid])
+    # log the student_uid
+    logger.info("Student UID: #{params[:attendance][:student_uid]}")
+    if student
+      @attendance = student.attendances.new(user_id: Current.user.id, timestamp: Time.zone.now)
+      if @attendance.save
+        render json: { status: 'success', message: 'Attendance recorded' }, status: :created
+      else
+        render json: {
+                 status: 'error',
+                 message: @attendance.errors.full_messages.join(', ')
+               },
+               status: :unprocessable_entity
+      end
+    else
+      render json: { status: 'error', message: 'Student not found' }, status: :not_found
     end
   end
 

@@ -9,6 +9,16 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+#
+# Table name: schools
+#
+#  id         :integer          not null, primary key
+#  address    :string
+#  country    :string           default("Unknown"), not null
+#  name       :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 school_1:
   id: 1
   name: "MUIC"
