@@ -3,15 +3,12 @@ class SignupController < ApplicationController
   skip_before_action :require_authentication, only: %i[new_principal create_principal]
 
   def new
-    @user = User.new
+    @role = params[:role]
   end
 
   def create
-    @enrollment_code = params[:user][:enrollment_code] || ''
-    user_password = params[:user][:password]
-
-    # Remove unnecessary parameters
-    params[:user].delete(:enrollment_code)
+    @enrollment_code = params[:enrollment_code] || ''
+    user_password = params[:password]
 
     hashed_code = Digest::SHA256.hexdigest(@enrollment_code)
     code_object = EnrollmentCode.find_by(hashed_code: hashed_code)
@@ -29,31 +26,32 @@ class SignupController < ApplicationController
     when 'student'
       student =
         Student.new(
-          email_address: params[:user][:email_address],
-          name: params[:user][:name],
+          email_address: params[:email_address],
+          name: params[:name],
           password: user_password,
           school_id: school_id
         )
       if student.save
         start_new_session_for(student)
         flash[:notice] = 'Student account created successfully.'
-        redirect_to after_authentication_url
+        redirect_to student_dashboard_path
       else
+        Rails.logger.error(student.errors.full_messages)
         flash[:alert] = 'Failed to create student account.'
         render :new, status: :unprocessable_entity
       end
     when 'staff'
       staff =
         Staff.new(
-          email_address: params[:user][:email_address],
-          name: params[:user][:name],
+          email_address: params[:email_address],
+          name: params[:name],
           password: user_password,
           school_id: school_id
         )
       if staff.save
         start_new_session_for(staff)
         flash[:notice] = 'Staff account created successfully.'
-        redirect_to after_authentication_url
+        redirect_to staff_dashboard_path
       else
         flash[:alert] = 'Failed to create staff account.'
         render :new, status: :unprocessable_entity
@@ -82,10 +80,6 @@ class SignupController < ApplicationController
   end
 
   private
-
-  def user_params
-    params.require(:user).permit(:email_address, :password, :password_confirmation)
-  end
 
   def principal_params
     params.require(:principal).permit(

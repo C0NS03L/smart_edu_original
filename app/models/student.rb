@@ -24,7 +24,6 @@
 #
 class Student < ApplicationRecord
   belongs_to :school
-  belongs_to :user
   has_many :attendances, dependent: :destroy
   has_secure_password
   has_many :sessions, dependent: :destroy
