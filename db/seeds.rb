@@ -1,4 +1,3 @@
-# # db/seeds.rb
 # # This file contains seed data for development and testing
 
 # # Clear existing data to avoid duplicates
@@ -36,45 +35,42 @@
 # puts 'Creating users, principals, staff, and students...'
 
 # created_schools.each do |school|
-#   # Create some users for the school
-#   5.times do |i|
-#     # Create principal (one per school)
-#     if i == 0
-#       user =
-#         User.create!(
-#           email_address: "principal@#{school.name.downcase.gsub(' ', '')}.edu",
-#           password: 'password123',
-#           password_confirmation: 'password123',
-#           school: school
-#         )
+#   # Create principal (one per school)
+#   user =
+#     User.create!(
+#       email_address: "principal@#{school.name.downcase.gsub(' ', '')}.edu",
+#       password: 'password123',
+#       password_confirmation: 'password123',
+#       school: school
+#     )
 
-#       Principal.create!(
-#         name: "Principal #{school.name.split.first}",
-#         email_address: "principal@#{school.name.downcase.gsub(' ', '')}.edu",
+#   principal =
+#     Principal.create!(
+#       name: "Principal #{school.name.split.first}",
+#       email_address: "principal@#{school.name.downcase.gsub(' ', '')}.edu",
+#       password: 'password123',
+#       password_confirmation: 'password123',
+#       school: school,
+#       phone_number: '+1 555-555-5555'
+#     )
+
+#   # Create staff members
+#   2.times do |i|
+#     user =
+#       User.create!(
+#         email_address: "teacher#{i + 1}@#{school.name.downcase.gsub(' ', '')}.edu",
 #         password: 'password123',
 #         password_confirmation: 'password123',
-#         school: school,
-#         user_id: user.id
+#         school: school
 #       )
-#       # Create staff
-#     elsif i < 3
-#       user =
-#         User.create!(
-#           email_address: "teacher#{i}@#{school.name.downcase.gsub(' ', '')}.edu",
-#           password: 'password123',
-#           password_confirmation: 'password123',
-#           school: school
-#         )
 
-#       Staff.create!(
-#         name: "Teacher #{i} #{school.name.split.first}",
-#         email_address: "teacher#{i}@#{school.name.downcase.gsub(' ', '')}.edu",
-#         password: 'password123',
-#         password_confirmation: 'password123',
-#         school: school,
-#         user_id: user.id
-#       )
-#     end
+#     Staff.create!(
+#       name: "Teacher #{i + 1} #{school.name.split.first}",
+#       email_address: "teacher#{i + 1}@#{school.name.downcase.gsub(' ', '')}.edu",
+#       password: 'password123',
+#       password_confirmation: 'password123',
+#       school: school
+#     )
 #   end
 
 #   # Create students
@@ -93,18 +89,18 @@
 #       email_address: "student#{i}@#{school.name.downcase.gsub(' ', '')}.edu",
 #       password: 'password123',
 #       password_confirmation: 'password123',
-#       school: school,
-#       user_id: user.id
+#       school: school
 #     )
 #   end
 
-#   # Create enrollment codes
+#   # Create enrollment codes with new account_type field
 #   EnrollmentCode.create!(
 #     hashed_code: Digest::SHA256.hexdigest("teacher-#{school.id}"),
 #     role: 'teacher',
 #     school_id: school.id,
 #     usage_limit: 10,
-#     usage_count: 0
+#     usage_count: 0,
+#     account_type: 'staff'
 #   )
 
 #   EnrollmentCode.create!(
@@ -112,7 +108,8 @@
 #     role: 'student',
 #     school_id: school.id,
 #     usage_limit: 50,
-#     usage_count: 0
+#     usage_count: 0,
+#     account_type: 'student'
 #   )
 # end
 
@@ -120,29 +117,39 @@
 # puts 'Creating attendance records...'
 # Student.all.each do |student|
 #   staff = Staff.where(school: student.school).sample
+#   # Find the corresponding user for the staff
+#   user = User.find_by(email_address: staff.email_address)
 
 #   # Create 5 attendance records per student
 #   5.times do |i|
 #     Attendance.create!(
 #       student: student,
 #       timestamp: Date.today - i.days - rand(1..5).hours,
-#       user_id: staff.user_id,
+#       user_id: user.id,
 #       school: student.school
 #     )
 #   end
 # end
 
-# # Create sessions
-# # puts 'Creating sessions...'
-# # User
-# #   .limit(10)
-# #   .each do |user|
-# #     Session.create!(
-# #       user: user,
-# #       ip_address: "192.168.1.#{rand(1..255)}",
-# #       user_agent: %w[Chrome/112.0 Firefox/98.0 Safari/15.0].sample
-# #     )
-# #   end
+# # Create sessions with new fields
+# puts 'Creating sessions...'
+# User
+#   .limit(10)
+#   .each do |user|
+#     # Determine which type of user this is
+#     principal = Principal.find_by(email_address: user.email_address)
+#     staff = Staff.find_by(email_address: user.email_address)
+#     student = Student.find_by(email_address: user.email_address)
+
+#     Session.create!(
+#       user: user,
+#       ip_address: "192.168.1.#{rand(1..255)}",
+#       user_agent: %w[Chrome/112.0 Firefox/98.0 Safari/15.0].sample,
+#       principal: principal,
+#       staff: staff,
+#       student: student
+#     )
+#   end
 
 # puts 'Seed completed! Created:'
 # puts "- #{School.count} schools"
@@ -172,8 +179,6 @@
 
 # puts "\nEnrollment Codes:"
 # School.all.each do |school|
-#   # teacher_code = EnrollmentCode.find_by(school: school, role: 'teacher')
-#   # student_code = EnrollmentCode.find_by(school: school, role: 'student')
 #   puts "- #{school.name}:"
 #   puts "  - Teacher code: #{Digest::SHA256.hexdigest("teacher-#{school.id}")}"
 #   puts "  - Student code: #{Digest::SHA256.hexdigest("student-#{school.id}")}"

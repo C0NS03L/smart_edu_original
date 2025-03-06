@@ -4,7 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  address    :string
-#  country    :string           not null
+#  country    :string           default("Unknown"), not null
 #  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

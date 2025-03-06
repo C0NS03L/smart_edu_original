@@ -33,4 +33,16 @@ class SessionsController < ApplicationController
     end
     nil
   end
+
+  def after_authentication_url
+    if Current.session.principal
+      principal_dashboard_path
+    elsif Current.session.staff
+      staff_dashboard_path # Assuming this path helper exists
+    elsif Current.session.student
+      student_dashboard_path # Assuming this path helper exists
+    else
+      root_path # Fallback to root path if none of the above
+    end
+  end
 end
