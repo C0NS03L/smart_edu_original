@@ -51,7 +51,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_103033) do
     t.string 'address'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.string 'country', null: false
+    t.string 'country', default: 'Unknown', null: false
   end
 
   create_table 'sessions', force: :cascade do |t|
@@ -123,4 +123,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_103033) do
   add_foreign_key 'sessions', 'users'
   add_foreign_key 'staffs', 'schools'
   add_foreign_key 'students', 'schools'
+  add_foreign_key 'users', 'schools'
 end

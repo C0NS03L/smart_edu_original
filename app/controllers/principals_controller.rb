@@ -4,7 +4,7 @@ class PrincipalsController < ApplicationController
 
   def generate_staff_code
     usage_limit = params[:usage_limit].to_i
-    school_id = Current.session.principal.school_id
+    school_id = Current.session.principal.school.id
 
     if usage_limit > 0
       codes = Principal.generate_enrollment_code('staff')
@@ -25,7 +25,13 @@ class PrincipalsController < ApplicationController
 
   def generate_student_code
     usage_limit = params[:usage_limit].to_i
-    school_id = Current.session.principal.school_id
+
+    # Print current session info for debugging purposes
+    Rails.logger.info("Current session info: #{Current.session.inspect}")
+    Rails.logger.info("Principal: #{Current.session.principal.inspect}")
+    Rails.logger.info("School: #{Current.session.principal.school.inspect}")
+
+    school_id = Current.session.principal.school.id
 
     if usage_limit > 0
       codes = Principal.generate_enrollment_code('student')
