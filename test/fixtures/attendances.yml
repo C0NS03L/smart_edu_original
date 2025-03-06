@@ -18,6 +18,7 @@
 #
 # Foreign Keys
 #
+#  school_id   (school_id => schools.id)
 #  student_id  (student_id => students.id)
 #  user_id     (user_id => users.id)
 #
@@ -47,6 +48,7 @@ attendance_<%= i %>:
   student_id: <%= i %>
   timestamp: <%= Time.now - (i * 60) %> # Adding a minute difference for each record
   user_id: <%= i %>
+  school_id: 1
 <% end %>
 
 # attendance_1:

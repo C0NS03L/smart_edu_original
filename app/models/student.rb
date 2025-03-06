@@ -40,11 +40,11 @@ class Student < ApplicationRecord
   private
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[id name uid created_at updated_at]
+    %w[id name uid created_at updated_at school_id]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    []
+    %w[school attendances]
   end
 
   def set_default_uid
