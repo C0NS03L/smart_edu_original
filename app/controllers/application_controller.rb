@@ -3,3 +3,13 @@ class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   # allow_browser versions: :modern
 end
+
+module SchoolScopable
+  extend ActiveSupport::Concern
+
+  private
+
+  def scope_to_school(relation)
+    relation.where(school: current_school.id)
+  end
+end

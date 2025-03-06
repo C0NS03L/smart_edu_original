@@ -17,6 +17,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_103033) do
     t.integer 'user_id', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.integer 'school_id', null: false
+    t.index ['school_id'], name: 'index_attendances_on_school_id'
     t.index ['student_id'], name: 'index_attendances_on_student_id'
     t.index ['user_id'], name: 'index_attendances_on_user_id'
   end
@@ -106,9 +108,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_103033) do
     t.string 'password_digest', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.integer 'school_id', null: false
     t.index ['email_address'], name: 'index_users_on_email_address', unique: true
+    t.index ['school_id'], name: 'index_users_on_school_id'
   end
 
+  add_foreign_key 'attendances', 'schools'
   add_foreign_key 'attendances', 'students'
   add_foreign_key 'attendances', 'users'
   add_foreign_key 'principals', 'schools'

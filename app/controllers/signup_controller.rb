@@ -3,7 +3,9 @@ class SignupController < ApplicationController
   skip_before_action :require_authentication, only: %i[new_principal create_principal]
 
   def new
-    @role = params[:role]
+    @role = params[:role] || ''
+    @user = User.new
+    @schools = School.order(:name)
   end
 
   def create
@@ -58,6 +60,7 @@ class SignupController < ApplicationController
       end
     else
       flash[:alert] = 'Invalid account type.'
+      @schools = School.order(:name)
       render :new, status: :unprocessable_entity
     end
   end
@@ -81,12 +84,24 @@ class SignupController < ApplicationController
 
   private
 
+  def user_params
+    params.require(:user).permit(:email_address, :password, :password_confirmation, :school_id)
+  end
+
+  def student_params
+    params.require(:student).permit(:name, :school_id, :email_address, :password, :password_confirmation)
+  end
+
+  def staff_params
+    params.require(:staff).permit(:name, :school_id, :email_address, :password, :password_confirmation)
+  end
+
   def principal_params
     params.require(:principal).permit(
       :school_id,
       :name,
       :email_address,
-      :phone_number,
+      # :phone_number,
       :password,
       :password_confirmation,
       school_attributes: %i[name address country]
