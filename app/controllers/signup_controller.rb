@@ -137,7 +137,7 @@ class SignupController < ApplicationController
       :school_id,
       :name,
       :email_address,
-      :phone_number,
+      # :phone_number,
       :password,
       :password_confirmation
     )

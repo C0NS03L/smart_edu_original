@@ -26,13 +26,15 @@ user_<%= i %>:
   id: <%= i %>
   email_address: user<%= i %>@example.com
   password_digest: <%= password_digest %>
+  school_id: 1
 <% end %>
 
 one:
   id: 1000
   email_address: one@example.com
   password_digest: <%= password_digest %>
-  school: school_1
+  school_id: 1
+
 
 # user_1:
 #   email_address: one@example.com
