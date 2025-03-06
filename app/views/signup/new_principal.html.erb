@@ -1,0 +1,46 @@
+<%= render 'shared/single_box' do %>
+  <h1 class="break-words pb-4 text-center text-3xl font-bold">
+    <%= render 'shared/logo_text' %> <span class="inline-block">Sign Up as Principal</span>
+  </h1>
+  <% if @principal.errors.any? %>
+    <div class="alert alert-error mt-4">
+      <ul>
+        <% @principal.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form_with(
+        model: @principal,
+        url: create_principal_signup_path,
+        class: 'form-control mt-4',
+        html: {
+          autocomplete: 'on'
+        }
+      ) do |form| %>
+    <%= form.text_field :name, class: 'input input-bordered w-full mt-2', placeholder: 'Name', required: true, autofocus: true %>
+    <%# TODO: figure out school id/enrollment how it works etc %>
+    <%= form.hidden_field :school_id, value: 1 %>
+    <%= form.email_field :email_address,
+                         class: 'input input-bordered w-full mt-2',
+                         placeholder: 'Email',
+                         required: true,
+                         autocomplete: 'username' %>
+    <%= form.telephone_field :phone_number,
+                             class: 'input input-bordered w-full mt-2',
+                             placeholder: 'Phone Number',
+                             required: true %>
+    <%= form.password_field :password,
+                            class: 'input input-bordered w-full mt-2',
+                            placeholder: 'Password',
+                            required: true,
+                            autocomplete: 'new-password' %>
+    <%= form.password_field :password_confirmation,
+                            class: 'input input-bordered w-full mt-2',
+                            placeholder: 'Confirm Password',
+                            autocomplete: 'new-password' %>
+    <%= form.submit 'Sign Up as Principal', class: 'btn btn-primary w-full mt-2' %>
+  <% end %>
+  <%= link_to 'Back to Sign Up', choose_role_path, class: 'btn btn-ghost w-full mt-2' %>
+<% end %>

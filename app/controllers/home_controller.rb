@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   include SchoolScopable
-
+  # allow_unauthenticated_access only: %i[index]
   def index
     @student_count = scope_to_school(Student).count
     @attendance_count = scope_to_school(Attendance).count

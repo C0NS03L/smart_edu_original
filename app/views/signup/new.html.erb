@@ -1,6 +1,6 @@
 <%= render 'shared/single_box' do %>
   <h1 class="break-words pb-4 text-center text-3xl font-bold">
-    <%= render 'shared/logo_text' %> <span class="inline-block">Sign Up</span>
+    <%= render 'shared/logo_text' %> <span class="inline-block"></span>
   </h1>
   <% if @user.errors.any? %>
     <div class="alert alert-error mt-4">
@@ -12,6 +12,9 @@
     </div>
   <% end %>
   <%= form_with(model: @user, url: signup_index_path, class: 'form-control mt-4', html: { autocomplete: 'on' }) do |form| %>
+    <%# TODO: Make consistent header with principal %>
+    <h2 class="text-lg font-bold">Sign Up as <%= @role.capitalize %></h2>
+    <%= form.text_field :name, class: 'input input-bordered w-full mt-2', placeholder: 'Name', required: true, autofocus: true %>
     <%= form.email_field :email_address,
                          class: 'input input-bordered w-full mt-2',
                          placeholder: 'Email',
@@ -30,7 +33,12 @@
                             class: 'input input-bordered w-full mt-2',
                             placeholder: 'Confirm Password',
                             autocomplete: 'new-password' %>
+    <%= form.text_field :enrollment_code,
+                        class: 'input input-bordered w-full mt-2',
+                        placeholder: 'Enrollment Code',
+                        required: true %>
     <%= form.submit 'Sign Up', class: 'btn btn-primary w-full mt-2' %>
+    <%= form.hidden_field :role, value: @role %>
   <% end %>
-  <%= link_to 'Back to Sign In', new_session_path, class: 'btn btn-ghost' %>
+  <%= link_to 'Back to Role Selection', choose_role_path, class: 'btn btn-ghost' %>
 <% end %>

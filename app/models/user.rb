@@ -27,4 +27,10 @@ class User < ApplicationRecord
   validates :email_address, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, presence: true, length: { minimum: 8, maximum: 20 }
   validates :school, presence: true
+
+  def self.generate_enrollment_code
+    raw_code = SecureRandom.hex(8) # Generates a random 16-character string
+    hashed_code = Digest::SHA256.hexdigest(raw_code)
+    { raw_code: raw_code, hashed_code: hashed_code }
+  end
 end

@@ -21,16 +21,20 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky",
-    "setup": "bun install && husky install && bundle install && bin/rails tailwindcss:install"
+    "setup": "bun install && husky && bundle install && bin/rails tailwindcss:install"
   },
   "lint-staged": {
     "*.js": "prettier --write",
     "*.rb": [
+      "prettier --write",
       "bun exec 'bundle exec rubocop --autocorrect'",
       "bun exec 'brakeman --skip-libs --output /dev/null'"
     ],
     "*.html.erb": "prettier --write"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "smart_edu": "file:"
+  }
 }

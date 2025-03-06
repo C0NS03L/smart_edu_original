@@ -15,6 +15,7 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
     get new_student_url
     assert_response :success
   end
+
   # TODO: Fix this test,
   # School must exist
   # Password can't be blank

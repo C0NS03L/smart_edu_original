@@ -20,17 +20,28 @@
 #
 #  school_id  (school_id => schools.id)
 #
+
+<% for i in 1..40 do %>
+user_<%= i %>:
+  id: <%= i %>
+  email_address: user<%= i %>@example.com
+  password_digest: <%= password_digest %>
+<% end %>
+
 one:
+  id: 1000
   email_address: one@example.com
   password_digest: <%= password_digest %>
   school: school_1
 
-two:
-  email_address: two@example.com
-  password_digest: <%= password_digest %>
-  school: school_1
+# user_1:
+#   email_address: one@example.com
+#   password_digest: <%= password_digest %>
 
-three:
-  email_address: a@a.com
-  password_digest: <%= password_digest %>
-  school: school_1
+# user_2:
+#   email_address: two@example.com
+#   password_digest: <%= password_digest %>
+
+# user_3:
+#   email_address: three@example.com
+#   password_digest: <%= password_digest %>
