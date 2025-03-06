@@ -4,6 +4,7 @@ class SignupController < ApplicationController
   def new
     @role = params[:role] || ''
     @user = User.new
+    @schools = School.order(:name)
   end
 
   def create
@@ -81,6 +82,7 @@ class SignupController < ApplicationController
         render :new, status: :unprocessable_entity
       end
     else
+      @schools = School.order(:name)
       render :new, status: :unprocessable_entity
     end
   end
@@ -119,7 +121,7 @@ class SignupController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email_address, :password, :password_confirmation)
+    params.require(:user).permit(:email_address, :password, :password_confirmation, :school_id)
   end
 
   def student_params
@@ -135,7 +137,7 @@ class SignupController < ApplicationController
       :school_id,
       :name,
       :email_address,
-      :phone_number,
+      # :phone_number,
       :password,
       :password_confirmation
     )

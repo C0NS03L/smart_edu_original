@@ -19,7 +19,12 @@
                          class: 'input input-bordered w-full mt-2',
                          placeholder: 'Email',
                          autocomplete: 'username' %>
-    <%# TODO: Use daisyui validator for password %>
+    <%# = form.collection_select :school_id,
+                               @schools,
+                               :id,
+                               :name,
+                               { prompt: 'Select your school' },
+                               { class: 'select select-bordered w-full mt-2', required: true } %>
     <%= form.password_field :password,
                             class: 'input input-bordered w-full mt-2',
                             placeholder: 'Password',

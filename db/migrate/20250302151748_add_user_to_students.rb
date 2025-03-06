@@ -24,7 +24,8 @@ class AddUserToStudents < ActiveRecord::Migration[8.0]
             password: '12345678',
             password_confirmation: '12345678',
             created_at: '2025-03-04 17:57:00',
-            updated_at: '2025-03-04 17:57:00'
+            updated_at: '2025-03-04 17:57:00',
+            school_id: student.school_id
           )
 
         # Update the student with the new user

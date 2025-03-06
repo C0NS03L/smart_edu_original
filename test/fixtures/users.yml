@@ -9,10 +9,16 @@
 #  password_digest :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  school_id       :integer          not null
 #
 # Indexes
 #
 #  index_users_on_email_address  (email_address) UNIQUE
+#  index_users_on_school_id      (school_id)
+#
+# Foreign Keys
+#
+#  school_id  (school_id => schools.id)
 #
 
 <% for i in 1..40 do %>
@@ -20,12 +26,15 @@ user_<%= i %>:
   id: <%= i %>
   email_address: user<%= i %>@example.com
   password_digest: <%= password_digest %>
+  school_id: 1
 <% end %>
 
 one:
   id: 1000
   email_address: one@example.com
   password_digest: <%= password_digest %>
+  school_id: 1
+
 
 # user_1:
 #   email_address: one@example.com

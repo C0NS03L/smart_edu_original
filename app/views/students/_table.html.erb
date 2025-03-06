@@ -2,7 +2,8 @@
   <thead>
     <tr>
       <th></th>
-      <th><%= sort_link(@q, :id, 'ID') %></th>
+      <th></th>
+      <%# <th><%= sort_link(@q, :id, 'ID') </th> %>
       <th><%= sort_link(@q, :name, 'Name') %></th>
       <th><%= sort_link(@q, :uid, 'UID') %></th>
       <th>Actions</th>
@@ -12,7 +13,8 @@
     <% @students.each do |student| %>
       <tr>
         <td></td>
-        <td><%= student.id %></td>
+        <td></td>
+        <%# <td><%= student.id </td> %>
         <td><%= student.name %></td>
         <td><%= student.uid %></td>
         <td>

@@ -3,7 +3,8 @@ module Authentication
 
   included do
     before_action :require_authentication
-    helper_method :authenticated?
+    before_action :set_current_school
+    helper_method :authenticated?, :current_school
   end
 
   class_methods do
@@ -14,8 +15,28 @@ module Authentication
 
   private
 
+  def set_current_school
+    Current.school = Current.user&.school if authenticated?
+  end
+
+  def current_school
+    Current.school
+  end
+
+  def start_new_session_for(user)
+    user
+      .sessions
+      .create!(user_agent: request.user_agent, ip_address: request.remote_ip)
+      .tap do |session|
+        Current.session = session
+        Current.user = user
+        Current.school = user.school
+        cookies.signed.permanent[:session_id] = { value: session.id, httponly: true, same_site: :lax }
+      end
+  end
+
   def authenticated?
-    resume_session
+    resume_session.present?
   end
 
   def require_authentication
@@ -23,7 +44,14 @@ module Authentication
   end
 
   def resume_session
-    Current.session ||= find_session_by_cookie
+    return Current.session if Current.session
+
+    if (session = find_session_by_cookie)
+      Current.session = session
+      Current.user = session.user
+      Current.school = Current.user.school
+      session
+    end
   end
 
   def find_session_by_cookie
@@ -39,18 +67,9 @@ module Authentication
     session.delete(:return_to_after_authenticating) || root_url
   end
 
-  def start_new_session_for(user)
-    user
-      .sessions
-      .create!(user_agent: request.user_agent, ip_address: request.remote_ip)
-      .tap do |session|
-        Current.session = session
-        cookies.signed.permanent[:session_id] = { value: session.id, httponly: true, same_site: :lax }
-      end
-  end
-
   def terminate_session
-    Current.session.destroy
+    Current.session&.destroy
+    Current.reset
     cookies.delete(:session_id)
   end
 end
