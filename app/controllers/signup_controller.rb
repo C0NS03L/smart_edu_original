@@ -22,48 +22,44 @@ class SignupController < ApplicationController
       return
     end
 
-    @role = code_object.role
+    account_type = code_object.account_type
     school_id = code_object.school_id
 
-    @user = User.new(user_params)
-    if @user.save
-      start_new_session_for(@user)
-
-      case @role
-      when 'student'
-        student =
-          Student.new(
-            email_address: @user.email_address,
-            name: params[:user][:name],
-            user_id: @user.id,
-            password: user_password,
-            school_id: school_id
-          )
-        if student.save
-          redirect_to after_authentication_url
-        else
-          flash[:alert] = student.errors.full_messages.to_sentence
-          render :new, status: :unprocessable_entity
-        end
-      when 'staff'
-        staff =
-          Staff.new(
-            email_address: @user.email_address,
-            name: params[:user][:name],
-            user_id: @user.id,
-            password: user_password,
-            school_id: school_id
-          )
-        if staff.save
-          redirect_to after_authentication_url
-        else
-          flash[:alert] = staff.errors.full_messages.to_sentence
-          render :new, status: :unprocessable_entity
-        end
+    case account_type
+    when 'student'
+      student =
+        Student.new(
+          email_address: params[:user][:email_address],
+          name: params[:user][:name],
+          password: user_password,
+          school_id: school_id
+        )
+      if student.save
+        start_new_session_for(student)
+        flash[:notice] = 'Student account created successfully.'
+        redirect_to after_authentication_url
       else
+        flash[:alert] = 'Failed to create student account.'
+        render :new, status: :unprocessable_entity
+      end
+    when 'staff'
+      staff =
+        Staff.new(
+          email_address: params[:user][:email_address],
+          name: params[:user][:name],
+          password: user_password,
+          school_id: school_id
+        )
+      if staff.save
+        start_new_session_for(staff)
+        flash[:notice] = 'Staff account created successfully.'
+        redirect_to after_authentication_url
+      else
+        flash[:alert] = 'Failed to create staff account.'
         render :new, status: :unprocessable_entity
       end
     else
+      flash[:alert] = 'Invalid account type.'
       render :new, status: :unprocessable_entity
     end
   end

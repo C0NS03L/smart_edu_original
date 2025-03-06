@@ -27,4 +27,17 @@ class Staff < ApplicationRecord
   normalizes :email_address, with: ->(e) { e.strip.downcase }
   validates :email_address, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, presence: true, length: { minimum: 8, maximum: 20 }
+
+  def self.generate_enrollment_code(account_type)
+    prefix =
+      case account_type
+      when 'student'
+        'STU'
+      else
+        'GEN'
+      end
+    raw_code = "#{prefix}-#{SecureRandom.hex(4).upcase}"
+    hashed_code = Digest::SHA256.hexdigest(raw_code)
+    { raw_code: raw_code, hashed_code: hashed_code }
+  end
 end

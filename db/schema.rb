@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_05_212954) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_06_103033) do
   create_table 'attendances', force: :cascade do |t|
     t.integer 'student_id', null: false
     t.datetime 'timestamp'
@@ -29,6 +29,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_05_212954) do
     t.integer 'school_id'
     t.integer 'usage_limit'
     t.integer 'usage_count'
+    t.string 'account_type'
   end
 
   create_table 'principals', force: :cascade do |t|

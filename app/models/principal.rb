@@ -32,4 +32,19 @@ class Principal < ApplicationRecord
   validates :phone_number, presence: true
 
   accepts_nested_attributes_for :school
+
+  def self.generate_enrollment_code(account_type)
+    prefix =
+      case account_type
+      when 'student'
+        'STU'
+      when 'staff'
+        'STA'
+      else
+        'GEN'
+      end
+    raw_code = "#{prefix}-#{SecureRandom.hex(4).upcase}"
+    hashed_code = Digest::SHA256.hexdigest(raw_code)
+    { raw_code: raw_code, hashed_code: hashed_code }
+  end
 end

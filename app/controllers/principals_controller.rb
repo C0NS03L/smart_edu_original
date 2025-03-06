@@ -2,6 +2,48 @@ class PrincipalsController < ApplicationController
   def generate_code
   end
 
+  def generate_staff_code
+    usage_limit = params[:usage_limit].to_i
+    school_id = Current.session.principal.school_id
+
+    if usage_limit > 0
+      codes = Principal.generate_enrollment_code('staff')
+      EnrollmentCode.create!(
+        hashed_code: codes[:hashed_code],
+        account_type: 'staff',
+        school_id: school_id,
+        usage_count: 0,
+        usage_limit: usage_limit
+      )
+      flash[:notice] = "Staff Code Generated: #{codes[:raw_code]}"
+    else
+      flash[:alert] = 'Invalid number of accounts required.'
+    end
+
+    redirect_to generate_code_principal_path
+  end
+
+  def generate_student_code
+    usage_limit = params[:usage_limit].to_i
+    school_id = Current.session.principal.school_id
+
+    if usage_limit > 0
+      codes = Principal.generate_enrollment_code('student')
+      EnrollmentCode.create!(
+        hashed_code: codes[:hashed_code],
+        account_type: 'student',
+        school_id: school_id,
+        usage_count: 0,
+        usage_limit: usage_limit
+      )
+      flash[:notice] = "Student Code Generated: #{codes[:raw_code]}"
+    else
+      flash[:alert] = 'Invalid number of accounts required.'
+    end
+
+    redirect_to generate_code_principal_path
+  end
+
   def dashboard
   end
 
