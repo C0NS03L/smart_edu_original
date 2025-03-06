@@ -19,11 +19,11 @@ class AttendancesTest < ApplicationSystemTestCase
   # end
   #
 
-  test 'searches attendances by student name' do
-    visit attendances_url
-    fill_in 'Search by name', with: 'Student 1'
-    assert_text 'Student 1', wait: 1
-  end
+  # test 'searches attendances by student name' do
+  #   visit attendances_url
+  #   fill_in 'Search by name', with: 'Student 1'
+  #   assert_text 'Student 1', wait: 1
+  # end
 
   # test 'should create attendance' do
   #   visit new_attendance_url

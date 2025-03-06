@@ -25,13 +25,12 @@
 #  school_id  (school_id => schools.id)
 #
 
-<% for i in 1..40 do %>
+<% for i in 1..10 do %>
 student_<%=i%>:
   id: <%=i%>
   name: Student <%=i%>
   uid: UID_<%=i%>
   school_id: 1
-  user_id: <%=i%>
   email_address: student<%=i%>@example.com
   password_digest: <%= BCrypt::Password.create("password") %>
 <% end %>

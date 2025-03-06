@@ -25,7 +25,7 @@
 #  user_id     (user_id => users.id)
 #
 
-<% for i in 1..20 do %>
+<% for i in 1..10 do %>
 attendance_<%= i %>:
   student_id: <%= i %>
   timestamp: <%= Time.now - (i * 60) %> # Adding a minute difference for each record
