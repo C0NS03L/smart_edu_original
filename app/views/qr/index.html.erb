@@ -1,5 +1,7 @@
-<!-- include the library -->
+<!-- Include the necessary libraries -->
 <script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script>
+<script src="https://unpkg.com/@material-tailwind/html@latest/scripts/dialog.js"></script>
+
 <style>
   main {
     display: flex;
@@ -14,6 +16,11 @@
   #result {
     text-align: center;
     font-size: 1.5rem;
+    color: red;
+  }
+
+  #attendanceModal {
+    display: none;
   }
 </style>
 
@@ -22,50 +29,98 @@
   <div id="result"></div>
 </main>
 
+<!-- Modal -->
+<div
+  id="attendanceModal"
+  class="inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-300"
+  style="display: none;"
+>
+  <div class="relative m-4 w-2/5 min-w-[40%] max-w-[40%] rounded-lg bg-white p-4 shadow-sm">
+    <div class="flex items-center pb-4 text-xl font-medium text-slate-800">Attendance Logged</div>
+    <div class="relative border-t border-slate-200 py-4 font-light leading-normal text-slate-600">
+      Scanned Student: <span id="studentName"></span><br />
+      Timestamp: <span id="attendanceTimestamp"></span>
+    </div>
+    <div class="flex justify-end pt-4">
+      <button
+        class="rounded-md border border-transparent px-4 py-2 text-sm text-slate-600 transition-all hover:bg-slate-100"
+        onclick="restartScanner()"
+      >
+        Scan Again
+      </button>
+      <button
+        class="ml-2 rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm text-white shadow-md transition-all hover:bg-green-700"
+        onclick="goToDashboard()"
+      >
+        Back to Dashboard
+      </button>
+    </div>
+  </div>
+</div>
+
 <script>
-  const scanner = new Html5QrcodeScanner('reader', {
-    qrbox: {
-      width: 250,
-      height: 250
-    },
-    fps: 20
+  let scanner
+
+  document.addEventListener('DOMContentLoaded', function () {
+    initScanner()
   })
 
-  scanner.render(onScanSuccess, onScanError)
+  function initScanner() {
+    scanner = new Html5QrcodeScanner('reader', {
+      qrbox: { width: 250, height: 250 },
+      fps: 20
+    })
 
-  function onScanSuccess(decodedText, decodedResult) {
-    console.log('Decoded text: ', decodedText)
+    scanner.render(onScanSuccess, onScanError)
+  }
+
+  function onScanSuccess(decodedText) {
+    console.log('Decoded text:', decodedText)
+
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
+    if (!csrfToken) {
+      console.error('CSRF token not found!')
+      document.getElementById('result').innerText = 'Error: CSRF token missing.'
+      return
+    }
 
     fetch('/attendances/qr_attendance', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+        'X-CSRF-Token': csrfToken
       },
       body: JSON.stringify({ attendance: { student_uid: decodedText } })
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.json()
-        } else {
-          return response.text().then((text) => {
-            throw new Error(text)
-          })
-        }
-      })
+      .then((response) => response.json())
       .then((data) => {
-        document.getElementById('result').innerText = data.message
+        if (data.status === 'success') {
+          document.getElementById('studentName').innerText = data.student_name
+          document.getElementById('attendanceTimestamp').innerText = data.timestamp
+          document.getElementById('attendanceModal').style.display = 'grid'
+          scanner.clear() // Stop scanner
+          document.getElementById('reader').style.display = 'none'
+        } else {
+          throw new Error(data.message)
+        }
       })
       .catch((error) => {
         console.error('Error:', error)
-        document.getElementById('result').innerText = 'Error recording attendance: ' + error.message
+        document.getElementById('result').innerText = 'Error: ' + error.message
       })
-
-    scanner.clear()
-    document.getElementById('reader').remove()
   }
 
   function onScanError(error) {
-    console.error('Scan error:', error)
+    console.warn('Scan error:', error)
+  }
+
+  function restartScanner() {
+    document.getElementById('attendanceModal').style.display = 'none'
+    document.getElementById('reader').style.display = 'block'
+    initScanner()
+  }
+
+  function goToDashboard() {
+    window.location.href = '/home/index' // Change URL if necessary
   }
 </script>

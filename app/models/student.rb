@@ -26,7 +26,7 @@
 class Student < ApplicationRecord
   belongs_to :school
   belongs_to :user
-  has_many :attendances, dependent: :destroy
+  has_many :attendances, dependent: :delete_all
   has_secure_password
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }

@@ -6,7 +6,7 @@ class AttendancesController < ApplicationController
   # GET /attendances or /attendances.json
   #
   def index
-    @q = scope_to_school(Attendance).includes(:student).ransack(params[:q])
+    @q = scope_to_school(Attendance).includes(:student).where(students: { discarded_at: nil }).ransack(params[:q])
     @pagy, @attendances = pagy(@q.result)
     respond_to do |format|
       format.html
@@ -52,16 +52,28 @@ class AttendancesController < ApplicationController
     student = Student.find_by(uid: params[:attendance][:student_uid])
     # log the student_uid
     logger.info("Student UID: #{params[:attendance][:student_uid]}")
+
     if student
-      @attendance = student.attendances.new(user_id: Current.user.id, timestamp: Time.zone.now)
-      if @attendance.save
-        render json: { status: 'success', message: 'Attendance recorded' }, status: :created
+      if student.school_id == current_school.id
+        @attendance =
+          student.attendances.new(user_id: Current.user.id, timestamp: Time.zone.now, school_id: current_school.id)
+        if @attendance.save
+          render json: {
+                   status: 'success',
+                   message: 'Attendance recorded',
+                   student_name: student.name,
+                   timestamp: @attendance.timestamp
+                 },
+                 status: :created
+        else
+          render json: {
+                   status: 'error',
+                   message: @attendance.errors.full_messages.join(', ')
+                 },
+                 status: :unprocessable_entity
+        end
       else
-        render json: {
-                 status: 'error',
-                 message: @attendance.errors.full_messages.join(', ')
-               },
-               status: :unprocessable_entity
+        render json: { status: 'error', message: 'Student belongs to a different school' }, status: :forbidden
       end
     else
       render json: { status: 'error', message: 'Student not found' }, status: :not_found
