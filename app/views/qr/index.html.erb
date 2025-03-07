@@ -19,7 +19,8 @@
     color: red;
   }
 
-  #attendanceModal {
+  #attendanceModal,
+  #failModal {
     display: none;
   }
 </style>
@@ -29,7 +30,7 @@
   <div id="result"></div>
 </main>
 
-<!-- Modal -->
+<!-- Success Modal -->
 <div
   id="attendanceModal"
   class="inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-300"
@@ -50,6 +51,34 @@
       </button>
       <button
         class="ml-2 rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm text-white shadow-md transition-all hover:bg-green-700"
+        onclick="goToDashboard()"
+      >
+        Back to Dashboard
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Fail Modal -->
+<div
+  id="failModal"
+  class="inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-300"
+  style="display: none;"
+>
+  <div class="relative m-4 w-2/5 min-w-[40%] max-w-[40%] rounded-lg bg-white p-4 shadow-sm">
+    <div class="flex items-center pb-4 text-xl font-medium text-slate-800">Attendance Failed</div>
+    <div class="relative border-t border-slate-200 py-4 font-light leading-normal text-slate-600">
+      Error: <span id="errorMessage"></span>
+    </div>
+    <div class="flex justify-end pt-4">
+      <button
+        class="rounded-md border border-transparent px-4 py-2 text-sm text-slate-600 transition-all hover:bg-slate-100"
+        onclick="restartScanner()"
+      >
+        Try Again
+      </button>
+      <button
+        class="ml-2 rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm text-white shadow-md transition-all hover:bg-red-700"
         onclick="goToDashboard()"
       >
         Back to Dashboard
@@ -106,7 +135,10 @@
       })
       .catch((error) => {
         console.error('Error:', error)
-        document.getElementById('result').innerText = 'Error: ' + error.message
+        document.getElementById('errorMessage').innerText = error.message
+        document.getElementById('failModal').style.display = 'grid'
+        scanner.clear() // Stop scanner
+        document.getElementById('reader').style.display = 'none'
       })
   }
 
@@ -116,6 +148,7 @@
 
   function restartScanner() {
     document.getElementById('attendanceModal').style.display = 'none'
+    document.getElementById('failModal').style.display = 'none'
     document.getElementById('reader').style.display = 'block'
     initScanner()
   }
