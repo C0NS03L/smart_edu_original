@@ -20,5 +20,5 @@ Rails.application.routes.draw do
 
   get 'up' => 'rails/health#show', :as => 'rails_health_check'
   root 'home#index'
-  get 'qr', to: 'qr#index'
+  get 'qr', to: 'qr#index', as: 'qr_index'
 end
