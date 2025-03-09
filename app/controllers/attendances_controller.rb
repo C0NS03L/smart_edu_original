@@ -16,6 +16,7 @@ class AttendancesController < ApplicationController
 
   # GET /attendances/1 or /attendances/1.json
   def show
+    # We already have get the attendance record in the before_action
   end
 
   # GET /attendances/new
@@ -31,6 +32,7 @@ class AttendancesController < ApplicationController
 
   # GET /attendances/1/edit
   def edit
+    # We can't edit attendance records
   end
 
   # POST /attendances or /attendances.json

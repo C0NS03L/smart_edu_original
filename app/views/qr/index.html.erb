@@ -1,6 +1,7 @@
 <!-- Include the necessary libraries -->
 
 <head>
+  <title>QR Scanner</title>
   <meta name="csrf-token" content="<%= form_authenticity_token %>" />
 </head>
 <script
@@ -61,12 +62,12 @@
 
     <!-- Back to Home Button -->
     <div class="mt-12">
-      <a
+      <button
         class="inline-block rounded-lg bg-gray-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
         onclick="restartScanner()"
       >
         Scan Again
-      </a>
+      </button>
       <a
         href="/home/index"
         class="inline-block rounded-lg bg-green-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
@@ -93,12 +94,12 @@
 
     <!-- Back to Home Button -->
     <div class="mt-12">
-      <a
+      <button
         class="inline-block rounded-lg bg-gray-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
         onclick="restartScanner()"
       >
         Scan Again
-      </a>
+      </button>
       <a
         href="/home/index"
         class="inline-block rounded-lg bg-green-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
