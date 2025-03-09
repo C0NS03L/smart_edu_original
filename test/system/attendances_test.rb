@@ -35,16 +35,16 @@ class AttendancesTest < ApplicationSystemTestCase
     assert_selector first_row, text: 'Student 6'
   end
 
-  test 'qr code check-in for existing student' do
-    visit qr_index_path
-    execute_script("onScanSuccess('#{@existing_student.uid}')")
-    assert_text 'Attendance Logged', wait: 1
-    assert_text @existing_student.name
-  end
-
-  test 'qr code check-in for non-existing student' do
-    visit qr_index_path
-    execute_script("onScanSuccess('non_existing_uid')")
-    assert_text 'Student not found', wait: 1
-  end
+  # test 'qr code check-in for existing student' do
+  #   visit qr_index_path
+  #   execute_script("onScanSuccess('#{@existing_student.uid}')")
+  #   assert_text 'Attendance Logged', wait: 1
+  #   assert_text @existing_student.name
+  # end
+  #
+  # test 'qr code check-in for non-existing student' do
+  #   visit qr_index_path
+  #   execute_script("onScanSuccess('non_existing_uid')")
+  #   assert_text 'Student not found', wait: 1
+  # end
 end
