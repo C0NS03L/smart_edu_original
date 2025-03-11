@@ -8,8 +8,6 @@
 #  name            :string
 #  password_digest :string
 #  uid             :string           not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
 #  school_id       :integer          not null
 #  user_id         :integer          not null
 #
@@ -28,7 +26,7 @@
 class Student < ApplicationRecord
   belongs_to :school
   belongs_to :user
-  has_many :attendances, dependent: :destroy
+  has_many :attendances, dependent: :delete_all
   has_secure_password
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
@@ -44,6 +42,7 @@ class Student < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     %w[id name uid created_at updated_at school_id]
   end
+
   def self.ransackable_associations(auth_object = nil)
     %w[school attendances]
   end

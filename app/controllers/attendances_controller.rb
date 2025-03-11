@@ -6,7 +6,7 @@ class AttendancesController < ApplicationController
   # GET /attendances or /attendances.json
   #
   def index
-    @q = scope_to_school(Attendance).includes(:student).ransack(params[:q])
+    @q = scope_to_school(Attendance).includes(:student).where(students: { discarded_at: nil }).ransack(params[:q])
     @pagy, @attendances = pagy(@q.result)
     respond_to do |format|
       format.html
@@ -16,6 +16,7 @@ class AttendancesController < ApplicationController
 
   # GET /attendances/1 or /attendances/1.json
   def show
+    # We already have get the attendance record in the before_action
   end
 
   # GET /attendances/new
@@ -31,6 +32,7 @@ class AttendancesController < ApplicationController
 
   # GET /attendances/1/edit
   def edit
+    # We can't edit attendance records
   end
 
   # POST /attendances or /attendances.json
@@ -42,6 +44,41 @@ class AttendancesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to new_attendance_path(request.parameters) } # For normal page loads
       format.turbo_stream { redirect_to new_attendance_path(request.parameters) } # For Turbo-powered live updates
+      # console log the recorded uid
+      logger.info("Recorded attendance for student with uid: #{p[:student_id]}")
+    end
+  end
+
+  # POST /attendances/qr_attendance
+  def qr_attendance
+    student = Student.find_by(uid: params[:attendance][:student_uid])
+    # log the student_uid
+    logger.info("Student UID: #{params[:attendance][:student_uid]}")
+
+    if student
+      if student.school_id == current_school.id
+        @attendance =
+          student.attendances.new(user_id: Current.user.id, timestamp: Time.zone.now, school_id: current_school.id)
+        if @attendance.save
+          render json: {
+                   status: 'success',
+                   message: 'Attendance recorded',
+                   student_name: student.name,
+                   timestamp: @attendance.timestamp
+                 },
+                 status: :created
+        else
+          render json: {
+                   status: 'error',
+                   message: @attendance.errors.full_messages.join(', ')
+                 },
+                 status: :unprocessable_entity
+        end
+      else
+        render json: { status: 'error', message: 'Student belongs to a different school' }, status: :forbidden
+      end
+    else
+      render json: { status: 'error', message: 'Student not found' }, status: :not_found
     end
   end
 

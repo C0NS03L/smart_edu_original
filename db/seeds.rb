@@ -1,6 +1,4 @@
-# # db/seeds.rb
 # # This file contains seed data for development and testing
-
 # # Clear existing data to avoid duplicates
 # puts 'Cleaning database...'
 # Session.destroy_all
@@ -12,7 +10,6 @@
 # User.destroy_all
 # EnrollmentCode.destroy_all
 # School.destroy_all
-
 # # Create Schools
 # puts 'Creating schools...'
 # schools = [
@@ -20,9 +17,7 @@
 #   { name: 'Washington Academy', address: '456 Learning Ave, Washington', country: 'USA' },
 #   { name: 'Kennedy Institute', address: '789 Knowledge Blvd, Kennedy', country: 'Canada' }
 # ]
-
 # created_schools = schools.map { |school| School.create!(school) }
-
 # # Create System Admin
 # puts 'Creating system admin...'
 # SystemAdmin.create!(
@@ -31,10 +26,8 @@
 #   password: 'password123',
 #   password_confirmation: 'password123'
 # )
-
 # # Create Users, Principals, Staff and Students for each school
 # puts 'Creating users, principals, staff, and students...'
-
 # created_schools.each do |school|
 #   # Create some users for the school
 #   5.times do |i|
@@ -47,7 +40,6 @@
 #           password_confirmation: 'password123',
 #           school: school
 #         )
-
 #       Principal.create!(
 #         name: "Principal #{school.name.split.first}",
 #         email_address: "principal@#{school.name.downcase.gsub(' ', '')}.edu",
@@ -65,7 +57,6 @@
 #           password_confirmation: 'password123',
 #           school: school
 #         )
-
 #       Staff.create!(
 #         name: "Teacher #{i} #{school.name.split.first}",
 #         email_address: "teacher#{i}@#{school.name.downcase.gsub(' ', '')}.edu",
@@ -76,7 +67,6 @@
 #       )
 #     end
 #   end
-
 #   # Create students
 #   10.times do |i|
 #     user =
@@ -86,7 +76,6 @@
 #         password_confirmation: 'password123',
 #         school: school
 #       )
-
 #     Student.create!(
 #       name: "Student #{i}",
 #       uid: "S#{school.id}#{format('%03d', i)}",
@@ -97,7 +86,6 @@
 #       user_id: user.id
 #     )
 #   end
-
 #   # Create enrollment codes
 #   EnrollmentCode.create!(
 #     hashed_code: Digest::SHA256.hexdigest("teacher-#{school.id}"),
@@ -106,7 +94,6 @@
 #     usage_limit: 10,
 #     usage_count: 0
 #   )
-
 #   EnrollmentCode.create!(
 #     hashed_code: Digest::SHA256.hexdigest("student-#{school.id}"),
 #     role: 'student',
@@ -115,12 +102,10 @@
 #     usage_count: 0
 #   )
 # end
-
 # # Create attendance records
 # puts 'Creating attendance records...'
 # Student.all.each do |student|
 #   staff = Staff.where(school: student.school).sample
-
 #   # Create 5 attendance records per student
 #   5.times do |i|
 #     Attendance.create!(
@@ -131,7 +116,6 @@
 #     )
 #   end
 # end
-
 # # Create sessions
 # # puts 'Creating sessions...'
 # # User
@@ -143,7 +127,6 @@
 # #       user_agent: %w[Chrome/112.0 Firefox/98.0 Safari/15.0].sample
 # #     )
 # #   end
-
 # puts 'Seed completed! Created:'
 # puts "- #{School.count} schools"
 # puts "- #{SystemAdmin.count} system admins"
@@ -154,22 +137,16 @@
 # puts "- #{EnrollmentCode.count} enrollment codes"
 # puts "- #{Attendance.count} attendance records"
 # puts "- #{Session.count} sessions"
-
 # # Print login details for all users
 # puts "\nLogin Details:"
 # puts "=============\n"
-
 # puts 'System Admin: admin@smartedu.com / password123'
-
 # puts "\nPrincipals:"
 # Principal.all.each { |principal| puts "- #{principal.name}: #{principal.email_address} / password123" }
-
 # puts "\nStaff:"
 # Staff.all.each { |staff| puts "- #{staff.name}: #{staff.email_address} / password123" }
-
 # puts "\nStudents (sample of 5):"
 # Student.limit(5).each { |student| puts "- #{student.name}: #{student.email_address} / password123" }
-
 # puts "\nEnrollment Codes:"
 # School.all.each do |school|
 #   # teacher_code = EnrollmentCode.find_by(school: school, role: 'teacher')

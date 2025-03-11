@@ -3,6 +3,7 @@ require 'application_system_test_case'
 class AttendancesTest < ApplicationSystemTestCase
   setup do
     @attendance = attendances(:attendance_1)
+    @existing_student = students(:student_1)
     login
   end
 
@@ -33,4 +34,17 @@ class AttendancesTest < ApplicationSystemTestCase
     first_row = 'table#latest-attendances tbody tr:first-of-type td:first-of-type'
     assert_selector first_row, text: 'Student 6'
   end
+
+  # test 'qr code check-in for existing student' do
+  #   visit qr_index_path
+  #   execute_script("onScanSuccess('#{@existing_student.uid}')")
+  #   assert_text 'Attendance Logged', wait: 1
+  #   assert_text @existing_student.name
+  # end
+  #
+  # test 'qr code check-in for non-existing student' do
+  #   visit qr_index_path
+  #   execute_script("onScanSuccess('non_existing_uid')")
+  #   assert_text 'Student not found', wait: 1
+  # end
 end
