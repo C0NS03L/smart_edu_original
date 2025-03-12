@@ -11,6 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2025_03_06_103033) do
+
   create_table 'attendances', force: :cascade do |t|
     t.integer 'student_id', null: false
     t.datetime 'timestamp'
@@ -41,6 +42,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_103033) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.string 'name', null: false
+
+    t.integer 'user_id', null: false
     t.string 'phone_number'
     t.index ['email_address'], name: 'index_principals_on_email_address', unique: true
     t.index ['school_id'], name: 'index_principals_on_school_id'
@@ -83,8 +86,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_103033) do
   create_table 'students', force: :cascade do |t|
     t.string 'name'
     t.string 'uid', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
     t.datetime 'discarded_at'
     t.integer 'school_id', null: false
     t.string 'email_address'
@@ -106,6 +107,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_103033) do
   create_table 'users', force: :cascade do |t|
     t.string 'email_address', null: false
     t.string 'password_digest', null: false
+    t.boolean 'is_active', default: true
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.integer 'school_id', null: false
