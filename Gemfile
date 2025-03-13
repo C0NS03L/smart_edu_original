@@ -82,3 +82,5 @@ gem 'faker', '~> 3.5'
 gem 'discard', '~> 1.4'
 
 gem 'pry-byebug', '~> 3.10'
+
+gem 'omise'
