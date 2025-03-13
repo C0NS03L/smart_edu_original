@@ -41,8 +41,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_103033) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.string 'name', null: false
-
-    t.integer 'user_id', null: false
     t.string 'phone_number'
     t.index ['email_address'], name: 'index_principals_on_email_address', unique: true
     t.index ['school_id'], name: 'index_principals_on_school_id'

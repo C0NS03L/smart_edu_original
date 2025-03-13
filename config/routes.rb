@@ -26,5 +26,8 @@ Rails.application.routes.draw do
   post 'set_role', to: 'signup#set_role', as: 'set_role'
 
   root 'home#index'
+  resources :charge
+  get 'subscriptions', to: 'subscriptions#index'
+  post 'charge', to: 'charge#create'
   get 'qr', to: 'qr#index', as: 'qr_index'
 end
