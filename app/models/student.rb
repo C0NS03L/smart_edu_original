@@ -8,6 +8,8 @@
 #  name            :string
 #  password_digest :string
 #  uid             :string           not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #  school_id       :integer          not null
 #
 # Indexes
