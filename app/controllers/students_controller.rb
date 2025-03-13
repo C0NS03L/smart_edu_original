@@ -86,4 +86,7 @@ class StudentsController < ApplicationController
   def student_params
     params.require(:student).permit(:name).merge(school_id: current_school.id)
   end
+
+  def dashboard
+  end
 end

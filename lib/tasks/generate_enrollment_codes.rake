@@ -1,39 +1,49 @@
 namespace :enrollment do
-  def generate_enrollment_codes(role, count, school_id)
-    count.times do
-      codes = User.generate_enrollment_code
-      puts "#{role.capitalize} Raw Code: #{codes[:raw_code]}, Hashed Code: #{codes[:hashed_code]}"
-      EnrollmentCode.create!(hashed_code: codes[:hashed_code], role: role, school_id: school_id, usage_count: 0)
-    end
+  def generate_enrollment_code_with_limit(account_type, usage_limit, school_id, generator)
+    codes = generator.generate_enrollment_code(account_type)
+    puts "#{account_type.capitalize} Raw Code: #{codes[:raw_code]}, Hashed Code: #{codes[:hashed_code]}"
+    EnrollmentCode.create!(
+      hashed_code: codes[:hashed_code],
+      account_type: account_type,
+      school_id: school_id,
+      usage_count: 0,
+      usage_limit: usage_limit
+    )
   end
 
-  desc 'Generate enrollment codes for principals'
-  task generate_principal_codes: :environment do
+  desc 'Generate a single enrollment code for principals with multiple uses'
+  task generate_principal_code_with_limit: :environment do
     school_id = ENV['SCHOOL_ID'].to_i
-    generate_enrollment_codes('principal', 10, school_id)
+    usage_limit = ENV['USAGE_LIMIT'].to_i
+    generate_enrollment_code_with_limit('principal', usage_limit, school_id, Principal)
   end
 
-  desc 'Generate enrollment codes for teachers'
-  task generate_teacher_codes: :environment do
+  desc 'Generate a single enrollment code for staff with multiple uses'
+  task generate_staff_code_with_limit: :environment do
     school_id = ENV['SCHOOL_ID'].to_i
-    generate_enrollment_codes('teacher', 10, school_id)
+    usage_limit = ENV['USAGE_LIMIT'].to_i
+    generate_enrollment_code_with_limit('staff', usage_limit, school_id, Principal)
   end
 
-  desc 'Generate enrollment codes for students'
-  task generate_student_codes: :environment do
+  desc 'Generate a single enrollment code for students with multiple uses'
+  task generate_student_code_with_limit: :environment do
     school_id = ENV['SCHOOL_ID'].to_i
-    generate_enrollment_codes('student', 10, school_id)
+    usage_limit = ENV['USAGE_LIMIT'].to_i
+    generator = ENV['GENERATOR'] == 'staff' ? Staff : Principal
+    generate_enrollment_code_with_limit('student', usage_limit, school_id, generator)
   end
 
-  desc 'Generate enrollment codes for a specified role and count'
-  task generate_codes: :environment do
-    role = ENV['ROLE']
-    count = ENV['COUNT'].to_i
+  desc 'Generate a single enrollment code for a specified account type with multiple uses'
+  task generate_code_with_limit: :environment do
+    account_type = ENV['ACCOUNT_TYPE']
+    usage_limit = ENV['USAGE_LIMIT'].to_i
     school_id = ENV['SCHOOL_ID'].to_i
-    if role && count > 0 && school_id > 0
-      generate_enrollment_codes(role, count, school_id)
+    generator = ENV['GENERATOR'] == 'staff' ? Staff : Principal
+    if account_type && usage_limit > 0 && school_id > 0
+      generate_enrollment_code_with_limit(account_type, usage_limit, school_id, generator)
     else
-      puts 'Eg: rake enrollment:generate_codes ROLE=teacher COUNT=5 SCHOOL_ID=1'
+      puts 'Eg: rake enrollment:generate_code_with_limit ACCOUNT_TYPE=staff USAGE_LIMIT=5 ' \
+             'SCHOOL_ID=1 GENERATOR=principal'
     end
   end
 end

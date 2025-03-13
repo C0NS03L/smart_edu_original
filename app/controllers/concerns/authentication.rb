@@ -16,23 +16,23 @@ module Authentication
   private
 
   def set_current_school
-    Current.school = Current.user&.school if authenticated?
+    if authenticated?
+      Current.school =
+        case
+        when Current.session.user.present?
+          Current.session.user.school
+        when Current.session.principal.present?
+          Current.session.principal.school
+        when Current.session.staff.present?
+          Current.session.staff.school
+        when Current.session.student.present?
+          Current.session.student.school
+        end
+    end
   end
 
   def current_school
     Current.school
-  end
-
-  def start_new_session_for(user)
-    user
-      .sessions
-      .create!(user_agent: request.user_agent, ip_address: request.remote_ip)
-      .tap do |session|
-        Current.session = session
-        Current.user = user
-        Current.school = user.school
-        cookies.signed.permanent[:session_id] = { value: session.id, httponly: true, same_site: :lax }
-      end
   end
 
   def authenticated?
@@ -48,8 +48,21 @@ module Authentication
 
     if (session = find_session_by_cookie)
       Current.session = session
-      Current.user = session.user
-      Current.school = Current.user.school
+
+      # Set current account based on session type
+      if session.user
+        Current.user = session.user
+      elsif session.principal
+        Current.principal = session.principal
+      elsif session.staff
+        Current.staff = session.staff
+      elsif session.student
+        Current.student = session.student
+      elsif session.system_admin
+        Current.system_admin = session.system_admin
+      end
+
+      set_current_school
       session
     end
   end
@@ -64,7 +77,56 @@ module Authentication
   end
 
   def after_authentication_url
-    session.delete(:return_to_after_authenticating) || root_url
+    if Current.session.user
+      user_dashboard_path
+    elsif Current.session.principal
+      principal_dashboard_path
+    elsif Current.session.staff
+      staff_dashboard_path
+    elsif Current.session.student
+      student_dashboard_path
+    elsif Current.session.system_admin
+      admin_dashboard_path
+    else
+      root_url
+    end
+  end
+
+  def start_new_session_for(account)
+    session =
+      case account
+      when User
+        account.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip)
+      when Principal
+        account.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip, principal: account)
+      when Staff
+        account.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip, staff: account)
+      when Student
+        account.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip, student: account)
+      when SystemAdmin
+        account.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip, system_admin: account)
+      end
+
+    Current.session = session
+
+    # Set the appropriate Current variable based on account type
+    case account
+    when User
+      Current.user = account
+    when Principal
+      Current.principal = account
+    when Staff
+      Current.staff = account
+    when Student
+      Current.student = account
+    when SystemAdmin
+      Current.system_admin = account
+    end
+
+    # Set current school based on account type
+    set_current_school
+
+    cookies.signed.permanent[:session_id] = { value: session.id, httponly: true, same_site: :lax }
   end
 
   def terminate_session
