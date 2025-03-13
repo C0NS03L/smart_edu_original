@@ -42,7 +42,8 @@ namespace :enrollment do
     if account_type && usage_limit > 0 && school_id > 0
       generate_enrollment_code_with_limit(account_type, usage_limit, school_id, generator)
     else
-      puts 'Eg: rake enrollment:generate_code_with_limit ACCOUNT_TYPE=staff USAGE_LIMIT=5 SCHOOL_ID=1 GENERATOR=principal'
+      puts 'Eg: rake enrollment:generate_code_with_limit ACCOUNT_TYPE=staff USAGE_LIMIT=5 ' \
+             'SCHOOL_ID=1 GENERATOR=principal'
     end
   end
 end

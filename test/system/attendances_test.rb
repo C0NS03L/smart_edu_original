@@ -1,13 +1,11 @@
 require 'application_system_test_case'
 
 class AttendancesTest < ApplicationSystemTestCase
-
- # setup do
- #   @attendance = attendances(:attendance_1)
- #   @existing_student = students(:student_1)
- #   login
- # end
-
+  # setup do
+  #   @attendance = attendances(:attendance_1)
+  #   @existing_student = students(:student_1)
+  #   login
+  # end
 
   # test 'visiting the index' do
   #   visit attendances_url
@@ -35,7 +33,6 @@ class AttendancesTest < ApplicationSystemTestCase
   #   end
   #   first_row = 'table#latest-attendances tbody tr:first-of-type td:first-of-type'
   #   assert_selector first_row, text: 'Student 6'
-
 
   # test 'qr code check-in for existing student' do
   #   visit qr_index_path

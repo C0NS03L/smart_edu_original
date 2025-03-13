@@ -118,7 +118,6 @@
 #     )
 #   end
 
-
 #   # Create enrollment codes
 #   EnrollmentCode.create!(
 #     hashed_code: Digest::SHA256.hexdigest("teacher-#{school.id}"),
