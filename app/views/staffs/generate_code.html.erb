@@ -1,0 +1,21 @@
+<% content_for :title, 'Code Generation' %>
+<div class="flex min-h-[calc(100vh-64px)] flex-col items-center justify-center space-y-8">
+  <% if flash[:notice] %>
+    <div class="alert alert-success"><%= flash[:notice] %></div>
+  <% elsif flash[:alert] %>
+    <div class="alert alert-danger"><%= flash[:alert] %></div>
+  <% end %>
+  <div class="text-center">
+    <h2 class="mb-4 text-3xl font-bold">Generate Student Code</h2>
+    <div class="rounded border p-4 shadow-sm">
+      <%= form_with url: staffs_create_code_path, method: :post, local: true do |form| %>
+        <label for="student_uses" class="mb-2 block text-lg font-medium">Number of Accounts Required</label>
+        <%= form.number_field :usage_limit,
+                              id: 'student_uses',
+                              class: 'input input-bordered mb-4 w-full',
+                              placeholder: 'Enter Number' %>
+        <%= form.submit 'Generate', class: 'btn btn-primary w-full' %>
+      <% end %>
+    </div>
+  </div>
+</div>
