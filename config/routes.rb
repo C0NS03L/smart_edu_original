@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
   resources :signup, only: %i[new create]
+  resources :students, only: [:show]
 
   get 'signup/new_principal', to: 'signup#new_principal', as: 'new_principal_signup'
   post 'signup/create_principal', to: 'signup#create_principal', as: 'create_principal_signup'

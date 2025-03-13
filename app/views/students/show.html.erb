@@ -1,18 +1,20 @@
 <%= render 'shared/notice' %>
-<div class="flex justify-center"><%= render @student %></div>
-<div class="mt-8 flex flex-col justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-  <%= link_to edit_student_path(@student), class: 'btn btn-primary' do %>
-    <i class="fas fa-edit"></i> Edit this student
-  <% end %>
-  <%= button_to student_path(@student),
-                method: :delete,
-                class: 'btn btn-error w-full',
-                data: {
-                  turbo_confirm: 'Are you sure you want to destroy this student?'
-                } do %>
-    <i class="fas fa-trash"></i> Destroy this student
-  <% end %>
-  <%= link_to students_path, class: 'btn btn-secondary' do %>
-    <i class="fas fa-arrow-left"></i> Back to students
-  <% end %>
+<div class="flex flex-col items-center justify-center">
+  <div class="mt-8 flex justify-center"><%= render 'students/student', student: @student %></div>
+  <div class="mt-8 flex flex-col justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+    <%= link_to edit_student_path(@student), class: 'btn btn-primary' do %>
+      <i class="fas fa-edit"></i> Edit this student
+    <% end %>
+    <%= button_to student_path(@student),
+                  method: :delete,
+                  class: 'btn btn-error w-full',
+                  data: {
+                    turbo_confirm: 'Are you sure you want to destroy this student?'
+                  } do %>
+      <i class="fas fa-trash"></i> Destroy this student
+    <% end %>
+    <%= link_to students_path, class: 'btn btn-secondary' do %>
+      <i class="fas fa-arrow-left"></i> Back to students
+    <% end %>
+  </div>
 </div>

@@ -1,21 +1,85 @@
 <% content_for :title, 'Dashboard' %>
-<div class="flex min-h-[calc(100vh-64px)] items-center justify-center">
-  <div class="stats stats-vertical lg:stats-horizontal text-3xl shadow-sm">
-    <div class="stat">
-      <div class="stat-figure text-secondary">
-        <i class="fa-solid fa-user-graduate"></i>
+<div class="flex min-h-[calc(100vh-64px)] flex-col">
+  <div class="flex flex-grow flex-col items-center justify-center lg:flex-row">
+    <% if @role == 'student' %>
+      <div class="stats stats-vertical lg:stats-horizontal m-8 w-1/4 p-6 text-2xl shadow-lg">
+        <div class="stat">
+          <div class="text-xl font-bold">Student Details</div>
+          <div class="stat-desc">Name: <%= @student_details.name %></div>
+          <div class="stat-desc">Student ID: <%= @student_details.id %></div>
+        </div>
+        <div class="stat">
+          <div class="text-xl font-bold">School Details</div>
+          <div class="stat-desc"><%= @school_details.name %></div>
+          <div class="stat-desc"><%= @school_details.address %></div>
+          <div class="stat-desc"><%= @school_details.country %></div>
+        </div>
+        <div class="stat">
+          <div class="text-xl font-bold">QR Code</div>
+          <div class="stat-value">
+            <%= link_to 'View My QR', student_path(@student_details), class: 'btn btn-primary' %>
+          </div>
+        </div>
       </div>
-      <div class="stat-title">Students</div>
-      <div class="stat-value"><%= number_with_delimiter(@student_count) %></div>
-      <div class="stat-desc">Total Students</div>
-    </div>
-    <div class="stat">
-      <div class="stat-figure text-accent">
-        <i class="fa-solid fa-user-tie"></i>
+    <% elsif @role == 'staff' %>
+      <!-- Staff-specific dashboard content -->
+      <div class="stats stats-vertical lg:stats-horizontal m-6 w-full p-6 text-2xl shadow-lg lg:w-1/4">
+        <div class="stat">
+          <div class="stat-figure text-secondary">
+            <i class="fa-solid fa-chalkboard-teacher"></i>
+          </div>
+          <div class="stat-title text-xl font-bold">Classes</div>
+          <div class="stat-value"><%= number_with_delimiter(@class_count) %></div>
+          <div class="stat-desc">Total Classes</div>
+        </div>
+        <div class="stat">
+          <div class="stat-figure text-accent">
+            <i class="fa-solid fa-user-tie"></i>
+          </div>
+          <div class="stat-title text-xl font-bold">Total Check Ins</div>
+          <div class="stat-value"><%= number_with_delimiter(@attendance_count) %></div>
+          <div class="stat-desc">
+            Last Check In <%= @last_checkin.nil? ? 'N/A' : time_ago_in_words(@last_checkin) %>
+          </div>
+        </div>
       </div>
-      <div class="stat-title">Total Check Ins</div>
-      <div class="stat-value"><%= number_with_delimiter(@attendance_count) %></div>
-      <div class="stat-desc">Last Check In <%= @last_checkin.nil? ? 'N/A' : time_ago_in_words(@last_checkin) %></div>
+    <% else %>
+      <!-- Default dashboard content -->
+      <div class="stats stats-vertical lg:stats-horizontal m-6 w-full p-6 text-2xl shadow-lg lg:w-1/4">
+        <div class="stat">
+          <div class="stat-figure text-secondary">
+            <i class="fa-solid fa-school"></i>
+          </div>
+          <div class="stat-title text-xl font-bold">Schools</div>
+          <div class="stat-value"><%= number_with_delimiter(@school_count) %></div>
+          <div class="stat-desc">Total Schools</div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="mt-8 flex flex-grow flex-col items-center">
+    <div class="mt-8 w-full rounded-lg bg-white p-6 shadow-lg lg:w-3/4">
+      <div class="overflow-x-auto">
+        <table class="table-zebra table w-full">
+          <caption class="p-4 text-xl font-bold">
+            Attendance History
+          </caption>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @attendance_history.each do |attendance| %>
+              <tr class="hover">
+                <td><%= attendance.student.name %></td>
+                <td><%= attendance.timestamp.strftime('%Y-%m-%d') %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

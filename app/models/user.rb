@@ -24,6 +24,10 @@ class User < ApplicationRecord
   belongs_to :school
   has_many :sessions, dependent: :destroy
 
+  has_one :student
+  has_one :staff
+  has_one :principal
+
   normalizes :email_address, with: ->(e) { e.strip.downcase }
   validates :email_address, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, presence: true, length: { minimum: 8, maximum: 20 }
@@ -33,5 +37,12 @@ class User < ApplicationRecord
     raw_code = SecureRandom.hex(8) # Generates a random 16-character string
     hashed_code = Digest::SHA256.hexdigest(raw_code)
     { raw_code: raw_code, hashed_code: hashed_code }
+  end
+
+  def role
+    return 'student' if student
+    return 'staff' if staff
+    return 'principal' if principal
+    'unknown'
   end
 end
