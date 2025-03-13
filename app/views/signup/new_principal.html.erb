@@ -1,0 +1,50 @@
+<%= render 'shared/single_box' do %>
+  <h1 class="break-words pb-4 text-center text-3xl font-bold">
+    <%= render 'shared/logo_text' %> <span class="inline-block"></span>
+  </h1>
+  <% if @principal.errors.any? %>
+    <div class="alert alert-error mt-4">
+      <ul>
+        <% @principal.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form_with(
+        model: @principal,
+        url: create_principal_signup_path,
+        class: 'form-control mt-4',
+        html: {
+          autocomplete: 'on'
+        }
+      ) do |form| %>
+    <h2 class="text-lg font-bold">Enter Your Information</h2>
+    <%= form.text_field :name, class: 'input input-bordered w-full mt-2', placeholder: 'Name', required: true, autofocus: true %>
+    <%= form.email_field :email_address,
+                         class: 'input input-bordered w-full mt-2',
+                         placeholder: 'Email',
+                         autocomplete: 'username' %>
+    <%= form.password_field :password,
+                            class: 'input input-bordered w-full mt-2',
+                            placeholder: 'Password',
+                            autocomplete: 'new-password' %>
+    <%= form.password_field :password_confirmation,
+                            class: 'input input-bordered w-full mt-2',
+                            placeholder: 'Confirm Password',
+                            autocomplete: 'new-password' %>
+    <%= form.text_field :phone_number, class: 'input input-bordered w-full mt-2', placeholder: 'Phone Number', required: true %>
+
+    <h2 class="mt-4 text-lg font-bold">Enter School Your Information</h2>
+    <%= form.fields_for :school do |school_form| %>
+      <%= school_form.text_field :name, class: 'input input-bordered w-full mt-2', placeholder: 'School Name', required: true %>
+      <%= school_form.text_field :address,
+                                 class: 'input input-bordered w-full mt-2',
+                                 placeholder: 'School Address',
+                                 required: true %>
+      <%= school_form.text_field :country, class: 'input input-bordered w-full mt-2', placeholder: 'Country', required: true %>
+    <% end %>
+    <%= form.submit 'Sign Up', class: 'btn btn-primary w-full mt-2' %>
+  <% end %>
+  <%= link_to 'Back to Sign In', new_session_path, class: 'btn btn-ghost' %>
+<% end %>

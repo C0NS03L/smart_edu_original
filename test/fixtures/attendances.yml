@@ -8,24 +8,42 @@
 #  timestamp  :datetime
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  school_id  :integer          not null
 #  student_id :integer          not null
 #  user_id    :integer          not null
 #
 # Indexes
 #
+#  index_attendances_on_school_id   (school_id)
 #  index_attendances_on_student_id  (student_id)
 #  index_attendances_on_user_id     (user_id)
 #
 # Foreign Keys
 #
+#  school_id   (school_id => schools.id)
 #  student_id  (student_id => students.id)
 #  user_id     (user_id => users.id)
 #
 
-<% for i in 1..20 do %>
+<% for i in 1..10 do %>
 attendance_<%= i %>:
-  student: student_<%= i %>
+  student_id: <%= i %>
   timestamp: <%= Time.now - (i * 60) %> # Adding a minute difference for each record
-  user: one
+  user_id: <%= i %>
+  school_id: 1
 <% end %>
 
+# attendance_1:
+#   student: student_1
+#   user: user_1
+#   timestamp: <%= Time.now %>
+
+# attendance_2:
+#   student: student_2
+#   user: user_2
+#   timestamp: <%= Time.now %>
+
+# attendance_3:
+#   student: student_3
+#   user: user_3
+#   timestamp: <%= Time.now %>
