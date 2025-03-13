@@ -1,0 +1,32 @@
+<!-- filepath: c:\Users\Swan\Desktop\uni\24_25\T2\Software Engineering\P2\smart_edu_original\app\views\home\_staff_principal_table.html.erb -->
+<table class="table-zebra table">
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th><%= sort_link(@q, :name, 'Name') %></th>
+      <th><%= sort_link(@q, :uid, 'UID') %></th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @students.each do |student| %>
+      <tr>
+        <td></td>
+        <td></td>
+        <td><%= student.name %></td>
+        <td><%= student.uid %></td>
+        <td>
+          <div class="flex space-x-2">
+            <%= link_to student, class: 'hover:text-blue-500 text-blue-700' do %>
+              <i class="fas fa-eye" title="Show"></i> View
+            <% end %>
+            <%= link_to edit_student_path(student), class: 'hover:text-yellow-500 text-yellow-700' do %>
+              <i class="fas fa-edit" title="Edit"></i> Edit
+            <% end %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

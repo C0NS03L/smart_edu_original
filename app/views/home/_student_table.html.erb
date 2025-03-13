@@ -1,0 +1,20 @@
+<!-- filepath: c:\Users\Swan\Desktop\uni\24_25\T2\Software Engineering\P2\smart_edu_original\app\views\home\_student_table.html.erb -->
+<table class="table-zebra table">
+  <thead>
+    <tr>
+      <th><%= sort_link(q, :name, 'Name') %></th>
+      <th><%= sort_link(q, :uid, 'Date') %></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @attendance_history.each do |attendance| %>
+      <tr class="hover">
+        <td><%= attendance.student.name %></td>
+        <td><%= attendance.timestamp.strftime('%Y-%m-%d') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
