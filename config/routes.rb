@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   post 'principals/generate_student_code', to: 'principals#generate_student_code', as: 'generate_student_code_principal'
   get 'student_dashboard', to: 'students#dashboard', as: 'student_dashboard'
   get 'staff_dashboard', to: 'staffs#dashboard', as: 'staff_dashboard'
+  get 'staff/generate_code', to: 'staffs#generate_code', as: 'staffs_generate_code'
+  post 'staff/create_code', to: 'staffs#create_code', as: 'staffs_create_code'
   resources :attendances
 
   resources :attendances do
