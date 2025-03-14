@@ -10,6 +10,6 @@ module SchoolScopable
   private
 
   def scope_to_school(relation)
-    relation.where(school: current_school.id)
+    relation.where(school_id: current_school.id)
   end
 end

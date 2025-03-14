@@ -16,19 +16,7 @@ module Authentication
   private
 
   def set_current_school
-    if authenticated?
-      Current.school =
-        case
-        when Current.session.user.present?
-          Current.session.user.school
-        when Current.session.principal.present?
-          Current.session.principal.school
-        when Current.session.staff.present?
-          Current.session.staff.school
-        when Current.session.student.present?
-          Current.session.student.school
-        end
-    end
+    Current.school = Current.user.school if authenticated? && Current.user.present?
   end
 
   def current_school
@@ -48,20 +36,7 @@ module Authentication
 
     if (session = find_session_by_cookie)
       Current.session = session
-
-      # Set current account based on session type
-      if session.user
-        Current.user = session.user
-      elsif session.principal
-        Current.principal = session.principal
-      elsif session.staff
-        Current.staff = session.staff
-      elsif session.student
-        Current.student = session.student
-      elsif session.system_admin
-        Current.system_admin = session.system_admin
-      end
-
+      Current.user = session.user if session.user
       set_current_school
       session
     end
@@ -77,53 +52,32 @@ module Authentication
   end
 
   def after_authentication_url
-    if Current.session.user
-      user_dashboard_path
-    elsif Current.session.principal
+    case Current.user&.type
+    when 'Principal'
       principal_dashboard_path
-    elsif Current.session.staff
+    when 'Staff'
       staff_dashboard_path
-    elsif Current.session.student
+    when 'Student'
       student_dashboard_path
-    elsif Current.session.system_admin
+    when 'SystemAdmin'
       admin_dashboard_path
     else
       root_url
     end
   end
 
-  def start_new_session_for(account)
-    session =
-      case account
-      when User
-        account.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip)
-      when Principal
-        account.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip, principal: account)
-      when Staff
-        account.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip, staff: account)
-      when Student
-        account.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip, student: account)
-      when SystemAdmin
-        account.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip, system_admin: account)
-      end
+  def start_new_session_for(user)
+    # Create the session directly with only the required attributes
+    session = Session.new(user_agent: request.user_agent, ip_address: request.remote_ip)
+
+    # Explicitly set the user association to avoid automatic setting of type-specific columns
+    session.user = user
+    session.save!
 
     Current.session = session
+    Current.user = user
 
-    # Set the appropriate Current variable based on account type
-    case account
-    when User
-      Current.user = account
-    when Principal
-      Current.principal = account
-    when Staff
-      Current.staff = account
-    when Student
-      Current.student = account
-    when SystemAdmin
-      Current.system_admin = account
-    end
-
-    # Set current school based on account type
+    # Set current school
     set_current_school
 
     cookies.signed.permanent[:session_id] = { value: session.id, httponly: true, same_site: :lax }

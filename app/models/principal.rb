@@ -1,37 +1,33 @@
 # == Schema Information
 #
-# Table name: principals
+# Table name: users
 #
 #  id              :integer          not null, primary key
+#  discarded_at    :datetime
 #  email_address   :string           not null
-#  name            :string           not null
+#  name            :string
 #  password_digest :string           not null
 #  phone_number    :string
+#  type            :string
+#  uid             :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  school_id       :integer
 #
 # Indexes
 #
-#  index_principals_on_email_address  (email_address) UNIQUE
-#  index_principals_on_school_id      (school_id)
+#  index_users_on_discarded_at   (discarded_at)
+#  index_users_on_email_address  (email_address) UNIQUE
+#  index_users_on_school_id      (school_id)
+#  index_users_on_type           (type)
 #
 # Foreign Keys
 #
 #  school_id  (school_id => schools.id)
 #
-class Principal < ApplicationRecord
-  belongs_to :school
-  has_secure_password
-  has_many :sessions, dependent: :destroy
-
-  normalizes :email_address, with: ->(e) { e.strip.downcase }
-  validates :email_address, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :password, presence: true, length: { minimum: 8, maximum: 20 }
+class Principal < User
   validates :name, presence: true
   validates :phone_number, presence: true
-
-  accepts_nested_attributes_for :school
 
   def self.generate_enrollment_code(account_type)
     prefix =
