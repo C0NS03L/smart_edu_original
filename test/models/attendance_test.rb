@@ -18,9 +18,8 @@
 #
 # Foreign Keys
 #
-#  school_id   (school_id => schools.id)
-#  student_id  (student_id => students.id)
-#  user_id     (user_id => users.id)
+#  school_id  (school_id => schools.id)
+#  user_id    (user_id => users.id)
 #
 require 'test_helper'
 

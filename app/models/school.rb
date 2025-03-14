@@ -10,8 +10,8 @@
 #  updated_at :datetime         not null
 #
 class School < ApplicationRecord
-  has_many :students
   has_many :users
-  has_one :principals
-  has_many :staff
+  has_many :students, -> { where(type: 'Student') }, class_name: 'User'
+  has_one :principal, -> { where(type: 'Principal') }, class_name: 'User'
+  has_many :staff, -> { where(type: 'Staff') }, class_name: 'User'
 end

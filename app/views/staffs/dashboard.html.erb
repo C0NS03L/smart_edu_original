@@ -1,2 +1,6 @@
 <h1>Staff Dashboard</h1>
-<p>Welcome, <%= Current.session.staff.name %>!</p>
+<p>Welcome, <%= Current.user.name %>!</p>
+
+<% if Current.staff? %>
+  <p>You have staff access to the system.</p>
+<% end %>

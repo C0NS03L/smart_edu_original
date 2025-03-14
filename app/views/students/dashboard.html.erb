@@ -1,2 +1,6 @@
 <h1>Student Dashboard</h1>
-<p>Welcome, <%= Current.session.student.name %>!</p>
+<p>Welcome, <%= Current.user.name %>!</p>
+
+<% if Current.student? %>
+  <p>You have student access to the system.</p>
+<% end %>

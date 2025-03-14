@@ -6,7 +6,12 @@ class AttendancesController < ApplicationController
   # GET /attendances or /attendances.json
   #
   def index
-    @q = scope_to_school(Attendance).includes(:student).where(students: { discarded_at: nil }).ransack(params[:q])
+    # Fix the query to work with STI by using the users table with type='Student'
+    @q =
+      scope_to_school(Attendance)
+        .includes(:student)
+        .where(users: { type: 'Student', discarded_at: nil })
+        .ransack(params[:q])
     @pagy, @attendances = pagy(@q.result)
     respond_to do |format|
       format.html
@@ -21,7 +26,8 @@ class AttendancesController < ApplicationController
 
   # GET /attendances/new
   def new
-    @q = scope_to_school(Student).ransack(params[:q])
+    # Update to use STI for students
+    @q = scope_to_school(User).where(type: 'Student').ransack(params[:q])
     @students = @q.result(distinct: true)
     @attendances = scope_to_school(Attendance).order(timestamp: :desc).limit(20).includes(:student)
     respond_to do |format|
@@ -51,7 +57,7 @@ class AttendancesController < ApplicationController
 
   # POST /attendances/qr_attendance
   def qr_attendance
-    student = Student.find_by(uid: params[:attendance][:student_uid])
+    student = User.find_by(uid: params[:attendance][:student_uid], type: 'Student')
     # log the student_uid
     logger.info("Student UID: #{params[:attendance][:student_uid]}")
 
@@ -109,7 +115,7 @@ class AttendancesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_attendance
-    @attendance = Attendance.find(params.expect(:id))
+    @attendance = Attendance.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
