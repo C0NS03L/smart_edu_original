@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :posts
   resources :attendances
   resources :students
   get 'home/index'
@@ -9,7 +8,4 @@ Rails.application.routes.draw do
   resources :students
   get 'up' => 'rails/health#show', :as => :rails_health_check
   root 'home#index'
-  resources :charge
-  get 'subscriptions', to: 'subscriptions#index'
-  post 'charge', to: 'charge#create'
 end
