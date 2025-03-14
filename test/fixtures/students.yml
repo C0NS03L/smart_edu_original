@@ -1,82 +1,31 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
+<% for i in 1..40 do %>
 # == Schema Information
 #
-# Table name: students
+# Table name: users
 #
 #  id              :integer          not null, primary key
 #  discarded_at    :datetime
-#  email_address   :string
+#  email_address   :string           not null
 #  name            :string
-#  password_digest :string
-#  uid             :string           not null
-#  school_id       :integer          not null
-#
-# Indexes
-#
-#  index_students_on_discarded_at   (discarded_at)
-#  index_students_on_email_address  (email_address) UNIQUE
-#  index_students_on_school_id      (school_id)
-#
-# Foreign Keys
-#
-#  school_id  (school_id => schools.id)
-#
-
-
-
-# student_1:
-#   name: Student 1
-#   uid: UID_1
-#   school: school_1
-#   user: user_1
-#   email_address: student1@example.com
-#   password_digest: <%= BCrypt::Password.create("password") %>
-
-# student_2:
-#   name: Student 2
-#   uid: UID_2
-#   school: school_1
-#   user: user_2
-#   email_address: student2@example.com
-#   password_digest: <%= BCrypt::Password.create("password") %>
-
-# student_3:
-#   name: Student 3
-#   uid: UID_3
-#   school: school_1
-#   user: user_3
-#   email_address: student3@example.com
-#   password_digest: <%= BCrypt::Password.create("password") %>
-=======
-#
-# Table name: students
-#
-#  id              :integer          not null, primary key
-#  discarded_at    :datetime
-#  email_address   :string
-#  name            :string
-#  password_digest :string
-#  uid             :string           not null
+#  password_digest :string           not null
+#  phone_number    :string
+#  type            :string
+#  uid             :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  school_id       :integer          not null
-#  user_id         :integer          not null
+#  school_id       :integer
 #
 # Indexes
 #
-#  index_students_on_discarded_at   (discarded_at)
-#  index_students_on_email_address  (email_address) UNIQUE
-#  index_students_on_school_id      (school_id)
-#  index_students_on_user_id        (user_id)
+#  index_users_on_discarded_at   (discarded_at)
+#  index_users_on_email_address  (email_address) UNIQUE
+#  index_users_on_school_id      (school_id)
+#  index_users_on_type           (type)
 #
 # Foreign Keys
 #
 #  school_id  (school_id => schools.id)
-#  user_id    (user_id => users.id)
 #
-
-<% for i in 1..40 do %>
 student_<%=i%>:
   id: <%=i%>
   name: Student <%=i%>
@@ -86,28 +35,3 @@ student_<%=i%>:
   email_address: student<%=i%>@example.com
   password_digest: <%= BCrypt::Password.create("password") %>
 <% end %>
-
-
-# student_1:
-#   name: Student 1
-#   uid: UID_1
-#   school: school_1
-#   user: user_1
-#   email_address: student1@example.com
-#   password_digest: <%= BCrypt::Password.create("password") %>
-
-# student_2:
-#   name: Student 2
-#   uid: UID_2
-#   school: school_1
-#   user: user_2
-#   email_address: student2@example.com
-#   password_digest: <%= BCrypt::Password.create("password") %>
-
-# student_3:
-#   name: Student 3
-#   uid: UID_3
-#   school: school_1
-#   user: user_3
-#   email_address: student3@example.com
-#   password_digest: <%= BCrypt::Password.create("password") %>

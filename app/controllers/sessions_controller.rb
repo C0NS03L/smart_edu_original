@@ -9,9 +9,9 @@ class SessionsController < ApplicationController
   end
 
   def create
-    account = find_account_by_email(params[:email_address])
-    if account&.authenticate(params[:password])
-      start_new_session_for(account)
+    user = User.find_by(email_address: params[:email_address])
+    if user&.authenticate(params[:password])
+      start_new_session_for(user)
       redirect_to after_authentication_url
     else
       flash[:alert] = 'Invalid email or password'
@@ -27,22 +27,23 @@ class SessionsController < ApplicationController
   private
 
   def find_account_by_email(email)
-    [User, Principal, Staff, SystemAdmin].each do |account_type|
-      account = account_type.find_by(email_address: email)
-      return account if account
-    end
-    nil
+    # With STI, we only need to check the User model as all types inherit from it
+    User.find_by(email_address: email)
   end
 
   def after_authentication_url
-    if Current.session.principal
+    # Now we determine the path based on the user's type
+    case Current.user.type
+    when 'Principal'
       principal_dashboard_path
-    elsif Current.session.staff
-      staff_dashboard_path # Assuming this path helper exists
-    elsif Current.session.student
-      student_dashboard_path # Assuming this path helper exists
+    when 'Staff'
+      staff_dashboard_path
+    when 'Student'
+      student_dashboard_path
+    when 'SystemAdmin'
+      admin_dashboard_path # Adjust if needed
     else
-      root_path # Fallback to root path if none of the above
+      root_path
     end
   end
 end

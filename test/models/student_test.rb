@@ -1,20 +1,25 @@
 # == Schema Information
 #
-# Table name: students
+# Table name: users
 #
 #  id              :integer          not null, primary key
 #  discarded_at    :datetime
-#  email_address   :string
+#  email_address   :string           not null
 #  name            :string
-#  password_digest :string
-#  uid             :string           not null
-#  school_id       :integer          not null
+#  password_digest :string           not null
+#  phone_number    :string
+#  type            :string
+#  uid             :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  school_id       :integer
 #
 # Indexes
 #
-#  index_students_on_discarded_at   (discarded_at)
-#  index_students_on_email_address  (email_address) UNIQUE
-#  index_students_on_school_id      (school_id)
+#  index_users_on_discarded_at   (discarded_at)
+#  index_users_on_email_address  (email_address) UNIQUE
+#  index_users_on_school_id      (school_id)
+#  index_users_on_type           (type)
 #
 # Foreign Keys
 #

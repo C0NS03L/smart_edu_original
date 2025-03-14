@@ -18,9 +18,8 @@
 #
 # Foreign Keys
 #
-#  school_id   (school_id => schools.id)
-#  student_id  (student_id => students.id)
-#  user_id     (user_id => users.id)
+#  school_id  (school_id => schools.id)
+#  user_id    (user_id => users.id)
 #
 class Attendance < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
@@ -31,7 +30,16 @@ class Attendance < ApplicationRecord
     %w[school student user]
   end
 
-  belongs_to :school
-  belongs_to :student
+  # Update this association to work with STI
+  # The student_id column now references a User of type 'Student'
+  belongs_to :student, -> { where(type: 'Student') }, class_name: 'User', foreign_key: 'student_id'
+
+  # The user who recorded the attendance
   belongs_to :user
+
+  # The school where attendance was taken
+  belongs_to :school
+
+  # Add validations if needed
+  validates :timestamp, presence: true
 end
