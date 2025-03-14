@@ -69,7 +69,7 @@ group :test do
   gem 'selenium-webdriver'
 end
 
-gem 'annotaterb', '~> 4.13'
+gem 'annotaterb', '~> 4.14'
 gem 'rqrcode', '~> 2.0'
 
 gem 'pagy', '~> 9.3' # omit patch digit
