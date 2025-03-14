@@ -21,6 +21,12 @@ class SignupController < ApplicationController
       return
     end
 
+    unless code_object.can_be_used?
+      flash[:alert] = 'Enrollment code has reached its usage limit.'
+      render :new, status: :unprocessable_entity
+      return
+    end
+
     account_type = code_object.account_type
     school_id = code_object.school_id
 
@@ -34,6 +40,7 @@ class SignupController < ApplicationController
           school_id: school_id
         )
       if student.save
+        code_object.increment_usage_count!
         start_new_session_for(student)
         flash[:notice] = 'Student account created successfully.'
         redirect_to student_dashboard_path
@@ -51,10 +58,12 @@ class SignupController < ApplicationController
           school_id: school_id
         )
       if staff.save
+        code_object.increment_usage_count!
         start_new_session_for(staff)
         flash[:notice] = 'Staff account created successfully.'
         redirect_to staff_dashboard_path
       else
+        Rails.logger.error(staff.errors.full_messages)
         flash[:alert] = 'Failed to create staff account.'
         render :new, status: :unprocessable_entity
       end
