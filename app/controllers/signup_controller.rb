@@ -107,7 +107,6 @@ class SignupController < ApplicationController
 
   def principal_params
     params.require(:principal).permit(
-      :school_id,
       :name,
       :email_address,
       :phone_number,
