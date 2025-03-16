@@ -30,7 +30,6 @@ class Student < User
   validates :uid, presence: true
 
   has_many :attendances, dependent: :destroy
-  belongs_to :user
   has_many :attendances, dependent: :delete_all
   has_secure_password
   has_many :sessions, dependent: :destroy

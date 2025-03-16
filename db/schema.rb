@@ -39,7 +39,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_14_043353) do
     t.string 'address'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.string 'country', default: 'Unknown', null: false
+    t.string 'country', null: false
   end
 
   create_table 'sessions', force: :cascade do |t|
