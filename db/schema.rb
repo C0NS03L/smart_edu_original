@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_14_043353) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_17_000002) do
   create_table 'attendances', force: :cascade do |t|
     t.integer 'student_id', null: false
     t.datetime 'timestamp'
@@ -34,12 +34,33 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_14_043353) do
     t.string 'account_type'
   end
 
+  create_table 'payment_histories', force: :cascade do |t|
+    t.integer 'school_id', null: false
+    t.decimal 'amount', precision: 10, scale: 2, null: false
+    t.datetime 'payment_date', null: false
+    t.string 'payment_method', null: false
+    t.string 'transaction_id'
+    t.string 'status', null: false
+    t.string 'card_last_digits'
+    t.string 'card_type'
+    t.string 'subscription_plan'
+    t.text 'notes'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['school_id'], name: 'index_payment_histories_on_school_id'
+    t.index ['transaction_id'], name: 'index_payment_histories_on_transaction_id', unique: true
+  end
+
   create_table 'schools', force: :cascade do |t|
     t.string 'name', null: false
     t.string 'address'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.string 'country', null: false
+    t.string 'country', default: 'Unknown', null: false
+    t.string 'subscription_status', default: 'pending'
+    t.string 'subscription_type'
+    t.datetime 'next_payment_date'
+    t.integer 'student_limit', default: 0
   end
 
   create_table 'sessions', force: :cascade do |t|
@@ -70,6 +91,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_14_043353) do
 
   add_foreign_key 'attendances', 'schools'
   add_foreign_key 'attendances', 'users'
+  add_foreign_key 'payment_histories', 'schools'
   add_foreign_key 'sessions', 'users'
   add_foreign_key 'users', 'schools'
 end

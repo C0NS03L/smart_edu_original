@@ -1,132 +1,233 @@
 <% content_for :title, 'Subscriptions' %>
+<div class="flex min-h-screen px-[40px] pt-[30px]">
+  <div class="min-w-full">
+    <p class="text-[20px] font-semibold leading-[40px] text-[#00153B]">Your Subscription</p>
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Select Your Subscription Plan</title>
-    <script
-      src="https://cdn.omise.co/omise.js"
-      integrity="sha384-v6y29T/P7GSTWYN1YtWJ/nr3af4GzVNQqX3CA8xqvo4Qj5ow7dkYuRq06/wS0GSW"
-      crossorigin="anonymous"
-    ></script>
-  </head>
-  <body class="bg-gray-100">
-    <div class="container mx-auto mt-20 px-4 py-10">
-      <h1 class="mb-6 text-center text-3xl font-bold">Select Your Subscription Plan</h1>
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-        <div class="rounded-lg border border-green-500 bg-white p-6 text-center shadow-md">
-          <h2 class="text-xl font-semibold">Free Trial</h2>
-          <p class="text-gray-600">Try our service for free for 30 days.</p>
-          <p class="text-gray-500">Up to 200 Students</p>
-          <button
-            class="select-tier mt-4 rounded bg-green-500 px-4 py-2 text-white"
-            data-amount="0"
-            data-tier="free_trial"
-          >
-            Select
-          </button>
+    <div>
+      <p class="text-[15px] font-medium leading-[27px] text-[#717F87]">Select Plan</p>
+    </div>
+
+    <div class="mt-[20px] grid grid-cols-3 gap-[20px]">
+      <div
+        key="1"
+        class="shadow-[0px 1px 2px #E1E3E5] w-full divide-y rounded-[10px] border border-[#E1E3E5] bg-[#fff]"
+      >
+        <div class="px-[25px] pb-[25px] pt-[15px]">
+          <div class="flex justify-end">
+            <div class="align-center flex justify-center rounded-[20px] bg-[#F6F6F7] px-[12px]">
+              <p class="text-[12px] font-bold leading-[28px] text-[#00153B]">Starter</p>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-[19px] font-bold leading-[24px] text-[#00153B]">Trial</p>
+            <p class="text-[50px] font-bold leading-[63px] text-[#00153B]">Free</p>
+          </div>
+
+          <div>
+            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">200 Students</p>
+            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">30 Days</p>
+          </div>
         </div>
-        <div class="rounded-lg border border-blue-500 bg-white p-6 text-center shadow-md">
-          <h2 class="text-xl font-semibold">Plan for 500 Students</h2>
-          <p class="text-gray-600">Get access for up to 500 students for $500/month.</p>
-          <p class="text-gray-500">$1.00 Per Student.</p>
-          <button
-            class="select-tier mt-4 rounded bg-blue-500 px-4 py-2 text-white"
-            data-amount="45000"
-            data-tier="500_students"
-          >
-            Select
-          </button>
+
+        <div class="px-[25px] pb-[35px] pt-[25px]">
+          <div>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">Attendance Tracker</p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">QR Scanner Check In</p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">Enrollment Code System</p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">Track Payment Invoice</p>
+          </div>
+
+          <div class="mt-[25px]">
+            <button
+              class="select-tier rounded-[5px] bg-[#006EF5] px-[25px] py-[15px] text-[14px] font-semibold leading-[17px] text-[#fff] hover:bg-sky-700"
+              data-amount="0"
+              data-tier="trial"
+            >
+              Try Free
+            </button>
+          </div>
         </div>
-        <div class="rounded-lg border border-blue-500 bg-white p-6 text-center shadow-md">
-          <h2 class="text-xl font-semibold">Plan for 1000 Students</h2>
-          <p class="text-gray-600">Get access for up to 1000 students for $800/month.</p>
-          <p class="text-gray-500">$0.80 per student.</p>
-          <button
-            class="select-tier mt-4 rounded bg-blue-500 px-4 py-2 text-white"
-            data-amount="80000"
-            data-tier="1000_students"
-          >
-            Select
-          </button>
+      </div>
+
+      <div
+        key="2"
+        class="shadow-[0px 1px 2px #E1E3E5] w-full divide-y rounded-[10px] border border-[#E1E3E5] bg-[#fff]"
+      >
+        <div class="px-[25px] pb-[25px] pt-[15px]">
+          <div class="flex justify-end">
+            <div class="align-center flex justify-center rounded-[20px] bg-[#F6F6F7] px-[12px]">
+              <p class="text-[12px] font-bold leading-[28px] text-[#00153B]">Value</p>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-[19px] font-bold leading-[24px] text-[#00153B]">Fast Start</p>
+            <div class="flex items-baseline">
+              <p class="text-[45px] font-bold leading-[63px] text-[#00153B]">$500</p>
+              <span class="text-[20px] font-medium leading-[25px] text-[#00153B]">/mo</span>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">500 Students</p>
+            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">$1.00 Per Student</p>
+          </div>
+        </div>
+
+        <div class="px-[25px] pb-[35px] pt-[25px]">
+          <div>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">Attendance Tracker</p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">QR Scanner Check In</p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">Enrollment Code System</p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">Track Payment Invoice</p>
+          </div>
+
+          <div class="mt-[25px]">
+            <button
+              class="select-tier rounded-[5px] bg-[#006EF5] px-[25px] py-[15px] text-[14px] font-semibold leading-[17px] text-[#fff] hover:bg-sky-700"
+              data-amount="50000"
+              data-tier="standard"
+            >
+              Buy Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        key="3"
+        class="shadow-[0px 1px 2px #E1E3E5] w-full divide-y rounded-[10px] border border-[#E1E3E5] bg-[#fff]"
+      >
+        <div class="px-[25px] pb-[25px] pt-[15px]">
+          <div class="flex justify-end">
+            <div class="align-center flex justify-center rounded-[20px] bg-[#F6F6F7] px-[12px]">
+              <p class="text-[12px] font-bold leading-[28px] text-[#00153B]">Pro</p>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-[19px] font-bold leading-[24px] text-[#00153B]">Accelerate</p>
+            <div class="flex items-baseline">
+              <p class="text-[45px] font-bold leading-[63px] text-[#00153B]">$800</p>
+              <span class="text-[20px] font-medium leading-[25px] text-[#00153B]">/mo</span>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">1000 Students</p>
+            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">$0.8 Per Student</p>
+          </div>
+        </div>
+
+        <div class="px-[25px] pb-[35px] pt-[25px]">
+          <div>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">Attendance Tracker</p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">QR Scanner Check In</p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">Enrollment Code System</p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">Track Payment Invoice</p>
+          </div>
+          <div class="mt-[25px]">
+            <button
+              class="select-tier rounded-[5px] bg-[#006EF5] px-[25px] py-[15px] text-[14px] font-semibold leading-[17px] text-[#fff] hover:bg-sky-700"
+              data-amount="80000"
+              data-tier="premium"
+            >
+              Buy Now
+            </button>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-    <form id="checkoutForm" method="POST" action="/charge" class="hidden">
-      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-      <input type="hidden" name="omiseToken" />
-      <input type="hidden" name="omiseSource" />
-      <input type="hidden" name="amount" id="amount" />
-      <input type="hidden" name="tier" id="tier" />
-      <button type="submit" id="checkoutButton">Checkout</button>
-    </form>
+<!-- Hidden checkout form -->
+<form id="checkoutForm" action="/charge" method="post" class="hidden">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <input type="hidden" name="amount" id="amount" value="" />
+  <input type="hidden" name="tier" id="tier" value="" />
+  <input type="hidden" name="omiseToken" value="" />
+  <input type="hidden" name="omiseSource" value="" />
+</form>
 
-    <div id="paymentModal" class="fixed inset-0 flex hidden items-center justify-center bg-black bg-opacity-50">
-      <div class="w-1/3 rounded-lg bg-white p-6 shadow-lg">
-        <h5 class="mb-4 text-xl font-semibold">Payment Status</h5>
-        <p id="paymentModalBody"></p>
-        <button
-          class="mt-4 rounded bg-gray-500 px-4 py-2 text-white"
-          onclick="document.getElementById('paymentModal').classList.add('hidden')"
-        >
-          Close
-        </button>
-      </div>
+<!-- Payment Result Modal -->
+<div id="paymentModal" class="fixed inset-0 z-50 flex hidden items-center justify-center bg-gray-900 bg-opacity-50">
+  <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
+    <h2 class="mb-4 text-xl font-bold">Payment Status</h2>
+    <p id="paymentModalBody" class="text-gray-700"></p>
+    <div class="mt-6 flex justify-end">
+      <button
+        class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+        onclick="document.getElementById('paymentModal').classList.add('hidden')"
+      >
+        Close
+      </button>
     </div>
+  </div>
+</div>
 
-    <script>
-      OmiseCard.configure({ publicKey: 'pkey_test_62unknn2ef7aol8k7nm' })
+<script src="https://cdn.omise.co/omise.js"></script>
+<script>
+  OmiseCard.configure({ publicKey: 'pkey_test_62unknn2ef7aol8k7nm' })
 
-      document.querySelectorAll('.select-tier').forEach((button) => {
-        button.addEventListener('click', (event) => {
-          var amount = event.target.getAttribute('data-amount')
-          var tier = event.target.getAttribute('data-tier')
-          document.getElementById('amount').value = amount
-          document.getElementById('tier').value = tier
+  document.querySelectorAll('.select-tier').forEach((button) => {
+    button.addEventListener('click', (event) => {
+      const amount = event.target.getAttribute('data-amount')
+      const tier = event.target.getAttribute('data-tier')
 
-          if (amount === 0) {
+      document.getElementById('amount').value = amount
+      document.getElementById('tier').value = tier
+
+      if (amount === '0') {
+        document.getElementById('checkoutForm').submit()
+      } else {
+        OmiseCard.open({
+          amount: parseInt(amount),
+          currency: 'USD',
+          defaultPaymentMethod: 'credit_card',
+          onCreateTokenSuccess: (nonce) => {
+            if (nonce.startsWith('tokn_')) {
+              document.querySelector('input[name="omiseToken"]').value = nonce
+              // redirect to success modal
+            } else {
+              document.querySelector('input[name="omiseSource"]').value = nonce
+            }
             document.getElementById('checkoutForm').submit()
-          } else {
-            OmiseCard.open({
-              amount: amount,
-              currency: 'USD',
-              defaultPaymentMethod: 'credit_card',
-              onCreateTokenSuccess: (nonce) => {
-                if (nonce.startsWith('tokn_')) {
-                  document.querySelector('input[name="omiseToken"]').value = nonce
-                } else {
-                  document.querySelector('input[name="omiseSource"]').value = nonce
-                }
-                document.getElementById('checkoutForm').submit()
-              }
-            })
           }
         })
-      })
+      }
+    })
+  })
 
-      document.getElementById('checkoutForm').addEventListener('submit', (event) => {
-        event.preventDefault()
-        fetch(event.target.action, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-Token': document.querySelector('input[name="authenticity_token"]').value
-          },
-          body: new URLSearchParams(new FormData(event.target))
+  document.getElementById('checkoutForm').addEventListener('submit', (event) => {
+    event.preventDefault()
+
+    // Show a loading indicator if needed
+    document.getElementById('paymentModalBody').innerText = 'Processing payment...'
+    document.getElementById('paymentModal').classList.remove('hidden')
+
+    fetch(event.target.action, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-CSRF-Token': document.querySelector('input[name="authenticity_token"]').value
+      },
+      body: new URLSearchParams(new FormData(event.target))
+    })
+      .then((response) => {
+        // Hide the loading indicator
+        document.getElementById('paymentModal').classList.add('hidden')
+
+        // Replace the entire page content with the response from the server
+        return response.text().then((html) => {
+          document.body.innerHTML = html
         })
-          .then((response) => response.json())
-          .then((data) => {
-            document.getElementById('paymentModalBody').innerText = data.message
-            document.getElementById('paymentModal').classList.remove('hidden')
-          })
-          .catch((error) => {
-            document.getElementById('paymentModalBody').innerText = 'Payment failed: ' + error.message
-            document.getElementById('paymentModal').classList.remove('hidden')
-          })
       })
-    </script>
-  </body>
-</html>
+      .catch((error) => {
+        // Show a generic error if fetch itself fails
+        document.getElementById('paymentModal').classList.add('hidden')
+        alert('Network error: ' + error.message)
+      })
+  })
+</script>
