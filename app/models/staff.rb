@@ -28,6 +28,8 @@
 class Staff < User
   validates :name, presence: true
 
+  accepts_nested_attributes_for :school
+
   def self.generate_enrollment_code(account_type)
     prefix =
       case account_type

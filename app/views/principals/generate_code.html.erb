@@ -6,8 +6,8 @@
     <div class="alert alert-danger"><%= flash[:alert] %></div>
   <% end %>
   <div class="text-center">
-    <h2 class="mb-4 text-3xl font-bold">Staff Code</h2>
-    <div class="rounded border p-4 shadow-sm">
+    <div class="rounded p-4 shadow-lg">
+      <h2 class="mb-4 text-3xl font-bold">Staff Code</h2>
       <%= form_with url: generate_staff_code_principal_path, method: :post, local: true do |form| %>
         <label for="staff_uses" class="mb-2 block text-lg font-medium">Number of Accounts Required</label>
         <%= form.number_field :usage_limit, id: 'staff_uses', class: 'input input-bordered mb-4 w-full', placeholder: 'Enter Number' %>
@@ -16,8 +16,8 @@
     </div>
   </div>
   <div class="text-center">
-    <h2 class="mb-4 text-3xl font-bold">Student Code</h2>
-    <div class="rounded border p-4 shadow-sm">
+    <div class="rounded p-4 shadow-lg">
+      <h2 class="mb-4 text-3xl font-bold">Student Code</h2>
       <%= form_with url: generate_student_code_principal_path, method: :post, local: true do |form| %>
         <label for="student_uses" class="mb-2 block text-lg font-medium">Number of Accounts Required</label>
         <%= form.number_field :usage_limit,
@@ -28,4 +28,5 @@
       <% end %>
     </div>
   </div>
+  <div class="text-center"><%= link_to 'Back', principal_dashboard_path, class: 'btn btn-secondary w-full' %></div>
 </div>

@@ -37,6 +37,8 @@ class Student < User
   include Discard::Model
   before_save :set_default_uid
 
+  accepts_nested_attributes_for :school
+
   private
 
   def self.ransackable_attributes(auth_object = nil)
