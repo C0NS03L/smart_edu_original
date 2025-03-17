@@ -36,7 +36,7 @@
         <div class="stat-desc"><%= @school_details.country %></div>
       </div>
     </div>
-    <div class="stats stats-vertical lg:stats-horizontal w-300 m-8 p-4 text-2xl shadow-lg">
+    <div class="stats stats-vertical lg:stats-horizontal w-full-200 m-8 p-4 text-2xl shadow-lg lg:w-1/4">
       <div class="stat">
         <div class="stat-title text-xl font-bold">Generate Codes</div>
         <div class="stat-value">
@@ -49,7 +49,7 @@
   <div class="mt-4 flex flex-grow flex-col items-center">
     <div class="w-full rounded-lg bg-white p-6 shadow-lg lg:w-3/4">
       <div class="stat-title p-4 text-xl font-bold">Attendance</div>
-      <div class="overflow-x-auto"><%= render 'home/all_students_table', q: @q %></div>
+      <div class="overflow-x-auto"><%= render 'shared/all_students_table', q: @q %></div>
     </div>
   </div>
 </div>
