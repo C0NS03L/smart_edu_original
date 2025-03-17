@@ -27,6 +27,7 @@
 #
 class Staff < User
   validates :name, presence: true
+  validates :uid, presence: true
 
   accepts_nested_attributes_for :school
 

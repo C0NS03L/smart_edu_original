@@ -1,6 +1,61 @@
-<h1>Staff Dashboard</h1>
-<p>Welcome, <%= Current.user.name %>!</p>
-
-<% if Current.staff? %>
-  <p>You have staff access to the system.</p>
-<% end %>
+<% content_for :title, 'Dashboard' %>
+<div class="flex min-h-[calc(100vh-64px)] flex-col">
+  <div class="flex flex-grow flex-col items-center justify-center">
+    <div class="stats stats-vertical lg:stats-horizontal w-full-200 m-8 p-4 text-2xl shadow-lg lg:w-1/4">
+      <div class="stat">
+        <div class="stat-figure text-secondary">
+          <i class="fa-solid fa-chalkboard-teacher"></i>
+        </div>
+        <div class="stat-title stat-title text-xl font-bold">Students</div>
+        <div class="stat-value"><%= number_with_delimiter(@student_count) %></div>
+        <div class="stat-desc">Total Students</div>
+      </div>
+      <div class="stat">
+        <div class="stat-figure text-accent">
+          <i class="fa-solid fa-user-tie"></i>
+        </div>
+        <div class="stat-title stat-title text-xl font-bold">Total Check Ins</div>
+        <div class="stat-value"><%= number_with_delimiter(@attendance_count) %></div>
+        <div class="stat-desc">Last Check In <%= @last_checkin.nil? ? 'N/A' : time_ago_in_words(@last_checkin) %></div>
+      </div>
+      <div class="stat">
+        <div class="stat-figure text-secondary">
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <div class="stat-title text-xl font-bold">Staff Details</div>
+        <div class="stat-desc">Name: <%= @staff_details.name %></div>
+        <div class="stat-desc">Staff ID: <%= @staff_details.id %></div>
+      </div>
+      <div class="stat">
+        <div class="stat-figure text-secondary">
+          <i class="fa-solid fa-school"></i>
+        </div>
+        <div class="stat-title text-xl font-bold">School Details</div>
+        <div class="stat-desc"><%= @school_details.name %></div>
+        <div class="stat-desc"><%= @school_details.address %></div>
+        <div class="stat-desc"><%= @school_details.country %></div>
+      </div>
+    </div>
+    <div class="stats stats-vertical lg:stats-horizontal w-full-200 m-8 p-4 text-2xl shadow-lg lg:w-1/4">
+      <div class="stat">
+        <div class="stat-figure text-secondary">
+          <i class="fa-solid fa-qrcode"></i>
+        </div>
+        <div class="stat-title text-xl font-bold">Check-In</div>
+        <div class="stat-value"><%= link_to 'Scan QR Code', qr_index_path, class: 'btn btn-primary' %></div>
+      </div>
+      <div class="stat">
+        <div class="stat-title text-xl font-bold">Generate Codes</div>
+        <div class="stat-value">
+          <%= link_to 'Generate Codes', staffs_generate_code_path, class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-4 flex flex-grow flex-col items-center">
+    <div class="w-full rounded-lg bg-white p-6 shadow-lg lg:w-3/4">
+      <div class="stat-title p-4 text-xl font-bold">Attendance</div>
+      <div class="overflow-x-auto"><%= render 'home/all_students_table', q: @q %></div>
+    </div>
+  </div>
+</div>

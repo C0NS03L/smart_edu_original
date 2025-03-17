@@ -19,6 +19,9 @@
         <div class="stat-desc">Last Check In <%= @last_checkin.nil? ? 'N/A' : time_ago_in_words(@last_checkin) %></div>
       </div>
       <div class="stat">
+        <div class="stat-figure text-secondary">
+          <i class="fa-solid fa-user"></i>
+        </div>
         <div class="stat-title text-xl font-bold">Principal Details</div>
         <div class="stat-desc">Name: <%= @principal_details.name %></div>
         <div class="stat-desc">Principal ID: <%= @principal_details.id %></div>
@@ -42,6 +45,7 @@
       </div>
     </div>
   </div>
+
   <div class="mt-4 flex flex-grow flex-col items-center">
     <div class="w-full rounded-lg bg-white p-6 shadow-lg lg:w-3/4">
       <div class="stat-title p-4 text-xl font-bold">Attendance</div>
