@@ -1,9 +1,19 @@
 class HomeController < ApplicationController
-  include SchoolScopable
-  # allow_unauthenticated_access only: %i[index]
   def index
-    @student_count = scope_to_school(Student).count
-    @attendance_count = scope_to_school(Attendance).count
-    @last_checkin = scope_to_school(Attendance).maximum(:timestamp)
+    redirect_to_dashboard
+  end
+
+  private
+
+  def redirect_to_dashboard
+    if Current.principal?
+      redirect_to principal_dashboard_path
+    elsif Current.student?
+      redirect_to student_dashboard_path
+    elsif Current.staff?
+      redirect_to staff_dashboard_path
+    else
+      redirect_to root_path, alert: 'Unauthorized access'
+    end
   end
 end
