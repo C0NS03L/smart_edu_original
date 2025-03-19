@@ -14,6 +14,13 @@ class StudentsController < ApplicationController
     end
   end
 
+  def dashboard
+    @student_details = Current.user
+    @school_details = Current.user.school
+    @attendance_history = Attendance.where(student: @student_details).order(timestamp: :desc)
+    @q = @school_details.students.ransack(params[:q])
+  end
+
   # GET /students/1 or /students/1.json
   def show
     @student = Student.kept.where(school: current_school).find(params[:id])
@@ -85,8 +92,5 @@ class StudentsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def student_params
     params.require(:student).permit(:name).merge(school_id: current_school.id)
-  end
-
-  def dashboard
   end
 end

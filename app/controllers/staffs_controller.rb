@@ -1,5 +1,12 @@
 class StaffsController < ApplicationController
   def dashboard
+    @staff_details = Current.user
+    @school_details = Current.user.school
+    @student_count = @school_details.students.count
+    @attendance_count = Attendance.where(school: @school_details).count
+    @last_checkin = Attendance.where(school: @school_details).order(created_at: :desc).first&.created_at
+
+    @q = @school_details.students.ransack(params[:q])
   end
 
   def generate_code
@@ -7,7 +14,7 @@ class StaffsController < ApplicationController
 
   def create_code
     usage_limit = params[:usage_limit].to_i
-    school_id = Current.session.staff.school.id
+    school_id = Current.user.school.id
 
     if usage_limit > 0
       codes = Staff.generate_enrollment_code('student')

@@ -3,7 +3,7 @@ class SignupController < ApplicationController
   skip_before_action :require_authentication, only: %i[new_principal create_principal]
 
   def new
-    @role = params[:role] || ''
+    # @role = params[:role] || ''
     @user = User.new
     @schools = School.order(:name)
   end
@@ -37,7 +37,8 @@ class SignupController < ApplicationController
           email_address: params[:email_address],
           name: params[:name],
           password: user_password,
-          school_id: school_id
+          school_id: school_id,
+          uid: SecureRandom.uuid
         )
       if student.save
         code_object.increment_usage_count!
@@ -55,7 +56,8 @@ class SignupController < ApplicationController
           email_address: params[:email_address],
           name: params[:name],
           password: user_password,
-          school_id: school_id
+          school_id: school_id,
+          uid: SecureRandom.uuid
         )
       if staff.save
         code_object.increment_usage_count!
@@ -98,11 +100,11 @@ class SignupController < ApplicationController
   end
 
   def student_params
-    params.require(:student).permit(:name, :school_id, :email_address, :password, :password_confirmation)
+    params.require(:student).permit(:name, :school_id, :email_address, :password, :password_confirmation, :uid)
   end
 
   def staff_params
-    params.require(:staff).permit(:name, :school_id, :email_address, :password, :password_confirmation)
+    params.require(:staff).permit(:name, :school_id, :email_address, :password, :password_confirmation, :uid)
   end
 
   def principal_params

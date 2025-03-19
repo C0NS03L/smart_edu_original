@@ -27,6 +27,9 @@
 #
 class Staff < User
   validates :name, presence: true
+  validates :uid, presence: true
+
+  accepts_nested_attributes_for :school
 
   def self.generate_enrollment_code(account_type)
     prefix =
