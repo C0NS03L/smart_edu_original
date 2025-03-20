@@ -6,8 +6,8 @@
     <div class="alert alert-danger"><%= flash[:alert] %></div>
   <% end %>
   <div class="text-center">
-    <h2 class="mb-4 text-3xl font-bold">Generate Student Code</h2>
-    <div class="rounded border p-4 shadow-sm">
+    <div class="rounded p-4 shadow-lg">
+      <h2 class="mb-4 text-3xl font-bold">Student Code</h2>
       <%= form_with url: staffs_create_code_path, method: :post, local: true do |form| %>
         <label for="student_uses" class="mb-2 block text-lg font-medium">Number of Accounts Required</label>
         <%= form.number_field :usage_limit,
@@ -18,4 +18,5 @@
       <% end %>
     </div>
   </div>
+  <%= render 'shared/back_to_dashboard_button' %>
 </div>
