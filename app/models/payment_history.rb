@@ -17,10 +17,8 @@
 #  transaction_id    :string
 #
 # Indexes
-#
-#  index_payment_histories_on_school_id       (school_id)
-#  index_payment_histories_on_transaction_id  (transaction_id) UNIQUE
-#
+#   #
+
 # Foreign Keys
 #
 #  school_id  (school_id => schools.id)
@@ -29,17 +27,12 @@ class PaymentHistory < ApplicationRecord
   belongs_to :school
 
   validates :amount, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :payment_date, presence: true
+
   validates :payment_method, presence: true
   validates :transaction_id, uniqueness: true, allow_nil: true
-
-  # Status can be 'success', 'failed', 'refunded'
   validates :status, presence: true
-
-  # Store the last 4 digits of the credit card and the card type (Visa, Mastercard, etc.)
   validates :card_last_digits, length: { is: 4 }, allow_nil: true
 
-  # Add a scope to easily find successful payments
   scope :successful, -> { where(status: 'success') }
 
   # Add a method to mask credit card info for display

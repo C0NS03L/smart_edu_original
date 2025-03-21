@@ -203,7 +203,6 @@
   document.getElementById('checkoutForm').addEventListener('submit', (event) => {
     event.preventDefault()
 
-    // Show a loading indicator if needed
     document.getElementById('paymentModalBody').innerText = 'Processing payment...'
     document.getElementById('paymentModal').classList.remove('hidden')
 
@@ -225,7 +224,6 @@
         })
       })
       .catch((error) => {
-        // Show a generic error if fetch itself fails
         document.getElementById('paymentModal').classList.add('hidden')
         alert('Network error: ' + error.message)
       })
