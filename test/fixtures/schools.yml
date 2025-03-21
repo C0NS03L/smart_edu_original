@@ -2,12 +2,16 @@
 #
 # Table name: schools
 #
-#  id         :integer          not null, primary key
-#  address    :string
-#  country    :string           not null
-#  name       :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                  :integer          not null, primary key
+#  address             :string
+#  country             :string           default("Unknown"), not null
+#  name                :string           not null
+#  next_payment_date   :datetime
+#  student_limit       :integer          default(0)
+#  subscription_status :string           default("pending")
+#  subscription_type   :string
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
 #
 school_1:
   id: 1
