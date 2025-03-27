@@ -1,21 +1,169 @@
-<% content_for :title, 'Dashboard' %>
-<div class="flex min-h-[calc(100vh-64px)] items-center justify-center">
-  <div class="stats stats-vertical lg:stats-horizontal text-3xl shadow-sm">
-    <div class="stat">
-      <div class="stat-figure text-secondary">
-        <i class="fa-solid fa-user-graduate"></i>
+<% content_for :title, 'SmartEDU - Effortless School Check-In and Attendance Management' %>
+
+<div class="min-h-screen bg-gradient-to-b from-blue-500 to-purple-500">
+  <!-- Hero Section -->
+  <section class="py-8">
+    <div class="container mx-auto bg-gradient-to-t from-transparent to-white px-6 py-12 md:py-24">
+      <div class="flex flex-col items-center lg:flex-row">
+        <div class="mb-8 text-center lg:mb-0 lg:w-1/2 lg:text-left">
+          <p
+            class="bg-linear-to-r mb-12 inline from-slate-800 via-red-800 to-indigo-800 bg-clip-text text-3xl font-semibold text-transparent"
+          >
+            SmartEDU
+          </p>
+          <h1 class="mb-4 text-4xl font-bold leading-tight sm:text-5xl">
+            Effortless School Check-In and Attendance Management
+          </h1>
+          <p class="mb-8 text-xl text-gray-700">
+            Simplify your attendance process, enhance security, and gain valuable insights with our comprehensive
+            solution.
+          </p>
+          <div class="flex flex-col justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 lg:justify-start">
+            <a href="#features" class="btn btn-secondary"> Learn More </a>
+            <%= link_to 'Get Started', new_session_path, class: 'btn btn-primary' %>
+          </div>
+        </div>
+        <div class="flex justify-center lg:w-1/2 lg:justify-end">
+          <img
+            src="https://placehold.co/600x400/E0E0E0/C0C0C0"
+            alt="SmartEDU Dashboard"
+            class="rounded-xl shadow-lg"
+            style="object-fit: contain; max-width: 100%;"
+          />
+        </div>
       </div>
-      <div class="stat-title">Students</div>
-      <div class="stat-value"><%= number_with_delimiter(@student_count) %></div>
-      <div class="stat-desc">Total Students</div>
     </div>
-    <div class="stat">
-      <div class="stat-figure text-accent">
-        <i class="fa-solid fa-user-tie"></i>
+  </section>
+
+  <!-- Problem and Solution Section -->
+  <section class="bg-white py-8">
+    <div class="container m-12 mx-auto px-6">
+      <div class="flex flex-row gap-12 lg:flex-col">
+        <!-- Problems Column -->
+        <div>
+          <h2 class="mb-6 text-3xl font-bold text-blue-600">The Challenges of Traditional Attendance</h2>
+          <ul class="space-y-4">
+            <li class="flex items-start">
+              <i class="fa-solid fa-triangle-exclamation mr-4 mt-1"></i>
+              <p class="text-slate-600">
+                <span class="font-semibold">Time-consuming manual processes</span> that take teachers away from valuable
+                instruction time.
+              </p>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-triangle-exclamation mr-4 mt-1"></i>
+              <p class="text-slate-600">
+                <span class="font-semibold">Inaccurate attendance records</span> leading to compliance issues and safety
+                concerns.
+              </p>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-triangle-exclamation mr-4 mt-1"></i>
+              <p class="text-slate-600">
+                <span class="font-semibold">Limited visibility</span> into attendance patterns and trends.
+              </p>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-triangle-exclamation mr-4 mt-1"></i>
+              <p class="text-slate-600">
+                <span class="font-semibold">Security vulnerabilities</span> with paper-based systems and outdated
+                technology.
+              </p>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-triangle-exclamation mr-4 mt-1"></i>
+              <p class="text-slate-600">
+                <span class="font-semibold">Difficulty communicating</span> attendance information to parents and
+                administrators.
+              </p>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Solutions Column -->
+        <div>
+          <h2 class="mb-6 text-3xl font-bold text-green-600">The SmartEDU Solution</h2>
+          <ul class="space-y-4">
+            <li class="flex items-start">
+              <i class="fa-solid fa-check mr-4 mt-1 text-green-600"></i>
+              <p class="text-slate-600">
+                <span class="font-semibold">Automated check-in system</span> that takes seconds, not minutes.
+              </p>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-check mr-4 mt-1 text-green-600"></i>
+              <p class="text-slate-600">
+                <span class="font-semibold">Real-time, accurate attendance tracking</span> with digital records and
+                backup.
+              </p>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-check mr-4 mt-1 text-green-600"></i>
+              <p class="text-slate-600">
+                <span class="font-semibold">Comprehensive reporting tools</span> that identify patterns and alert to
+                concerns.
+              </p>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-check mr-4 mt-1 text-green-600"></i>
+              <p class="text-slate-600">
+                <span class="font-semibold">Enhanced security features</span> with controlled access and data
+                protection.
+              </p>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-check mr-4 mt-1 text-green-600"></i>
+              <p class="text-slate-600">
+                <span class="font-semibold">Seamless communication</span> with automated notifications and shared
+                dashboards.
+              </p>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="stat-title">Total Check Ins</div>
-      <div class="stat-value"><%= number_with_delimiter(@attendance_count) %></div>
-      <div class="stat-desc">Last Check In <%= @last_checkin.nil? ? 'N/A' : time_ago_in_words(@last_checkin) %></div>
     </div>
-  </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="bg-transparent py-8" id="features">
+    <div class="container m-12 mx-auto px-6 text-center">
+      <h1 class="mb-4 text-4xl font-bold leading-tight sm:text-5xl">Key Features & Benefits</h1>
+      <p class="mb-8 text-xl">
+        SmartEDU provides everything you need to streamline attendance and <br />
+        enhance school safety
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4">
+        <div class="m-2 flex w-1/3 flex-col items-start rounded-lg bg-white p-6 shadow-md lg:w-1/4">
+          <div class="mb-4">
+            <i class="fa-solid fa-qrcode"></i>
+          </div>
+          <h3 class="mb-2 text-xl font-semibold text-blue-700">QR Code Check-In</h3>
+          <p class="text-gray-600">
+            Fast and efficient student check-in using QR codes, reducing lines and saving valuable time.
+          </p>
+        </div>
+
+        <div class="m-2 flex w-1/3 flex-col items-start rounded-lg bg-white p-6 shadow-md lg:w-1/4">
+          <div class="mb-4">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <h3 class="mb-2 text-xl font-semibold text-blue-700">Real-Time Reporting</h3>
+          <p class="text-gray-600">
+            Instant access to attendance data, trends, and insights to inform decision-making.
+          </p>
+        </div>
+
+        <div class="m-2 flex w-1/3 flex-col items-start rounded-lg bg-white p-6 shadow-md lg:w-1/4">
+          <div class="mb-4">
+            <i class="fa-solid fa-user-check"></i>
+          </div>
+          <h3 class="mb-2 text-xl font-semibold text-blue-700">Automated Notifications</h3>
+          <p class="text-gray-600">
+            Customizable alerts for late arrivals, early dismissals, and other attendance events.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
