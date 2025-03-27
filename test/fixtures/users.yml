@@ -38,6 +38,15 @@ admin_user:
   name: "Admin User"
   phone_number: "+15551234567"
 
+principal_user:
+  email_address: "principal@example.com"
+  password_digest: <%= BCrypt::Password.create('password') %>
+  school: school_one
+  type: "Principal"
+  name: "Principal Smith"
+  phone_number: "+15556789012"
+  uid: "PRIN001"
+
 staff_user:
   email_address: "staff@example.com"
   password_digest: <%= BCrypt::Password.create('password') %>
