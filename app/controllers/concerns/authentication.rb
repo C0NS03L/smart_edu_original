@@ -47,9 +47,7 @@ module Authentication
   end
 
   def request_authentication
-    unless Current.user
-      redirect_to new_session_path unless controller_name == 'home' && action_name == 'index'
-    end
+    redirect_to new_session_path unless Current.user || (controller_name == 'home' && action_name == 'index')
   end
 
   def after_authentication_url
