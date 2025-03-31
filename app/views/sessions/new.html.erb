@@ -1,6 +1,12 @@
 <%= render 'shared/single_box' do %>
   <div>
     <h1 class="pb-4 text-3xl font-bold"><%= render 'shared/logo_text' %> <%= t('sessions.sign_in_heading') %></h1>
+    <div class="language-switcher mb-4 flex justify-end">
+      <div class="join">
+        <%= link_to 'EN', { locale: :en }, class: "join-item btn btn-xs #{I18n.locale == :en ? 'btn-active' : ''}" %>
+        <%= link_to 'TH', { locale: :th }, class: "join-item btn btn-xs #{I18n.locale == :th ? 'btn-active' : ''}" %>
+      </div>
+    </div>
     <%= tag.div(flash[:alert], class: 'alert alert-error') if flash[:alert] %>
     <%= tag.div(flash[:notice], class: 'alert alert-success') if flash[:notice] %>
     <%= form_with(url: session_path, html: { autocomplete: 'on' }) do |form| %>

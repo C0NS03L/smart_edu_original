@@ -263,3 +263,9 @@ en:
       checked_in_heading: 'Checked-in Students'
       name: 'Name'
       time: 'Time'
+  drawer:
+    dashboard: 'Dashboard'
+    manage_students: 'Manage Students'
+    add_attendance: 'Add Attendance'
+    list_attendances: 'List Attendances'
+    logout: 'Logout'
