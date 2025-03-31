@@ -8,10 +8,19 @@
 }
 
 @theme {
-  --font-sans: InterVariable, sans-serif;
+  --font-sans: InterVariable, 'Noto Sans Thai', sans-serif;
 }
 
 @config '../../../config/tailwind.config.js';
+
+.thai-text {
+  font-family: 'Noto Sans Thai', sans-serif;
+}
+
+/* Automatically use Thai font when Thai locale is active */
+[lang='th'] {
+  font-family: 'Noto Sans Thai', InterVariable, sans-serif;
+}
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
