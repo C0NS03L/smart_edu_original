@@ -1,3 +1,13 @@
+<head>
+  <title>Subscriptions</title>
+  <script
+    src="https://cdn.omise.co/omise.js"
+    integrity="sha384-Ue+Uj0J/1ZGITiuYUvQgZGRWgS8ZuGIbVslPEqNh8EDJviXdDh2uWdudKLcFQBcm"
+    crossorigin="anonymous"
+    defer
+  ></script>
+</head>
+
 <% content_for :title, t('subscriptions.index.page_title') %>
 <div class="flex min-h-screen px-[40px] pt-[30px]">
   <div class="min-w-full">
@@ -213,43 +223,54 @@
   </div>
 </div>
 
-<script
-  src="https://cdn.omise.co/omise.js"
-  integrity="sha384-Ue+Uj0J/1ZGITiuYUvQgZGRWgS8ZuGIbVslPEqNh8EDJviXdDh2uWdudKLcFQBcm"
-  crossorigin="anonymous"
-></script>
-
 <script>
-  OmiseCard.configure({ publicKey: 'pkey_test_62unknn2ef7aol8k7nm' })
-
-  document.querySelectorAll('.select-tier').forEach((button) => {
-    button.addEventListener('click', (event) => {
-      const amount = event.target.getAttribute('data-amount')
-      const tier = event.target.getAttribute('data-tier')
-
-      document.getElementById('amount').value = amount
-      document.getElementById('tier').value = tier
-
-      if (amount === '0') {
-        document.getElementById('checkoutForm').submit()
-      } else {
-        OmiseCard.open({
-          amount: parseInt(amount),
-          currency: 'USD',
-          defaultPaymentMethod: 'credit_card',
-          onCreateTokenSuccess: (nonce) => {
-            if (nonce.startsWith('tokn_')) {
-              document.querySelector('input[name="omiseToken"]').value = nonce
-              // redirect to success modal
-            } else {
-              document.querySelector('input[name="omiseSource"]').value = nonce
-            }
-            document.getElementById('checkoutForm').submit()
-          }
-        })
+  async function loadOmiseAPI() {
+    return new Promise((resolve, reject) => {
+      if (typeof OmiseCard !== 'undefined') {
+        return resolve()
       }
+      const script = document.createElement('script')
+      script.src = 'https://cdn.omise.co/omise.js'
+      script.integrity = 'sha384-Ue+Uj0J/1ZGITiuYUvQgZGRWgS8ZuGIbVslPEqNh8EDJviXdDh2uWdudKLcFQBcm'
+      script.crossOrigin = 'anonymous'
+      script.onload = resolve
+      script.onerror = reject
+      document.head.appendChild(script)
     })
-  })
+  }
+  async function initializePayment() {
+    await loadOmiseAPI()
+    OmiseCard.configure({ publicKey: 'pkey_test_62unknn2ef7aol8k7nm' })
+
+    document.querySelectorAll('.select-tier').forEach((button) => {
+      button.addEventListener('click', (event) => {
+        const amount = event.target.getAttribute('data-amount')
+        const tier = event.target.getAttribute('data-tier')
+
+        document.getElementById('amount').value = amount
+        document.getElementById('tier').value = tier
+
+        if (amount === '0') {
+          document.getElementById('checkoutForm').submit()
+        } else {
+          OmiseCard.open({
+            amount: parseInt(amount),
+            currency: 'USD',
+            defaultPaymentMethod: 'credit_card',
+            onCreateTokenSuccess: (nonce) => {
+              if (nonce.startsWith('tokn_')) {
+                document.querySelector('input[name="omiseToken"]').value = nonce
+                // redirect to success modal
+              } else {
+                document.querySelector('input[name="omiseSource"]').value = nonce
+              }
+              document.getElementById('checkoutForm').submit()
+            }
+          })
+        }
+      })
+    })
+  }
 
   document.getElementById('checkoutForm').addEventListener('submit', (event) => {
     event.preventDefault()
@@ -278,5 +299,9 @@
         document.getElementById('paymentModal').classList.add('hidden')
         alert('<%= t('subscriptions.index.network_error') %>: ' + error.message)
       })
+  })
+
+  document.addEventListener('turbo:load', function () {
+    initializePayment()
   })
 </script>
