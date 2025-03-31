@@ -1,7 +1,7 @@
 <!-- Include the necessary libraries -->
 
 <head>
-  <title>QR Scanner</title>
+  <title><%= t('qr.page_title') %></title>
   <meta name="turbo-visit-control" content="reload" />
   <meta name="csrf-token" content="<%= form_authenticity_token %>" />
   <script
@@ -58,9 +58,9 @@
     </div>
 
     <!-- Main Content -->
-    <h1 class="mb-6 text-4xl font-extrabold text-green-600">Attendance Logged</h1>
-    <p class="mb-8 text-xl text-gray-700">Scanned Student: <span id="studentName"></span><br /></p>
-    <p class="mb-8 text-xl text-gray-700">Timestamp: <span id="attendanceTimestamp"></span></p>
+    <h1 class="mb-6 text-4xl font-extrabold text-green-600"><%= t('qr.attendance_logged') %></h1>
+    <p class="mb-8 text-xl text-gray-700"><%= t('qr.scanned_student') %>: <span id="studentName"></span><br /></p>
+    <p class="mb-8 text-xl text-gray-700"><%= t('qr.timestamp') %>: <span id="attendanceTimestamp"></span></p>
 
     <!-- Back to Home Button -->
     <div class="mt-12">
@@ -68,13 +68,13 @@
         class="inline-block rounded-lg bg-gray-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
         onclick="restartScanner()"
       >
-        Scan Again
+        <%= t('qr.scan_again') %>
       </button>
       <a
         href="/home/index"
         class="inline-block rounded-lg bg-green-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
       >
-        Go to Dashboard
+        <%= t('qr.go_to_dashboard') %>
       </a>
     </div>
   </div>
@@ -91,8 +91,8 @@
     </div>
 
     <!-- Main Content -->
-    <h1 class="mb-6 text-4xl font-extrabold text-red-600">Attendance Failed</h1>
-    <p class="mb-8 text-xl text-gray-700">Error: <span id="errorMessage"></span><br /></p>
+    <h1 class="mb-6 text-4xl font-extrabold text-red-600"><%= t('qr.attendance_failed') %></h1>
+    <p class="mb-8 text-xl text-gray-700"><%= t('qr.error') %>: <span id="errorMessage"></span><br /></p>
 
     <!-- Back to Home Button -->
     <div class="mt-12">
@@ -100,14 +100,14 @@
         class="inline-block rounded-lg bg-gray-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
         onclick="restartScanner()"
       >
-        Scan Again
+        <%= t('qr.scan_again') %>
       </button>
       <a
         href="/home/index"
         class="inline-block rounded-lg bg-green-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
         onclick="goToDashboard()"
       >
-        Go to Dashboard
+        <%= t('qr.go_to_dashboard') %>
       </a>
     </div>
   </div>

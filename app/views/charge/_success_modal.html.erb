@@ -10,9 +10,8 @@
     </div>
 
     <!-- Main Content -->
-    <h1 class="mb-6 text-4xl font-extrabold text-green-600">Payment Successful!</h1>
-
-    <p class="mb-8 text-xl text-gray-700">Thank you for your purchase.</p>
+    <h1 class="mb-6 text-4xl font-extrabold text-green-600"><%= t('charge.success_modal.heading') %></h1>
+    <p class="mb-8 text-xl text-gray-700"><%= t('charge.success_modal.message') %></p>
 
     <!-- Back to Home Button -->
     <div class="mt-12">
@@ -20,7 +19,7 @@
         href="/principal/dashboard"
         class="inline-block rounded-lg bg-green-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
       >
-        Go to Dashboard
+        <%= t('charge.success_modal.dashboard_button') %>
       </a>
     </div>
   </div>

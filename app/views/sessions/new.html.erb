@@ -1,6 +1,12 @@
 <%= render 'shared/single_box' do %>
   <div>
-    <h1 class="pb-4 text-3xl font-bold"><%= render 'shared/logo_text' %> Sign in</h1>
+    <h1 class="pb-4 text-3xl font-bold"><%= render 'shared/logo_text' %> <%= t('sessions.sign_in_heading') %></h1>
+    <div class="language-switcher mb-4 flex justify-end">
+      <div class="join">
+        <%= link_to 'EN', { locale: :en }, class: "join-item btn btn-xs #{I18n.locale == :en ? 'btn-active' : ''}" %>
+        <%= link_to 'TH', { locale: :th }, class: "join-item btn btn-xs #{I18n.locale == :th ? 'btn-active' : ''}" %>
+      </div>
+    </div>
     <%= tag.div(flash[:alert], class: 'alert alert-error') if flash[:alert] %>
     <%= tag.div(flash[:notice], class: 'alert alert-success') if flash[:notice] %>
     <%= form_with(url: session_path, html: { autocomplete: 'on' }) do |form| %>
@@ -8,17 +14,21 @@
                            required: true,
                            autofocus: true,
                            autocomplete: 'username',
-                           placeholder: 'Enter your email address',
+                           placeholder: t('sessions.email_placeholder'),
                            value: params[:email_address],
                            class: 'input input-bordered input-primary w-full mt-2' %><br />
       <%= form.password_field :password,
                               required: true,
                               autocomplete: 'current-password',
-                              placeholder: 'Enter your password',
+                              placeholder: t('sessions.password_placeholder'),
                               class: 'input input-bordered input-primary w-full mt-2' %><br />
-      <%= form.submit 'Sign in', class: 'btn btn-primary btn-wide mt-4 w-full' %>
+      <%= form.submit t('sessions.submit_button'), class: 'btn btn-primary btn-wide mt-4 w-full' %>
     <% end %>
-    <div><%= link_to 'Sign Up', new_signup_path, method: :get, class: 'btn btn-secondary btn-wide w-full mt-4' %></div>
-    <div class="pt-4"><%= link_to 'Forgot Password?', new_password_path, class: 'link link-info' %></div>
+    <div>
+      <%= link_to t('sessions.sign_up_link'), new_signup_path, method: :get, class: 'btn btn-secondary btn-wide w-full mt-4' %>
+    </div>
+    <div class="pt-4">
+      <%= link_to t('sessions.forgot_password_link'), new_password_path, class: 'link link-info' %>
+    </div>
   </div>
 <% end %>
