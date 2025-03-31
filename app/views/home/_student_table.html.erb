@@ -1,17 +1,17 @@
 <table class="table-zebra table">
   <thead>
     <tr>
-      <th><%= sort_link(q, :name, 'Name') %></th>
-      <th><%= sort_link(q, :date, 'Date') %></th>
-      <th><%= sort_link(q, :check_in_time, 'Check In Time') %></th>
+      <th><%= sort_link(q, :name, t('tables.student.name')) %></th>
+      <th><%= sort_link(q, :date, t('tables.student.date')) %></th>
+      <th><%= sort_link(q, :check_in_time, t('tables.student.check_in_time')) %></th>
     </tr>
   </thead>
   <tbody>
     <% @attendance_history.each do |attendance| %>
       <tr class="hover">
         <td><%= attendance.student.name %></td>
-        <td><%= attendance.timestamp.strftime('%Y-%m-%d') %></td>
-        <td><%= attendance.timestamp.strftime('%H:%M:%S') %></td>
+        <td><%= l(attendance.timestamp, format: :short) %></td>
+        <td><%= l(attendance.timestamp, format: :time) %></td>
       </tr>
     <% end %>
   </tbody>

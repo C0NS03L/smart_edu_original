@@ -1,10 +1,12 @@
-<% content_for :title, 'Subscriptions' %>
+<% content_for :title, t('subscriptions.index.page_title') %>
 <div class="flex min-h-screen px-[40px] pt-[30px]">
   <div class="min-w-full">
-    <p class="text-[20px] font-semibold leading-[40px] text-[#00153B]">Your Subscription</p>
+    <p class="text-[20px] font-semibold leading-[40px] text-[#00153B]">
+      <%= t('subscriptions.index.your_subscription') %>
+    </p>
 
     <div>
-      <p class="text-[15px] font-medium leading-[27px] text-[#717F87]">Select Plan</p>
+      <p class="text-[15px] font-medium leading-[27px] text-[#717F87]"><%= t('subscriptions.index.select_plan') %></p>
     </div>
 
     <div class="mt-[20px] grid grid-cols-3 gap-[20px]">
@@ -15,27 +17,39 @@
         <div class="px-[25px] pb-[25px] pt-[15px]">
           <div class="flex justify-end">
             <div class="align-center flex justify-center rounded-[20px] bg-[#F6F6F7] px-[12px]">
-              <p class="text-[12px] font-bold leading-[28px] text-[#00153B]">Starter</p>
+              <p class="text-[12px] font-bold leading-[28px] text-[#00153B]"><%= t('subscriptions.index.starter') %></p>
             </div>
           </div>
 
           <div>
-            <p class="text-[19px] font-bold leading-[24px] text-[#00153B]">Trial</p>
-            <p class="text-[50px] font-bold leading-[63px] text-[#00153B]">Free</p>
+            <p class="text-[19px] font-bold leading-[24px] text-[#00153B]"><%= t('subscriptions.index.trial') %></p>
+            <p class="text-[50px] font-bold leading-[63px] text-[#00153B]"><%= t('subscriptions.index.free') %></p>
           </div>
 
           <div>
-            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">200 Students</p>
-            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">30 Days</p>
+            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">
+              <%= t('subscriptions.index.trial_students', count: 200) %>
+            </p>
+            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">
+              <%= t('subscriptions.index.trial_days', count: 30) %>
+            </p>
           </div>
         </div>
 
         <div class="px-[25px] pb-[35px] pt-[25px]">
           <div>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">Attendance Tracker</p>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">QR Scanner Check In</p>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">Enrollment Code System</p>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">Track Payment Invoice</p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
+              <%= t('subscriptions.index.features.attendance') %>
+            </p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
+              <%= t('subscriptions.index.features.qr_scanner') %>
+            </p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
+              <%= t('subscriptions.index.features.enrollment') %>
+            </p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
+              <%= t('subscriptions.index.features.invoice') %>
+            </p>
           </div>
 
           <div class="mt-[25px]">
@@ -44,7 +58,7 @@
               data-amount="0"
               data-tier="trial"
             >
-              Try Free
+              <%= t('subscriptions.index.try_free') %>
             </button>
           </div>
         </div>
@@ -57,30 +71,46 @@
         <div class="px-[25px] pb-[25px] pt-[15px]">
           <div class="flex justify-end">
             <div class="align-center flex justify-center rounded-[20px] bg-[#F6F6F7] px-[12px]">
-              <p class="text-[12px] font-bold leading-[28px] text-[#00153B]">Value</p>
+              <p class="text-[12px] font-bold leading-[28px] text-[#00153B]"><%= t('subscriptions.index.value') %></p>
             </div>
           </div>
 
           <div>
-            <p class="text-[19px] font-bold leading-[24px] text-[#00153B]">Fast Start</p>
+            <p class="text-[19px] font-bold leading-[24px] text-[#00153B]">
+              <%= t('subscriptions.index.fast_start') %>
+            </p>
             <div class="flex items-baseline">
               <p class="text-[45px] font-bold leading-[63px] text-[#00153B]">$500</p>
-              <span class="text-[20px] font-medium leading-[25px] text-[#00153B]">/mo</span>
+              <span class="text-[20px] font-medium leading-[25px] text-[#00153B]"
+                ><%= t('subscriptions.index.per_month') %></span
+              >
             </div>
           </div>
 
           <div>
-            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">500 Students</p>
-            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">$1.00 Per Student</p>
+            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">
+              <%= t('subscriptions.index.std_students', count: 500) %>
+            </p>
+            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">
+              <%= t('subscriptions.index.price_per_student', price: '$1.00') %>
+            </p>
           </div>
         </div>
 
         <div class="px-[25px] pb-[35px] pt-[25px]">
           <div>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">Attendance Tracker</p>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">QR Scanner Check In</p>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">Enrollment Code System</p>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">Track Payment Invoice</p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
+              <%= t('subscriptions.index.features.attendance') %>
+            </p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
+              <%= t('subscriptions.index.features.qr_scanner') %>
+            </p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
+              <%= t('subscriptions.index.features.enrollment') %>
+            </p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
+              <%= t('subscriptions.index.features.invoice') %>
+            </p>
           </div>
 
           <div class="mt-[25px]">
@@ -89,7 +119,7 @@
               data-amount="50000"
               data-tier="standard"
             >
-              Buy Now
+              <%= t('subscriptions.index.buy_now') %>
             </button>
           </div>
         </div>
@@ -102,30 +132,46 @@
         <div class="px-[25px] pb-[25px] pt-[15px]">
           <div class="flex justify-end">
             <div class="align-center flex justify-center rounded-[20px] bg-[#F6F6F7] px-[12px]">
-              <p class="text-[12px] font-bold leading-[28px] text-[#00153B]">Pro</p>
+              <p class="text-[12px] font-bold leading-[28px] text-[#00153B]"><%= t('subscriptions.index.pro') %></p>
             </div>
           </div>
 
           <div>
-            <p class="text-[19px] font-bold leading-[24px] text-[#00153B]">Accelerate</p>
+            <p class="text-[19px] font-bold leading-[24px] text-[#00153B]">
+              <%= t('subscriptions.index.accelerate') %>
+            </p>
             <div class="flex items-baseline">
               <p class="text-[45px] font-bold leading-[63px] text-[#00153B]">$800</p>
-              <span class="text-[20px] font-medium leading-[25px] text-[#00153B]">/mo</span>
+              <span class="text-[20px] font-medium leading-[25px] text-[#00153B]"
+                ><%= t('subscriptions.index.per_month') %></span
+              >
             </div>
           </div>
 
           <div>
-            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">1000 Students</p>
-            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">$0.8 Per Student</p>
+            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">
+              <%= t('subscriptions.index.premium_students', count: 1000) %>
+            </p>
+            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">
+              <%= t('subscriptions.index.price_per_student', price: '$0.8') %>
+            </p>
           </div>
         </div>
 
         <div class="px-[25px] pb-[35px] pt-[25px]">
           <div>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">Attendance Tracker</p>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">QR Scanner Check In</p>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">Enrollment Code System</p>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">Track Payment Invoice</p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
+              <%= t('subscriptions.index.features.attendance') %>
+            </p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
+              <%= t('subscriptions.index.features.qr_scanner') %>
+            </p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
+              <%= t('subscriptions.index.features.enrollment') %>
+            </p>
+            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
+              <%= t('subscriptions.index.features.invoice') %>
+            </p>
           </div>
           <div class="mt-[25px]">
             <button
@@ -133,7 +179,7 @@
               data-amount="80000"
               data-tier="premium"
             >
-              Buy Now
+              <%= t('subscriptions.index.buy_now') %>
             </button>
           </div>
         </div>
@@ -154,14 +200,14 @@
 <!-- Payment Result Modal -->
 <div id="paymentModal" class="fixed inset-0 z-50 flex hidden items-center justify-center bg-gray-900 bg-opacity-50">
   <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
-    <h2 class="mb-4 text-xl font-bold">Payment Status</h2>
+    <h2 class="mb-4 text-xl font-bold"><%= t('subscriptions.index.payment_status') %></h2>
     <p id="paymentModalBody" class="text-gray-700"></p>
     <div class="mt-6 flex justify-end">
       <button
         class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
         onclick="document.getElementById('paymentModal').classList.add('hidden')"
       >
-        Close
+        <%= t('subscriptions.index.close') %>
       </button>
     </div>
   </div>
@@ -208,7 +254,7 @@
   document.getElementById('checkoutForm').addEventListener('submit', (event) => {
     event.preventDefault()
 
-    document.getElementById('paymentModalBody').innerText = 'Processing payment...'
+    document.getElementById('paymentModalBody').innerText = '<%= t('subscriptions.index.processing_payment') %>'
     document.getElementById('paymentModal').classList.remove('hidden')
 
     fetch(event.target.action, {
@@ -230,7 +276,7 @@
       })
       .catch((error) => {
         document.getElementById('paymentModal').classList.add('hidden')
-        alert('Network error: ' + error.message)
+        alert('<%= t('subscriptions.index.network_error') %>: ' + error.message)
       })
   })
 </script>

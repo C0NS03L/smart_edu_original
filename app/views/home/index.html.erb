@@ -1,21 +1,24 @@
-<% content_for :title, 'Dashboard' %>
+<% content_for :title, t('home.index.page_title') %>
 <div class="flex min-h-[calc(100vh-64px)] items-center justify-center">
   <div class="stats stats-vertical lg:stats-horizontal text-3xl shadow-sm">
     <div class="stat">
       <div class="stat-figure text-secondary">
         <i class="fa-solid fa-user-graduate"></i>
       </div>
-      <div class="stat-title">Students</div>
+      <div class="stat-title"><%= t('home.index.students') %></div>
       <div class="stat-value"><%= number_with_delimiter(@student_count) %></div>
-      <div class="stat-desc">Total Students</div>
+      <div class="stat-desc"><%= t('home.index.total_students') %></div>
     </div>
     <div class="stat">
       <div class="stat-figure text-accent">
         <i class="fa-solid fa-user-tie"></i>
       </div>
-      <div class="stat-title">Total Check Ins</div>
+      <div class="stat-title"><%= t('home.index.total_check_ins') %></div>
       <div class="stat-value"><%= number_with_delimiter(@attendance_count) %></div>
-      <div class="stat-desc">Last Check In <%= @last_checkin.nil? ? 'N/A' : time_ago_in_words(@last_checkin) %></div>
+      <div class="stat-desc">
+        <%= t('home.index.last_check_in') %>
+        <%= @last_checkin.nil? ? t('home.index.not_available') : time_ago_in_words(@last_checkin) %>
+      </div>
     </div>
   </div>
 </div>

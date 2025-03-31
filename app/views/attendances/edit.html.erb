@@ -1,12 +1,12 @@
-<% content_for :title, 'Editing attendance' %>
+<% content_for :title, t('attendances.edit.page_title') %>
 <div class="container mx-auto px-4 py-8">
-  <%# <h1 class="text-3xl font-bold mb-6">Editing attendance</h1> %>
+  <%# <h1 class="text-3xl font-bold mb-6"><%= t('attendances.edit.heading') </h1> %>
   <div class="card bg-base-100 shadow-xl">
     <div class="card-body">
       <%= render 'form', attendance: @attendance %>
       <div class="card-actions mt-6 justify-end space-x-2">
-        <%= link_to 'Show this attendance', @attendance, class: 'btn btn-primary' %>
-        <%= link_to 'Back to attendances', attendances_path, class: 'btn btn-ghost' %>
+        <%= link_to t('attendances.edit.show_link'), @attendance, class: 'btn btn-primary' %>
+        <%= link_to t('attendances.edit.back_link'), attendances_path, class: 'btn btn-ghost' %>
       </div>
     </div>
   </div>
