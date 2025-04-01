@@ -4,6 +4,7 @@
       <th><%= sort_link(@q, :name, 'Name') %></th>
       <th><%= sort_link(@q, :date, 'Date') %></th>
       <th><%= sort_link(@q, :check_in_time, 'Check In Time') %></th>
+      <th><%= sort_link(@q, :email_address, 'Email') %></th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -14,6 +15,7 @@
           <td><%= student.name %></td>
           <td><%= attendance.timestamp.strftime('%Y-%m-%d') %></td>
           <td><%= attendance.timestamp.strftime('%H:%M:%S') %></td>
+          <td><%= student.email_address %></td>
           <td>
             <div class="flex space-x-2">
               <%= link_to student, class: 'hover:text-blue-500 text-blue-700' do %>
