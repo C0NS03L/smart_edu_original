@@ -56,7 +56,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_17_000002) do
     t.string 'address'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.string 'country', default: 'Unknown', null: false
+    t.string 'country', null: false
     t.string 'subscription_status', default: 'pending'
     t.string 'subscription_type'
     t.datetime 'next_payment_date'

@@ -11,7 +11,7 @@
       <tr class="hover">
         <td><%= attendance.student.name %></td>
         <td><%= l(attendance.timestamp, format: :short) %></td>
-        <td><%= l(attendance.timestamp, format: :time) %></td>
+        <td><%= l(attendance.timestamp, format: :time_only) %></td>
       </tr>
     <% end %>
   </tbody>

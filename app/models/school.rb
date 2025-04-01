@@ -4,7 +4,7 @@
 #
 #  id                  :integer          not null, primary key
 #  address             :string
-#  country             :string           default("Unknown"), not null
+#  country             :string           not null
 #  name                :string           not null
 #  next_payment_date   :datetime
 #  student_limit       :integer          default(0)
