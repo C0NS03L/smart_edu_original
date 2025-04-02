@@ -135,6 +135,8 @@ th:
       generate_codes: 'สร้างรหัส'
       generate_enrollment_codes: 'สร้างรหัสลงทะเบียน'
       attendance: 'การเข้าเรียน'
+      settings: 'การตั้งค่า'
+      settings_button: 'การตั้งค่าโรงเรียน'
     generate_code:
       page_title: 'การสร้างรหัส'
       staff_code_heading: 'รหัสเจ้าหน้าที่'
@@ -142,6 +144,13 @@ th:
       number_of_accounts: 'จำนวนบัญชีที่ต้องการ'
       enter_number: 'ใส่จำนวน'
       generate_button: 'สร้าง'
+    settings:
+      page_title: 'การตั้งค่าโรงเรียน'
+      heading: 'การตั้งค่าโรงเรียน'
+      timezone_label: 'เขตเวลาของโรงเรียน'
+      timezone_help: 'เลือกเขตเวลาสำหรับโรงเรียนของคุณ ซึ่งมีผลต่อการแสดงเวลาทั้งหมดในระบบ'
+      save_button: 'บันทึกการตั้งค่า'
+      update_success: 'อัปเดตการตั้งค่าเรียบร้อยแล้ว'
   passwords_mailer:
     reset:
       instructions: 'คุณสามารถรีเซ็ตรหัสผ่านได้ภายใน 15 นาทีถัดไปที่'
@@ -175,6 +184,7 @@ th:
       date_only: '%Y-%m-%d'
       time_only: '%H:%M:%S'
       short: '%Y-%m-%d %H:%M'
+      time: '%H:%M'
   charge:
     fail_modal:
       heading: 'การชำระเงินล้มเหลว!'

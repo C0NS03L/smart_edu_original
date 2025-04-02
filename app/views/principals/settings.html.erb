@@ -1,0 +1,37 @@
+<% content_for :title, t('principals.settings.page_title') %>
+
+<div class="flex min-h-[calc(100vh-64px)] flex-col items-center justify-center">
+  <%= render 'shared/notice' %>
+
+  <div class="w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg">
+    <h1 class="mb-6 text-2xl font-bold"><%= t('principals.settings.heading') %></h1>
+
+    <%= form_with(model: @school, url: principal_settings_path, method: :patch) do |form| %>
+      <% if @school.errors.any? %>
+        <div class="alert alert-error mb-4">
+          <h2><%= pluralize(@school.errors.count, 'error') %> prohibited this update:</h2>
+          <ul>
+            <% @school.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="form-control mb-4">
+        <%= form.label :timezone, t('principals.settings.timezone_label'), class: 'label' %>
+        <%= form.time_zone_select :timezone,
+                                  ActiveSupport::TimeZone.all.sort,
+                                  { default: @school.timezone || 'Asia/Bangkok' },
+                                  { class: 'select select-bordered w-full' } %>
+        <div class="label-text-alt text-gray-500"><%= t('principals.settings.timezone_help') %></div>
+      </div>
+
+      <div class="mt-6 flex justify-end">
+        <%= form.submit t('principals.settings.save_button'), class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= render 'shared/back_to_dashboard_button' %>
+</div>

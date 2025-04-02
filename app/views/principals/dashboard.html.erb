@@ -55,4 +55,10 @@
       <div class="overflow-x-auto"><%= render 'shared/all_students_table', q: @q %></div>
     </div>
   </div>
+  <div class="stat">
+    <div class="stat-title text-xl font-bold"><%= t('principals.dashboard.settings') %></div>
+    <div class="stat-value">
+      <%= link_to t('principals.dashboard.settings_button'), principal_settings_path, class: 'btn btn-primary' %>
+    </div>
+  </div>
 </div>

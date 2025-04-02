@@ -164,13 +164,22 @@ en:
       generate_codes: 'Generate Codes'
       generate_enrollment_codes: 'Generate Enrollment Codes'
       attendance: 'Attendance'
-      generate_code:
-        page_title: 'Code Generation'
-        staff_code_heading: 'Staff Code'
-        student_code_heading: 'Student Code'
-        number_of_accounts: 'Number of Accounts Required'
-        enter_number: 'Enter Number'
-        generate_button: 'Generate'
+      settings: 'Settings'
+      settings_button: 'School Settings'
+    generate_code:
+      page_title: 'Code Generation'
+      staff_code_heading: 'Staff Code'
+      student_code_heading: 'Student Code'
+      number_of_accounts: 'Number of Accounts Required'
+      enter_number: 'Enter Number'
+      generate_button: 'Generate'
+    settings:
+      page_title: 'School Settings'
+      heading: 'School Settings'
+      timezone_label: 'School Timezone'
+      timezone_help: 'Select the timezone for your school. This affects how times are displayed throughout the system.'
+      save_button: 'Save Settings'
+      update_success: 'Settings updated successfully'
   passwords_mailer:
     reset:
       instructions: 'You can reset your password within the next 15 minutes on'
@@ -204,6 +213,7 @@ en:
       date_only: '%Y-%m-%d'
       time_only: '%H:%M:%S'
       short: '%Y-%m-%d %H:%M'
+      time: '%H:%M'
   charge:
     fail_modal:
       heading: 'Payment Failed!'

@@ -10,6 +10,7 @@
 #  student_limit       :integer          default(0)
 #  subscription_status :string           default("pending")
 #  subscription_type   :string
+#  timezone            :string           default("Asia/Bangkok")
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #

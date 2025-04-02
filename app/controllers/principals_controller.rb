@@ -68,7 +68,26 @@ class PrincipalsController < ApplicationController
     end
   end
 
+  def settings
+    @school = Current.user.school
+  end
+
+  def update_settings
+    @school = Current.user.school
+
+    if @school.update(school_settings_params)
+      flash[:notice] = t('principals.settings.update_success')
+      redirect_to principal_settings_path
+    else
+      render :settings, status: :unprocessable_entity
+    end
+  end
+
   private
+
+  def school_settings_params
+    params.require(:school).permit(:timezone)
+  end
 
   def principal_params
     params.require(:principal).permit(
