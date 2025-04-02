@@ -119,6 +119,7 @@ en:
     for: 'for'
     name_placeholder: 'Name'
     email_placeholder: 'Email'
+    phone_number_placeholder: 'Phone Number'
     password_placeholder: 'Password'
     confirm_password_placeholder: 'Confirm Password'
     enrollment_code_placeholder: 'Enrollment Code'

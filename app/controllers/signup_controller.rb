@@ -38,7 +38,8 @@ class SignupController < ApplicationController
           name: params[:name],
           password: user_password,
           school_id: school_id,
-          uid: SecureRandom.uuid
+          uid: SecureRandom.uuid,
+          phone_number: params[:phone_number]
         )
       if student.save
         code_object.increment_usage_count!
@@ -57,7 +58,8 @@ class SignupController < ApplicationController
           name: params[:name],
           password: user_password,
           school_id: school_id,
-          uid: SecureRandom.uuid
+          uid: SecureRandom.uuid,
+          phone_number: params[:phone_number]
         )
       if staff.save
         code_object.increment_usage_count!
@@ -100,11 +102,27 @@ class SignupController < ApplicationController
   end
 
   def student_params
-    params.require(:student).permit(:name, :school_id, :email_address, :password, :password_confirmation, :uid)
+    params.require(:student).permit(
+      :name,
+      :school_id,
+      :email_address,
+      :password,
+      :password_confirmation,
+      :uid,
+      :phone_number
+    )
   end
 
   def staff_params
-    params.require(:staff).permit(:name, :school_id, :email_address, :password, :password_confirmation, :uid)
+    params.require(:staff).permit(
+      :name,
+      :school_id,
+      :email_address,
+      :password,
+      :password_confirmation,
+      :uid,
+      :phone_number
+    )
   end
 
   def principal_params

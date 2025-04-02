@@ -22,6 +22,11 @@
                          class: 'input input-bordered w-full mt-2',
                          placeholder: t('signup.email_placeholder'),
                          autocomplete: 'username' %>
+    <%= form.text_field :phone_number,
+                        class: 'input input-bordered w-full mt-2',
+                        placeholder: t('signup.phone_number_placeholder'),
+                        required: true,
+                        autofocus: true %>
     <%= form.password_field :password,
                             class: 'input input-bordered w-full mt-2',
                             placeholder: t('signup.password_placeholder'),
