@@ -151,6 +151,23 @@ th:
       timezone_help: 'เลือกเขตเวลาสำหรับโรงเรียนของคุณ ซึ่งมีผลต่อการแสดงเวลาทั้งหมดในระบบ'
       save_button: 'บันทึกการตั้งค่า'
       update_success: 'อัปเดตการตั้งค่าเรียบร้อยแล้ว'
+      theme_section: 'การตั้งค่าธีม'
+      timezone_section: 'การตั้งค่าเขตเวลา'
+      theme_label: 'ธีม'
+      theme_help: 'เลือกธีมที่ออกแบบไว้ล่วงหน้าสำหรับอินเทอร์เฟซของโรงเรียนของคุณ'
+      theme_mode_label: 'โหมดธีม'
+      light_mode: 'โหมดสว่าง'
+      dark_mode: 'โหมดมืด'
+      primary_color: 'สีหลัก'
+      secondary_color: 'สีรอง'
+      accent_color: 'สีเน้น'
+      predefined_themes: 'ธีมที่กำหนดไว้ล่วงหน้า'
+      custom_theme: 'ธีมที่กำหนดเอง'
+      custom_theme_label: 'ธีม CSS ที่กำหนดเอง'
+      custom_theme_placeholder: 'วางธีม CSS ของ DaisyUI ที่นี่...'
+      custom_theme_help: 'วางธีมจาก DaisyUI Theme Generator หรือเขียน CSS ของคุณเอง'
+      preview_theme_button: 'ดูตัวอย่างธีมที่กำหนดเอง'
+      clear_custom_theme: 'ล้าง'
   passwords_mailer:
     reset:
       instructions: 'คุณสามารถรีเซ็ตรหัสผ่านได้ภายใน 15 นาทีถัดไปที่'
@@ -205,6 +222,7 @@ th:
     new:
       page_title: 'สร้างการเข้าเรียนใหม่'
       search_placeholder: 'ค้นหาตามชื่อนักเรียน...'
+      heading: 'สร้างการเข้าเรียนใหม่'
     index:
       page_title: 'การเข้าเรียน'
       new_attendance: 'สร้างการเข้าเรียนใหม่'

@@ -3,7 +3,7 @@
 <div class="flex min-h-[calc(100vh-64px)] flex-col items-center justify-center">
   <%= render 'shared/notice' %>
 
-  <div class="w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg">
+  <div class="bg-base-100 w-full max-w-2xl rounded-lg p-6 shadow-lg">
     <h1 class="mb-6 text-2xl font-bold"><%= t('principals.settings.heading') %></h1>
 
     <%= form_with(model: @school, url: principal_settings_path, method: :patch) do |form| %>
@@ -18,6 +18,9 @@
         </div>
       <% end %>
 
+      <!-- Timezone Settings -->
+      <div class="divider"><%= t('principals.settings.timezone_section') %></div>
+
       <div class="form-control mb-4">
         <%= form.label :timezone, t('principals.settings.timezone_label'), class: 'label' %>
         <%= form.time_zone_select :timezone,
@@ -25,6 +28,96 @@
                                   { default: @school.timezone || 'Asia/Bangkok' },
                                   { class: 'select select-bordered w-full' } %>
         <div class="label-text-alt text-gray-500"><%= t('principals.settings.timezone_help') %></div>
+      </div>
+
+      <!-- Theme Settings -->
+      <div class="divider"><%= t('principals.settings.theme_section') %></div>
+
+      <!-- Theme Type Selection (Tabs) -->
+      <div class="tabs mb-4">
+        <a class="tab tab-bordered <%= @school.custom_theme.blank? ? 'tab-active' : '' %>" id="predefined-tab"
+          ><%= t('principals.settings.predefined_themes') %></a
+        >
+        <a class="tab tab-bordered <%= @school.custom_theme.present? ? 'tab-active' : '' %>" id="custom-tab"
+          ><%= t('principals.settings.custom_theme') %></a
+        >
+      </div>
+
+      <!-- Predefined Themes Tab -->
+      <div id="predefined-themes" class="<%= @school.custom_theme.present? ? 'hidden' : '' %>">
+        <!-- Theme Selection -->
+        <div class="form-control mb-4">
+          <%= form.label :theme, t('principals.settings.theme_label'), class: 'label' %>
+          <%= form.select :theme,
+                          [
+                            %w[Pastel pastel],
+                            %w[Corporate corporate],
+                            %w[Light light],
+                            %w[Dark dark],
+                            %w[Cupcake cupcake],
+                            %w[Bumblebee bumblebee],
+                            %w[Emerald emerald],
+                            %w[Synthwave synthwave],
+                            %w[Retro retro],
+                            %w[Cyberpunk cyberpunk],
+                            %w[Valentine valentine],
+                            %w[Halloween halloween],
+                            %w[Garden garden],
+                            %w[Aqua aqua],
+                            %w[Lofi lofi],
+                            %w[Lemonade lemonade],
+                            %w[Night night],
+                            %w[Winter winter]
+                          ],
+                          { selected: @school.theme || 'pastel' },
+                          { class: 'select select-bordered w-full' } %>
+          <div class="label-text-alt text-gray-500"><%= t('principals.settings.theme_help') %></div>
+        </div>
+
+        <!-- Theme Previews -->
+        <div class="mb-6 grid grid-cols-3 gap-2">
+          <% %w[pastel corporate light dark cupcake bumblebee].each do |theme| %>
+            <div
+              class="theme-preview hover:border-primary cursor-pointer rounded border p-2 text-center"
+              data-theme="<%= theme %>"
+            >
+              <div class="flex justify-center">
+                <div class="bg-primary text-primary-content rounded p-2"><%= theme.capitalize %></div>
+              </div>
+              <div class="mt-2 flex justify-center space-x-1">
+                <span class="badge badge-primary"></span>
+                <span class="badge badge-secondary"></span>
+                <span class="badge badge-accent"></span>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Custom Theme Tab -->
+      <div id="custom-theme" class="<%= @school.custom_theme.blank? ? 'hidden' : '' %>">
+        <div class="form-control">
+          <%= form.label :custom_theme, t('principals.settings.custom_theme_label'), class: 'label' %>
+          <%= form.text_area :custom_theme,
+                             placeholder: t('principals.settings.custom_theme_placeholder'),
+                             class: 'textarea textarea-bordered h-64 font-mono text-sm',
+                             id: 'custom-theme-textarea' %>
+          <div class="label-text-alt text-gray-500">
+            <%= t('principals.settings.custom_theme_help') %>
+            <a href="https://daisyui.com/theme-generator/" target="_blank" class="link link-primary">
+              <%= t('principals.settings.theme_generator_link') %>
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-2">
+          <button type="button" class="btn btn-sm btn-secondary" id="preview-custom-theme">
+            <%= t('principals.settings.preview_theme_button') %>
+          </button>
+          <button type="button" class="btn btn-sm btn-ghost" id="clear-custom-theme">
+            <%= t('principals.settings.clear_custom_theme') %>
+          </button>
+        </div>
       </div>
 
       <div class="mt-6 flex justify-end">
@@ -35,3 +128,244 @@
 
   <%= render 'shared/back_to_dashboard_button' %>
 </div>
+
+<!-- Replace your existing script blocks with this unified script -->
+<script>
+  // Function to initialize theme settings
+  function initializeThemeSettings() {
+    // Tab switching
+    const predefinedTab = document.getElementById('predefined-tab')
+    const customTab = document.getElementById('custom-tab')
+    const predefinedThemes = document.getElementById('predefined-themes')
+    const customTheme = document.getElementById('custom-theme')
+    const customThemeStyleElement = document.getElementById('custom-theme-style')
+    let savedCustomCSS = '' // To store custom CSS when switching tabs
+
+    if (predefinedTab && customTab) {
+      predefinedTab.addEventListener('click', function () {
+        predefinedTab.classList.add('tab-active')
+        customTab.classList.remove('tab-active')
+        predefinedThemes.classList.remove('hidden')
+        customTheme.classList.add('hidden')
+
+        // Temporarily disable custom theme for previewing preset themes
+        if (customThemeStyleElement) {
+          savedCustomCSS = customThemeStyleElement.textContent
+          customThemeStyleElement.textContent = ''
+        }
+
+        // Reset to the current theme
+        const themeSelector = document.getElementById('school_theme')
+        if (themeSelector) {
+          document.documentElement.setAttribute('data-theme', themeSelector.value)
+        }
+      })
+
+      customTab.addEventListener('click', function () {
+        customTab.classList.add('tab-active')
+        predefinedTab.classList.remove('tab-active')
+        customTheme.classList.remove('hidden')
+        predefinedThemes.classList.add('hidden')
+
+        // Restore custom theme if it was previously saved
+        if (customThemeStyleElement && savedCustomCSS) {
+          customThemeStyleElement.textContent = savedCustomCSS
+        }
+      })
+    }
+
+    // Theme preview functionality
+    const themeSelector = document.getElementById('school_theme')
+    const previews = document.querySelectorAll('.theme-preview')
+
+    if (themeSelector) {
+      // Update preview when theme selector changes
+      themeSelector.addEventListener('change', function () {
+        // Temporarily disable custom theme for accurate preview
+        const customStyle = document.getElementById('custom-theme-style')
+        if (customStyle) {
+          savedCustomCSS = customStyle.textContent
+          customStyle.textContent = ''
+        }
+
+        // Set the theme
+        document.documentElement.setAttribute('data-theme', this.value)
+
+        // If we're in the predefined tab, keep the custom theme disabled
+        // Otherwise restore it
+        if (!predefinedTab.classList.contains('tab-active') && savedCustomCSS) {
+          setTimeout(() => {
+            if (customStyle) customStyle.textContent = savedCustomCSS
+          }, 100)
+        }
+      })
+
+      // Highlight initially selected theme
+      const initialTheme = themeSelector.value
+      const selectedPreview = document.querySelector(`.theme-preview[data-theme="${initialTheme}"]`)
+      if (selectedPreview) {
+        selectedPreview.classList.add('border-primary', 'border-2')
+      }
+    }
+
+    // Click on theme preview to select that theme
+    previews.forEach((preview) => {
+      preview.addEventListener('click', function () {
+        const theme = this.getAttribute('data-theme')
+        if (themeSelector) themeSelector.value = theme
+
+        // Temporarily disable custom theme for accurate preview
+        const customStyle = document.getElementById('custom-theme-style')
+        if (customStyle) {
+          savedCustomCSS = customStyle.textContent
+          customStyle.textContent = ''
+        }
+
+        // Set the theme
+        document.documentElement.setAttribute('data-theme', theme)
+
+        // Highlight selected preview
+        previews.forEach((p) => p.classList.remove('border-primary', 'border-2'))
+        this.classList.add('border-primary', 'border-2')
+      })
+    })
+
+    // Custom theme preview
+    const previewBtn = document.getElementById('preview-custom-theme')
+    if (previewBtn) {
+      previewBtn.addEventListener('click', function () {
+        const customCSS = document.getElementById('custom-theme-textarea').value
+        if (customCSS) {
+          let styleElement = document.getElementById('custom-theme-style')
+          if (!styleElement) {
+            styleElement = document.createElement('style')
+            styleElement.id = 'custom-theme-style'
+            document.head.appendChild(styleElement)
+          }
+
+          // Format the CSS properly
+          let formattedCSS = customCSS
+
+          // If it contains @plugin, extract just the variables
+          if (formattedCSS.includes('@plugin') || formattedCSS.includes('name:')) {
+            // Try to extract just the CSS variables
+            const cssVarLines = formattedCSS
+              .split('\n')
+              .filter((line) => line.trim().startsWith('--'))
+              .join('\n')
+
+            if (cssVarLines) {
+              formattedCSS = cssVarLines
+            }
+          }
+
+          // Save the formatted CSS
+          savedCustomCSS = formattedCSS
+
+          // Apply the custom theme CSS
+          styleElement.textContent = `:root { ${formattedCSS} }`
+
+          // Show a notification that the theme is being previewed
+          const notification = document.createElement('div')
+          notification.className = 'alert alert-info fixed top-4 left-1/2 transform -translate-x-1/2 z-50'
+          notification.innerHTML = '<%= t('principals.settings.previewing_theme') %>'
+          document.body.appendChild(notification)
+
+          // Remove the notification after 2 seconds
+          setTimeout(() => {
+            notification.remove()
+          }, 2000)
+        }
+      })
+    }
+
+    // Clear custom theme
+    const clearBtn = document.getElementById('clear-custom-theme')
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function () {
+        const textarea = document.getElementById('custom-theme-textarea')
+        if (textarea) textarea.value = ''
+
+        const styleElement = document.getElementById('custom-theme-style')
+        if (styleElement) {
+          styleElement.textContent = ''
+          savedCustomCSS = ''
+        }
+      })
+    }
+
+    // // Add an Extract Variables button
+    // const extractBtn = document.createElement('button')
+    // extractBtn.type = 'button'
+    // extractBtn.className = 'btn btn-sm btn-outline ml-1'
+    // extractBtn.id = 'extract-vars'
+    // extractBtn.textContent = '<%= t('principals.settings.extract_variables') || 'Extract Variables' %>'
+
+    // Insert after the preview button
+    const previewBtnContainer = previewBtn?.parentNode
+    if (previewBtnContainer && previewBtn && !document.getElementById('extract-vars')) {
+      previewBtnContainer.insertBefore(extractBtn, previewBtn.nextSibling)
+    }
+
+    // Add extract variables functionality
+    const extractVarsBtn = document.getElementById('extract-vars')
+    if (extractVarsBtn) {
+      extractVarsBtn.addEventListener('click', function () {
+        const textarea = document.getElementById('custom-theme-textarea')
+        if (!textarea) return
+
+        const currentText = textarea.value
+        if (!currentText) return
+
+        // Extract only CSS variable lines
+        const cssVarLines = currentText
+          .split('\n')
+          .filter((line) => line.trim().startsWith('--'))
+          .join('\n')
+
+        if (cssVarLines) {
+          textarea.value = cssVarLines
+
+          // Show success notification
+          const notification = document.createElement('div')
+          notification.className = 'alert alert-success fixed top-4 left-1/2 transform -translate-x-1/2 z-50'
+          notification.innerHTML = '<%= t('principals.settings.variables_extracted') || 'CSS variables extracted!' %>'
+          document.body.appendChild(notification)
+          setTimeout(() => notification.remove(), 2000)
+        }
+      })
+    }
+
+    // Check URL parameters for refresh flag
+    const urlParams = new URLSearchParams(window.location.search)
+    if (urlParams.has('refresh')) {
+      // Remove the refresh parameter from URL
+      urlParams.delete('refresh')
+      const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '')
+      window.history.replaceState({}, document.title, newUrl)
+
+      // Show a message that the theme is being applied
+      const noticeContainer = document.querySelector('.flex.min-h-\\[calc\\(100vh-64px\\)\\]')
+      if (noticeContainer) {
+        const applyingThemeMessage = document.createElement('div')
+        applyingThemeMessage.className = 'alert alert-info fixed top-4 left-1/2 transform -translate-x-1/2 z-50'
+        applyingThemeMessage.innerHTML = '<%= t('principals.settings.applying_theme') %>'
+        noticeContainer.appendChild(applyingThemeMessage)
+      }
+
+      // Refresh the page after a short delay
+      setTimeout(function () {
+        window.location.reload()
+      }, 500)
+    }
+  }
+
+  // Run on initial page load
+  document.addEventListener('DOMContentLoaded', initializeThemeSettings)
+
+  // Run on Turbo navigation
+  document.addEventListener('turbo:load', initializeThemeSettings)
+
+  // Fallback for older Turbolinks
+  document.addEventListener('turbolinks:load', initializeThemeSettings)
+</script>
