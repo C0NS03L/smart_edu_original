@@ -213,6 +213,7 @@ en:
       date_only: '%Y-%m-%d'
       time_only: '%H:%M:%S'
       short: '%Y-%m-%d %H:%M'
+      long: '%Y-%m-%d %H:%M:%S'
       time: '%H:%M'
   charge:
     fail_modal:
@@ -279,3 +280,5 @@ en:
     add_attendance: 'Add Attendance'
     list_attendances: 'List Attendances'
     logout: 'Logout'
+  controllers:
+    access_denied: 'Access denied. You must be a principal to view this page.'

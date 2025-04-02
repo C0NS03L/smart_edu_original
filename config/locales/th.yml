@@ -185,6 +185,7 @@ th:
       time_only: '%H:%M:%S'
       short: '%Y-%m-%d %H:%M'
       time: '%H:%M'
+      long: '%Y-%m-%d %H:%M:%S'
   charge:
     fail_modal:
       heading: 'การชำระเงินล้มเหลว!'
@@ -250,3 +251,48 @@ th:
     add_attendance: 'เพิ่มการเข้าเรียน'
     list_attendances: 'รายการการเข้าเรียน'
     logout: 'ออกจากระบบ'
+  datetime:
+    distance_in_words:
+      half_a_minute: 'ครึ่งนาที'
+      less_than_x_seconds:
+        one: 'น้อยกว่า 1 วินาที'
+        other: 'น้อยกว่า %{count} วินาที'
+      x_seconds:
+        one: '1 วินาที'
+        other: '%{count} วินาที'
+      less_than_x_minutes:
+        one: 'น้อยกว่า 1 นาที'
+        other: 'น้อยกว่า %{count} นาที'
+      x_minutes:
+        one: '1 นาที'
+        other: '%{count} นาที'
+      about_x_hours:
+        one: 'ประมาณ 1 ชั่วโมง'
+        other: 'ประมาณ %{count} ชั่วโมง'
+      x_days:
+        one: '1 วัน'
+        other: '%{count} วัน'
+      about_x_months:
+        one: 'ประมาณ 1 เดือน'
+        other: 'ประมาณ %{count} เดือน'
+      x_months:
+        one: '1 เดือน'
+        other: '%{count} เดือน'
+      about_x_years:
+        one: 'ประมาณ 1 ปี'
+        other: 'ประมาณ %{count} ปี'
+      over_x_years:
+        one: 'มากกว่า 1 ปี'
+        other: 'มากกว่า %{count} ปี'
+      almost_x_years:
+        one: 'เกือบ 1 ปี'
+        other: 'เกือบ %{count} ปี'
+    prompts:
+      year: 'ปี'
+      month: 'เดือน'
+      day: 'วัน'
+      hour: 'ชั่วโมง'
+      minute: 'นาที'
+      second: 'วินาที'
+  controllers:
+    access_denied: 'การเข้าถึงถูกปฏิเสธ คุณต้องเป็นผู้อำนวยการเพื่อดูหน้านี้'

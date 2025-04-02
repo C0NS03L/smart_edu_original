@@ -1,4 +1,6 @@
 class PrincipalsController < ApplicationController
+  before_action :require_principal
+
   def generate_code
   end
 
@@ -84,6 +86,13 @@ class PrincipalsController < ApplicationController
   end
 
   private
+
+  def require_principal
+    unless Current.principal?
+      flash[:alert] = t('controllers.access_denied')
+      redirect_to root_path
+    end
+  end
 
   def school_settings_params
     params.require(:school).permit(:timezone)
