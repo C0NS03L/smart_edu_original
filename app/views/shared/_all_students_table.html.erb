@@ -10,12 +10,19 @@
     </tr>
   </thead>
   <tbody>
-    <% @q.result.each do |student| %>
-      <% student.attendances.each do |attendance| %>
+    <% @q
+         .result
+         .includes(:attendances)
+         .to_a
+         .sort_by { |student| student.attendances.maximum(:timestamp) || Time.at(0) }
+         .reverse
+         .each do |student| %>
+      <% latest_attendance = student.attendances.order(timestamp: :desc).first %>
+      <% if latest_attendance %>
         <tr class="hover">
           <td><%= student.name %></td>
-          <td><%= attendance.timestamp.strftime('%Y-%m-%d') %></td>
-          <td><%= attendance.timestamp.strftime('%H:%M:%S') %></td>
+          <td><%= latest_attendance.timestamp.strftime('%Y-%m-%d') %></td>
+          <td><%= latest_attendance.timestamp.strftime('%H:%M:%S') %></td>
           <td><%= student.email_address %></td>
           <td><%= student.phone_number %></td>
           <td>
