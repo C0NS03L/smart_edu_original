@@ -35,16 +35,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Bar Chart
   const barCtx = document.getElementById('attendanceBarChart').getContext('2d')
-  const attendanceData = JSON.parse(barCanvas.dataset.attendanceData)
+  const attendanceData = JSON.parse(document.getElementById('attendanceBarChart').dataset.attendanceData)
+
+  if (attendanceData.length === 0) {
+    console.error('No attendance data available for the bar chart.')
+    return
+  }
 
   new Chart(barCtx, {
     type: 'bar',
     data: {
-      labels: attendanceData.dates,
+      labels: attendanceData.map((record) => record.date),
       datasets: [
         {
           label: 'Daily Attendance',
-          data: attendanceData.counts,
+          data: attendanceData.map((record) => record.count),
           backgroundColor: '#4CAF50'
         }
       ]
