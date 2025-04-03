@@ -2,6 +2,21 @@
   <h1 class="break-words pb-4 text-center text-3xl font-bold">
     <%= render 'shared/logo_text' %> <span class="inline-block"></span>
   </h1>
+
+  <!-- Display plan information -->
+  <div class="mb-4 rounded-lg bg-blue-50 p-4">
+    <h3 class="font-bold">Selected Plan: <%= params[:plan]&.capitalize || 'Unknown' %></h3>
+    <p>
+      <% if params[:plan] == 'free_trial' %>
+        Free Trial - 30 days
+      <% elsif params[:plan] == 'standard' %>
+        Standard Plan - $500/month
+      <% elsif params[:plan] == 'premium' %>
+        Premium Plan - $800/month
+      <% end %>
+    </p>
+  </div>
+
   <% if @principal.errors.any? %>
     <div class="alert alert-error mt-4">
       <ul>
@@ -14,9 +29,14 @@
   <%= form_with(
         model: @principal,
         url: create_principal_signup_path,
+        id: 'principalForm',
+        method: :post,
         class: 'form-control mt-4',
         html: {
-          autocomplete: 'on'
+          autocomplete: 'on',
+          data: {
+            turbo: false
+          }
         }
       ) do |form| %>
     <h2 class="text-lg font-bold"><%= t('signup.principal.enter_information') %></h2>
@@ -57,7 +77,78 @@
                                  placeholder: t('signup.principal.country_placeholder'),
                                  required: true %>
     <% end %>
-    <%= form.submit t('signup.submit_button'), class: 'btn btn-primary w-full mt-2' %>
+    <%= hidden_field_tag :plan, params[:plan] %>
+    <%= hidden_field_tag :amount, params[:amount] %>
+    <%= form.submit 'Subscribe', class: 'btn btn-primary w-full mt-2', id: 'subscribeButton' %>
   <% end %>
-  <%= link_to t('signup.back_to_signin'), new_session_path, class: 'btn btn-ghost' %>
 <% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('principalForm')
+    if (!form) {
+      console.error('Form not found!')
+      return
+    }
+
+    const subscribeBtn = document.getElementById('subscribeButton')
+    const planField = document.querySelector('input[name="plan"]')
+    const amountField = document.querySelector('input[name="amount"]')
+
+    // Load Omise JavaScript
+    const script = document.createElement('script')
+    script.src = 'https://cdn.omise.co/omise.js'
+    script.onload = function () {
+      console.log('Omise script loaded successfully')
+      OmiseCard.configure({
+        publicKey: 'pkey_test_62unknn2ef7aol8k7nm'
+      })
+    }
+    document.head.appendChild(script)
+
+    // Intercept form submission
+    form.addEventListener('submit', function (e) {
+      e.preventDefault()
+
+      const plan = planField.value
+      const amount = parseInt(amountField.value) || 0
+
+      console.log(`Processing plan: ${plan}, amount: ${amount}`)
+
+      // For free trial, just submit the form
+      if (plan === 'free_trial' || amount === 0) {
+        console.log('Free trial selected, submitting form directly')
+        form.submit()
+        return
+      }
+
+      // For paid plans, open Omise payment form
+      console.log('Opening Omise payment form for paid plan')
+      OmiseCard.open({
+        amount: amount,
+        currency: 'USD',
+        defaultPaymentMethod: 'credit_card',
+        onCreateTokenSuccess: function (token) {
+          console.log('Payment token created successfully')
+
+          // Add token to form
+          const tokenInput = document.createElement('input')
+          tokenInput.type = 'hidden'
+          tokenInput.name = 'omiseToken'
+          tokenInput.value = token
+          form.appendChild(tokenInput)
+
+          // Submit the form with the token
+          console.log('Submitting form with payment token')
+          form.submit()
+        },
+        onFormClosed: function () {
+          console.log('Payment form closed')
+          subscribeBtn.disabled = false
+        }
+      })
+
+      subscribeBtn.disabled = true
+    })
+  })
+</script>

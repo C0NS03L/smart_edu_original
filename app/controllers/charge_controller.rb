@@ -25,6 +25,15 @@ class ChargeController < ApplicationController
     end
   end
 
+  # Move the handle_payment method above the 'private' keyword
+  def handle_payment(school, tier, amount, omise_token, omise_source)
+    if amount == 0 && tier == 'trial'
+      handle_free_trial(school, tier)
+    else
+      handle_paid_subscription(school, tier, amount, omise_token, omise_source)
+    end
+  end
+
   private
 
   def ensure_payment_schema
@@ -38,15 +47,6 @@ class ChargeController < ApplicationController
              },
              status: :service_unavailable
       false
-    end
-  end
-
-  # New method to handle payment regardless of whether it's trial or paid
-  def handle_payment(school, tier, amount, omise_token, omise_source)
-    if amount == 0 && tier == 'trial'
-      handle_free_trial(school, tier)
-    else
-      handle_paid_subscription(school, tier, amount, omise_token, omise_source)
     end
   end
 

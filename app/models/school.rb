@@ -54,50 +54,38 @@ class School < ApplicationRecord
   end
 
   # Update subscription status based on payment
-  def record_payment(amount, payment_method, transaction_id, card_last_digits = nil, card_type = nil)
-    # Create a payment history record
-    payment =
-      payment_histories.create!(
-        amount: amount,
-        payment_date: Time.current,
-        payment_method: payment_method,
-        transaction_id: transaction_id,
-        status: 'success',
-        card_last_digits: card_last_digits,
-        card_type: card_type,
-        subscription_plan: subscription_type,
-        notes: "Payment for #{subscription_type} plan"
-      )
-
-    # Update subscription status and next payment date
-    update(subscription_status: 'active', next_payment_date: 30.days.from_now)
-
-    payment
+  def record_payment(amount, payment_method, transaction_id = nil, last_digits = nil, card_brand = nil)
+    # Create a payment record using PaymentHistory instead of Payment
+    PaymentHistory.create(
+      school: self,
+      amount: amount,
+      payment_date: Time.current,
+      payment_method: payment_method,
+      transaction_id: transaction_id,
+      card_last_digits: last_digits,
+      card_type: card_brand,
+      status: 'success',
+      subscription_plan: subscription_type
+    )
   end
 
   # Update student limit based on subscription type
-  def set_plan_limits(plan)
-    self.subscription_type = plan
-
-    # Set student limit based on the plan
-    self.student_limit =
-      case plan
-      when 'free_trial'
-        200
-      when '500_students'
-        500
-      when '1000_students'
-        1000
-      else
-        0
-      end
-
-    # Set the next payment date based on the plan
-    self.next_payment_date = plan == 'free_trial' ? 30.days.from_now : nil
-
-    # Set the status based on the plan
-    self.subscription_status = plan == 'free_trial' ? 'trial' : 'pending'
-
-    save!
+  def set_plan_limits(tier)
+    case tier
+    when 'free_trial'
+      self.student_limit = 200
+      self.subscription_type = 'trial'
+      self.subscription_status = 'active'
+      self.trial_ends_at = 30.days.from_now
+    when '500_students'
+      self.student_limit = 500
+      self.subscription_type = 'standard'
+      self.subscription_status = 'active'
+    when '1000_students'
+      self.student_limit = 1000
+      self.subscription_type = 'premium'
+      self.subscription_status = 'active'
+    end
+    save
   end
 end

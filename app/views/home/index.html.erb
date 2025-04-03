@@ -91,9 +91,12 @@
               QR Code Check-in
             </li>
           </ul>
-          <button class="select-tier btn btn-outline btn-primary w-full" data-amount="0" data-tier="trial">
+          <a
+            href="<%= new_principal_signup_path(plan: 'trial', amount: 0) %>"
+            class="btn btn-outline btn-primary w-full"
+          >
             Try For Free
-          </button>
+          </a>
         </div>
 
         <!-- Standard Plan -->
@@ -155,9 +158,9 @@
               Enrollment Management
             </li>
           </ul>
-          <button class="select-tier btn btn-primary w-full" data-amount="50000" data-tier="standard">
+          <a href="<%= new_principal_signup_path(plan: 'standard', amount: 50_000) %>" class="btn btn-primary w-full">
             Subscribe Now
-          </button>
+          </a>
         </div>
 
         <!-- Premium Plan -->
@@ -212,9 +215,9 @@
               Priority Support
             </li>
           </ul>
-          <button class="select-tier btn btn-primary w-full" data-amount="80000" data-tier="premium">
+          <a href="<%= new_principal_signup_path(plan: 'premium', amount: 80_000) %>" class="btn btn-primary w-full">
             Subscribe Now
-          </button>
+          </a>
         </div>
       </div>
 
