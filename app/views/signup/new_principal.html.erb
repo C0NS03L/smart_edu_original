@@ -55,7 +55,7 @@
                             autocomplete: 'new-password' %>
     <%= form.text_field :phone_number, class: 'input input-bordered w-full mt-2', placeholder: 'Phone Number', required: true %>
 
-    <h2 class="mt-4 text-lg font-bold">Enter School Your Information</h2>
+    <h2 class="mt-4 text-lg font-bold">Enter Your School Information</h2>
     <%= form.fields_for :school do |school_form| %>
       <%= school_form.text_field :name, class: 'input input-bordered w-full mt-2', placeholder: 'School Name', required: true %>
       <%= school_form.text_field :address,
