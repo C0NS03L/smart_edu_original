@@ -85,6 +85,7 @@ th:
       student_code: 'รหัสนักเรียน'
       enter_number: 'ใส่จำนวน'
       generate_button: 'สร้าง'
+      number_of_accounts: 'จำนวนบัญชี'
     manage_codes:
       page_title: 'จัดการรหัสการลงทะเบียนของนักเรียน'
       heading: 'จัดการรหัสการลงทะเบียนของนักเรียน'
@@ -155,6 +156,7 @@ th:
       student_code_heading: 'รหัสนักเรียน'
       enter_number: 'ใส่จำนวน'
       generate_button: 'สร้าง'
+      number_of_accounts: 'จำนวนบัญชี'
     manage_codes:
       page_title: 'จัดการรหัสการลงทะเบียน'
       heading: 'จัดการรหัสการลงทะเบียน'
