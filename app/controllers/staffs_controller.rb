@@ -1,4 +1,6 @@
 class StaffsController < ApplicationController
+  before_action :authorize_staff!
+
   def dashboard
     @staff_details = Current.user
     @school_details = Current.user.school
