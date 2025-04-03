@@ -1,4 +1,7 @@
 class PrincipalsController < ApplicationController
+  # Allow unauthenticated access to the new and create actions
+  allow_unauthenticated_access only: %i[new create]
+
   def generate_code
   end
 
@@ -56,15 +59,15 @@ class PrincipalsController < ApplicationController
 
   def new
     @principal = Principal.new
+    @principal.build_school # This ensures the school object exists for fields_for
   end
 
   def create
     @principal = Principal.new(principal_params)
     if @principal.save
-      start_new_session_for(@principal)
-      redirect_to subscriptions_path, notice: 'Principal was successfully created.'
+      redirect_to @principal, notice: 'Principal was successfully created.'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -72,12 +75,11 @@ class PrincipalsController < ApplicationController
 
   def principal_params
     params.require(:principal).permit(
+      :name,
       :email_address,
       :password,
       :password_confirmation,
-      :name,
-      :phone_number,
-      :school_id
+      school_attributes: %i[name address]
     )
   end
 end

@@ -3,6 +3,9 @@ require 'omise'
 class ChargeController < ApplicationController
   protect_from_forgery with: :exception
   before_action :ensure_payment_schema
+  # Skip authentication for the create action
+  skip_before_action :require_authentication, only: [:create]
+  before_action :check_user_exists, only: [:create]
 
   def create
     # Get the parameters from the form
@@ -11,15 +14,14 @@ class ChargeController < ApplicationController
     omise_token = params[:omiseToken]
     omise_source = params[:omiseSource]
 
-    # Start with the school record of the current principal
-    school = Current.user.school
-
-    if amount == 0 && tier == 'free_trial'
-      # Handle free trial activation (no payment needed)
-      handle_free_trial(school, tier)
+    if Current.user&.school.present?
+      school = Current.user.school
+      handle_payment(school, tier, amount, omise_token, omise_source)
     else
-      # Handle paid subscription with Omise
-      handle_paid_subscription(school, tier, amount, omise_token, omise_source)
+      session[:pending_payment] = { amount: amount, tier: tier, omise_token: omise_token, omise_source: omise_source }
+
+      flash[:notice] = 'Please create a principal account to complete your subscription'
+      redirect_to new_principal_signup
     end
   end
 
@@ -39,6 +41,15 @@ class ChargeController < ApplicationController
     end
   end
 
+  # New method to handle payment regardless of whether it's trial or paid
+  def handle_payment(school, tier, amount, omise_token, omise_source)
+    if amount == 0 && tier == 'trial'
+      handle_free_trial(school, tier)
+    else
+      handle_paid_subscription(school, tier, amount, omise_token, omise_source)
+    end
+  end
+
   def handle_free_trial(school, tier)
     # Set the plan limits for free trial
     school.set_plan_limits('free_trial')
@@ -46,13 +57,15 @@ class ChargeController < ApplicationController
     # Record the free trial as a $0 payment
     school.record_payment(0, 'free_trial', nil)
 
-    # Return success response
-    render json: {
-             status: 'success',
-             message: 'Free trial activated successfully',
-             plan: tier,
-             next_payment: school.next_payment_date&.strftime('%B %d, %Y')
-           }
+    # Flash success message
+    flash[:notice] = 'Free trial activated successfully!'
+
+    # Redirect to dashboard or appropriate page
+    if Current.user&.type == 'Principal'
+      redirect_to principal_dashboard_path
+    else
+      redirect_to root_path
+    end
   end
 
   def handle_paid_subscription(school, tier, amount, omise_token, omise_source)
@@ -75,20 +88,27 @@ class ChargeController < ApplicationController
             card_details[:brand]
           )
 
-        render '_success_modal'
+        flash[:notice] = 'Payment successful! Your subscription is now active.'
+
+        # Redirect based on user type
+        if Current.user&.type == 'Principal'
+          redirect_to principal_dashboard_path
+        else
+          redirect_to root_path
+        end
       else
         @error_message = "Payment failed: #{charge.failure_message || 'Unknown error'}"
         Rails.logger.error("Payment failed: #{charge.failure_message}")
-        render '_fail_modal'
+        render 'charge/fail_modal', layout: nil
       end
     rescue Omise::Error => e
       Rails.logger.error("Omise Error: #{e.message}")
       @error_message = "Payment failed: #{e.message}"
-      render '_fail_modal'
+      render 'charge/fail_modal', layout: nil
     rescue StandardError => e
       Rails.logger.error("Payment processing error: #{e.message}")
       @error_message = 'Payment system error: Please try again later'
-      render '_fail_modal'
+      render 'charge/fail_modal', layout: nil
     end
   end
 
@@ -123,6 +143,23 @@ class ChargeController < ApplicationController
       }
     else
       { last_digits: '0000', brand: 'Unknown' }
+    end
+  end
+
+  # Check if user exists but don't require authentication
+  def check_user_exists
+    # If there's no current user, redirect directly to principal signup
+    unless Current.user.present?
+      session[:pending_payment] = {
+        amount: params[:amount],
+        tier: params[:tier],
+        omise_token: params[:omiseToken],
+        omise_source: params[:omiseSource]
+      }
+
+      # Redirect to principal signup instead of login
+      flash[:notice] = 'Please create a principal account to complete your subscription'
+      redirect_to new_principal_path
     end
   end
 end

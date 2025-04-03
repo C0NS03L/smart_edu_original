@@ -20,7 +20,7 @@
           </p>
           <div class="flex flex-col justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 lg:justify-start">
             <a href="#features" class="btn btn-secondary"> Learn More </a>
-            <%= link_to 'Get Started', new_session_path, class: 'btn btn-primary' %>
+            <%= link_to 'Log In', new_session_path, class: 'btn btn-primary' %>
           </div>
         </div>
         <div class="flex justify-center lg:w-1/2 lg:justify-end">
@@ -34,6 +34,220 @@
       </div>
     </div>
   </section>
+
+  <!-- Subscription Plans Section -->
+  <section class="bg-gradient-to-b from-white to-blue-50 py-12" id="pricing">
+    <div class="container mx-auto px-6">
+      <h2 class="mb-8 text-center text-4xl font-bold">Subscription Plans</h2>
+      <p class="mb-12 text-center text-xl text-gray-600">Choose the plan that fits your school's needs</p>
+
+      <div class="flex flex-col justify-center space-y-8 md:flex-row md:space-x-8 md:space-y-0">
+        <!-- Trial Plan -->
+        <div class="w-full rounded-lg bg-white p-8 shadow-lg transition-all duration-200 hover:shadow-xl md:w-1/3">
+          <div class="mb-4 flex items-center justify-between">
+            <h3 class="text-2xl font-bold text-gray-800">Trial</h3>
+            <span class="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-800">Starter</span>
+          </div>
+          <div class="mb-4 text-4xl font-bold">Free</div>
+          <ul class="mb-8 space-y-3">
+            <li class="flex items-center">
+              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              200 Students
+            </li>
+            <li class="flex items-center">
+              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              30 Days Trial
+            </li>
+            <li class="flex items-center">
+              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              Basic Attendance Tracking
+            </li>
+            <li class="flex items-center">
+              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              QR Code Check-in
+            </li>
+          </ul>
+          <button class="select-tier btn btn-outline btn-primary w-full" data-amount="0" data-tier="trial">
+            Try For Free
+          </button>
+        </div>
+
+        <!-- Standard Plan -->
+        <div
+          class="w-full transform rounded-lg bg-white p-8 shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl md:w-1/3"
+        >
+          <div
+            class="absolute -top-4 left-0 right-0 mx-auto w-32 rounded-full bg-blue-500 py-1 text-center text-sm font-semibold text-white"
+          >
+            POPULAR
+          </div>
+          <div class="mb-4 flex items-center justify-between">
+            <h3 class="text-2xl font-bold text-gray-800">Standard</h3>
+            <span class="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-800">Value</span>
+          </div>
+          <div class="mb-4 flex items-baseline">
+            <span class="text-4xl font-bold">$500</span>
+            <span class="ml-1 text-gray-600">/month</span>
+          </div>
+          <ul class="mb-8 space-y-3">
+            <li class="flex items-center">
+              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              500 Students
+            </li>
+            <li class="flex items-center">
+              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              $1.00 Per Student
+            </li>
+            <li class="flex items-center">
+              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              Advanced Reporting
+            </li>
+            <li class="flex items-center">
+              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              Enrollment Management
+            </li>
+          </ul>
+          <button class="select-tier btn btn-primary w-full" data-amount="50000" data-tier="standard">
+            Subscribe Now
+          </button>
+        </div>
+
+        <!-- Premium Plan -->
+        <div class="w-full rounded-lg bg-white p-8 shadow-lg transition-all duration-200 hover:shadow-xl md:w-1/3">
+          <div class="mb-4 flex items-center justify-between">
+            <h3 class="text-2xl font-bold text-gray-800">Premium</h3>
+            <span class="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-800">Pro</span>
+          </div>
+          <div class="mb-4 flex items-baseline">
+            <span class="text-4xl font-bold">$800</span>
+            <span class="ml-1 text-gray-600">/month</span>
+          </div>
+          <ul class="mb-8 space-y-3">
+            <li class="flex items-center">
+              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              1000 Students
+            </li>
+            <li class="flex items-center">
+              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              $0.80 Per Student
+            </li>
+            <li class="flex items-center">
+              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              Premium Analytics
+            </li>
+            <li class="flex items-center">
+              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              Priority Support
+            </li>
+          </ul>
+          <button class="select-tier btn btn-primary w-full" data-amount="80000" data-tier="premium">
+            Subscribe Now
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-12 text-center">
+        <a href="#" class="mt-4 inline-block text-blue-600 hover:underline">Contact our sales team</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hidden checkout form -->
+  <form id="checkoutForm" action="/charge" method="post" class="hidden">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <input type="hidden" name="amount" id="amount" value="" />
+    <input type="hidden" name="tier" id="tier" value="" />
+    <input type="hidden" name="omiseToken" value="" />
+    <input type="hidden" name="omiseSource" value="" />
+  </form>
+
+  <!-- Payment Result Modal -->
+  <div id="paymentModal" class="fixed inset-0 z-50 flex hidden items-center justify-center bg-gray-900 bg-opacity-50">
+    <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
+      <h2 class="mb-4 text-xl font-bold">Payment Status</h2>
+      <p id="paymentModalBody" class="text-gray-700">Processing payment...</p>
+      <div class="mt-6 flex justify-end">
+        <button
+          class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+          onclick="document.getElementById('paymentModal').classList.add('hidden')"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Problem and Solution Section -->
   <section class="bg-white py-8">
@@ -167,3 +381,93 @@
     </div>
   </section>
 </div>
+
+<script>
+  async function loadOmiseAPI() {
+    return new Promise((resolve, reject) => {
+      if (typeof OmiseCard !== 'undefined') {
+        return resolve()
+      }
+      const script = document.createElement('script')
+      script.src = 'https://cdn.omise.co/omise.js'
+      script.integrity = 'sha384-Ue+Uj0J/1ZGITiuYUvQgZGRWgS8ZuGIbVslPEqNh8EDJviXdDh2uWdudKLcFQBcm'
+      script.crossOrigin = 'anonymous'
+      script.onload = resolve
+      script.onerror = reject
+      document.head.appendChild(script)
+    })
+  }
+
+  async function initializePayment() {
+    await loadOmiseAPI()
+    OmiseCard.configure({ publicKey: 'pkey_test_62unknn2ef7aol8k7nm' })
+
+    document.querySelectorAll('.select-tier').forEach((button) => {
+      button.addEventListener('click', (event) => {
+        const amount = event.target.getAttribute('data-amount')
+        const tier = event.target.getAttribute('data-tier')
+
+        document.getElementById('amount').value = amount
+        document.getElementById('tier').value = tier
+
+        // Always open Omise payment form, even for free trial
+        OmiseCard.open({
+          amount: parseInt(amount),
+          currency: 'USD',
+          defaultPaymentMethod: 'credit_card',
+          onCreateTokenSuccess: (nonce) => {
+            if (nonce.startsWith('tokn_')) {
+              document.querySelector('input[name="omiseToken"]').value = nonce
+              document.getElementById('checkoutForm').submit()
+            } else {
+              document.querySelector('input[name="omiseSource"]').value = nonce
+            }
+            document.getElementById('checkoutForm').submit()
+          }
+        })
+      })
+    })
+  }
+
+  document.getElementById('checkoutForm')?.addEventListener('submit', (event) => {
+    event.preventDefault()
+
+    document.getElementById('paymentModalBody').innerText = 'Processing payment...'
+    document.getElementById('paymentModal').classList.remove('hidden')
+
+    fetch(event.target.action, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-CSRF-Token': document.querySelector('input[name="authenticity_token"]').value
+      },
+      body: new URLSearchParams(new FormData(event.target)),
+      credentials: 'include',
+      redirect: 'follow' // Follow redirects automatically
+    })
+      .then((response) => {
+        document.getElementById('paymentModal').classList.add('hidden')
+
+        // Handle redirects by checking if response has a redirected flag
+        if (response.redirected) {
+          window.location.href = response.url
+          return null
+        }
+
+        return response.text()
+      })
+      .then((html) => {
+        if (html) {
+          document.body.innerHTML = html
+        }
+      })
+      .catch((error) => {
+        document.getElementById('paymentModal').classList.add('hidden')
+        alert('Error: ' + error.message)
+      })
+  })
+
+  document.addEventListener('DOMContentLoaded', function () {
+    initializePayment()
+  })
+</script>

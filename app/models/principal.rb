@@ -29,6 +29,7 @@ class Principal < User
   validates :name, presence: true
   validates :phone_number, presence: true
 
+  has_one :school, dependent: :destroy
   accepts_nested_attributes_for :school
 
   def self.generate_enrollment_code(account_type)

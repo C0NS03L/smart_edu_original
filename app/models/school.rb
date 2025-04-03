@@ -12,6 +12,15 @@
 #  subscription_type   :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  principal_id        :integer
+#
+# Indexes
+#
+#  index_schools_on_principal_id  (principal_id)
+#
+# Foreign Keys
+#
+#  principal_id  (principal_id => users.id)
 #
 class School < ApplicationRecord
   has_many :users
@@ -19,6 +28,7 @@ class School < ApplicationRecord
   has_one :principal, -> { where(type: 'Principal') }, class_name: 'User'
   has_many :staff, -> { where(type: 'Staff') }, class_name: 'User'
   has_many :payment_histories, dependent: :destroy
+  belongs_to :principal, class_name: 'User', optional: true
 
   # Define subscription status options
   SUBSCRIPTION_STATUSES = %w[pending active trial overdue cancelled].freeze

@@ -85,7 +85,7 @@ class SignupController < ApplicationController
     @principal = Principal.new(principal_params)
     if @principal.save
       start_new_session_for(@principal)
-      redirect_to subscriptions_path, notice: 'Principal was successfully created.'
+      redirect_to principal_dashboard_path, notice: 'Principal was successfully created.'
     else
       Rails.logger.debug "Principal creation failed: #{@principal.errors.full_messages.to_sentence}"
       flash[:alert] = @principal.errors.full_messages.to_sentence

@@ -12,6 +12,15 @@
 #  subscription_type   :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  principal_id        :integer
+#
+# Indexes
+#
+#  index_schools_on_principal_id  (principal_id)
+#
+# Foreign Keys
+#
+#  principal_id  (principal_id => users.id)
 #
 school_1:
   id: 1

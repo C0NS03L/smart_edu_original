@@ -27,6 +27,9 @@ Rails.application.routes.draw do
   get 'signup/choose_role', as: 'choose_role'
   post 'set_role', to: 'signup#set_role', as: 'set_role'
 
+  resources :principals, only: %i[new create]
+  resource :charge, only: [:create], controller: 'charge'
+
   root 'home#index'
   resources :charge
   get 'subscriptions', to: 'subscriptions#index'
