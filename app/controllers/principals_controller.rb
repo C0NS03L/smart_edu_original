@@ -1,4 +1,5 @@
 class PrincipalsController < ApplicationController
+  before_action :require_authentication
   def generate_code
   end
 
@@ -52,6 +53,8 @@ class PrincipalsController < ApplicationController
     @last_checkin = Attendance.where(school: @school_details).order(created_at: :desc).first&.created_at
 
     @q = @school_details.students.ransack(params[:q])
+
+    @recent_payments = Current.user.school.payment_histories.order(payment_date: :desc).limit(5) if Current.user.school
   end
 
   def new
