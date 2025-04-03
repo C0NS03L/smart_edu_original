@@ -67,9 +67,14 @@
           <%= link_to t('principals.dashboard.generate_enrollment_codes'), generate_code_principal_path, class: 'btn btn-primary' %>
         </div>
       </div>
+      <div class="stat">
+        <div class="stat-title text-xl font-bold"><%= t('principals.dashboard.generate_report') %></div>
+        <div class="stat-value">
+          <%= link_to t('principals.dashboard.download_report'), generate_report_principals_path, class: 'btn btn-primary' %>
+        </div>
+      </div>
     </div>
   </div>
-
   <div class="mt-4 flex flex-grow flex-col items-center">
     <div class="w-full rounded-lg bg-white p-6 shadow-lg lg:w-3/4">
       <div class="stat-title p-4 text-xl font-bold"><%= t('principals.dashboard.attendance') %></div>

@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('turbolinks:load', () => {
   // Pie Chart
   try {
     const pieCtx = document.getElementById('attendancePieChart').getContext('2d')

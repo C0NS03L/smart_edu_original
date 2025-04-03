@@ -84,3 +84,7 @@ gem 'discard', '~> 1.4'
 gem 'pry-byebug', '~> 3.10'
 
 gem 'omise'
+
+gem 'prawn'
+
+gem 'prawn-table'
