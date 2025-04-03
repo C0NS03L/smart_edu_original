@@ -35,41 +35,29 @@
     </div>
   </section>
 
-  <!-- Subscription Plans Section -->
   <section class="bg-gradient-to-b from-white to-blue-50 py-12" id="pricing">
     <div class="container mx-auto px-6">
       <h2 class="mb-8 text-center text-4xl font-bold">Subscription Plans</h2>
-      <p class="mb-12 text-center text-xl text-gray-600">Choose the plan that fits your school's needs</p>
+      <p class="mb-12 text-center text-xl text-gray-600">Enter your student count to calculate your monthly cost</p>
 
-      <div class="flex flex-col justify-center space-y-8 md:flex-row md:space-x-8 md:space-y-0">
-        <!-- Trial Plan -->
-        <div class="w-full rounded-lg bg-white p-8 shadow-lg transition-all duration-200 hover:shadow-xl md:w-1/3">
-          <div class="mb-4 flex items-center justify-between">
-            <h3 class="text-2xl font-bold text-gray-800">Trial</h3>
-            <span class="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-800">Starter</span>
+      <div class="flex flex-col items-center justify-center space-y-8 md:space-y-0">
+        <div class="w-400 rounded-lg bg-white p-8 shadow-lg transition-all duration-200 hover:shadow-xl">
+          <div class="items-left flex flex-col justify-between">
+            <label for="studentCount" class="block text-sm font-medium text-gray-700">Number of Students:</label>
+            <p id="errorMessage" class="hidden text-red-600">Can not be 0 or less</p>
+            <input
+              type="number"
+              id="studentCount"
+              class="w-full rounded-md bg-gray-200 px-4 py-2 text-xl font-bold"
+              value="0"
+            />
           </div>
-          <div class="mb-4 text-4xl font-bold">Free</div>
+          <div class="mb-4">
+            <h3 class="text-2xl font-bold text-gray-800">Monthly Cost:</h3>
+            <div id="monthlyCost" class="text-4xl font-bold">$0</div>
+            <p id="freeTierMessage" class="hidden text-green-600">Free Tier Applicable ( 200 Students or Fewer )</p>
+          </div>
           <ul class="mb-8 space-y-3">
-            <li class="flex items-center">
-              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              200 Students
-            </li>
-            <li class="flex items-center">
-              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              30 Days Trial
-            </li>
             <li class="flex items-center">
               <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path
@@ -90,58 +78,11 @@
               </svg>
               QR Code Check-in
             </li>
-          </ul>
-          <a
-            href="<%= new_principal_signup_path(plan: 'trial', amount: 0) %>"
-            class="btn btn-outline btn-primary w-full"
-          >
-            Try For Free
-          </a>
-        </div>
-
-        <!-- Standard Plan -->
-        <div
-          class="w-full transform rounded-lg bg-white p-8 shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl md:w-1/3"
-        >
-          <div
-            class="absolute -top-4 left-0 right-0 mx-auto w-32 rounded-full bg-blue-500 py-1 text-center text-sm font-semibold text-white"
-          >
-            POPULAR
-          </div>
-          <div class="mb-4 flex items-center justify-between">
-            <h3 class="text-2xl font-bold text-gray-800">Standard</h3>
-            <span class="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-800">Value</span>
-          </div>
-          <div class="mb-4 flex items-baseline">
-            <span class="text-4xl font-bold">$500</span>
-            <span class="ml-1 text-gray-600">/month</span>
-          </div>
-          <ul class="mb-8 space-y-3">
             <li class="flex items-center">
               <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              500 Students
-            </li>
-            <li class="flex items-center">
-              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              $1.00 Per Student
-            </li>
-            <li class="flex items-center">
-              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.093a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                   clip-rule="evenodd"
                 ></path>
               </svg>
@@ -158,66 +99,7 @@
               Enrollment Management
             </li>
           </ul>
-          <a href="<%= new_principal_signup_path(plan: 'standard', amount: 50_000) %>" class="btn btn-primary w-full">
-            Subscribe Now
-          </a>
-        </div>
-
-        <!-- Premium Plan -->
-        <div class="w-full rounded-lg bg-white p-8 shadow-lg transition-all duration-200 hover:shadow-xl md:w-1/3">
-          <div class="mb-4 flex items-center justify-between">
-            <h3 class="text-2xl font-bold text-gray-800">Premium</h3>
-            <span class="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-800">Pro</span>
-          </div>
-          <div class="mb-4 flex items-baseline">
-            <span class="text-4xl font-bold">$800</span>
-            <span class="ml-1 text-gray-600">/month</span>
-          </div>
-          <ul class="mb-8 space-y-3">
-            <li class="flex items-center">
-              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              1000 Students
-            </li>
-            <li class="flex items-center">
-              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              $0.80 Per Student
-            </li>
-            <li class="flex items-center">
-              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              Premium Analytics
-            </li>
-            <li class="flex items-center">
-              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              Priority Support
-            </li>
-          </ul>
-          <a href="<%= new_principal_signup_path(plan: 'premium', amount: 80_000) %>" class="btn btn-primary w-full">
-            Subscribe Now
-          </a>
+          <div id="getStartedLink"></div>
         </div>
       </div>
 
@@ -386,6 +268,71 @@
 </div>
 
 <script>
+  function updatePricing() {
+    const studentCount = parseInt(document.getElementById('studentCount').value)
+    let monthlyCost = 0
+    let plan = 'trial'
+
+    if (studentCount <= 0) {
+      // Disable the "Get Started" button if student count is 0 or less
+      document.getElementById('getStartedLink').innerHTML = '' // Clear the button
+      document.getElementById('errorMessage').classList.remove('hidden') // Show error message
+      document.getElementById('freeTierMessage').classList.add('hidden') // Hide free tier message
+      return // Exit the function early
+    } else {
+      document.getElementById('errorMessage').classList.add('hidden') // Hide error message
+    }
+
+    if (studentCount <= 200) {
+      monthlyCost = 0
+      plan = 'trial'
+      document.getElementById('freeTierMessage').classList.remove('hidden')
+    } else if (studentCount < 800) {
+      monthlyCost = studentCount * 2
+      plan = 'standard'
+      document.getElementById('freeTierMessage').classList.add('hidden')
+    } else {
+      monthlyCost = studentCount * 2
+      plan = 'premium'
+      document.getElementById('freeTierMessage').classList.add('hidden')
+    }
+
+    document.getElementById('monthlyCost').innerText = '$' + monthlyCost
+
+    // Generate link based on plan and cost
+    const link = document.createElement('a')
+    link.href = '<%= new_principal_signup_path(plan: 'TEMP_PLAN', amount: 'TEMP_AMOUNT') %>'
+      .replace('TEMP_PLAN', plan)
+      .replace('TEMP_AMOUNT', monthlyCost)
+    link.className = 'btn btn-primary w-full'
+    link.textContent = 'Get Started'
+
+    document.getElementById('getStartedLink').innerHTML = '' // Clear previous link
+    document.getElementById('getStartedLink').appendChild(link)
+  }
+
+  // Add event listener to update pricing dynamically
+  document.getElementById('studentCount').addEventListener('input', updatePricing)
+  updatePricing()
+
+  document.getElementById('subscribeButton').addEventListener('click', function (event) {
+    event.preventDefault()
+    OmiseCard.open({
+      amount: parseInt(document.getElementById('amount').value),
+      currency: 'USD',
+      defaultPaymentMethod: 'credit_card',
+      onCreateTokenSuccess: (nonce) => {
+        if (nonce.startsWith('tokn_')) {
+          document.querySelector('input[name="omiseToken"]').value = nonce
+          document.getElementById('checkoutForm').submit()
+        } else {
+          document.querySelector('input[name="omiseSource"]').value = nonce
+          document.getElementById('checkoutForm').submit()
+        }
+      }
+    })
+  })
+
   async function loadOmiseAPI() {
     return new Promise((resolve, reject) => {
       if (typeof OmiseCard !== 'undefined') {
