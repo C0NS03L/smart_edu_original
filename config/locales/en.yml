@@ -29,3 +29,243 @@
 
 en:
   hello: 'Hello world'
+  # Landing
+
+  subscriptions:
+    index:
+      page_title: 'Subscriptions'
+      your_subscription: 'Your Subscription'
+      select_plan: 'Select Plan'
+      starter: 'Starter'
+      trial: 'Trial'
+      free: 'Free'
+      trial_students: '%{count} Students'
+      trial_days: '%{count} Days'
+      value: 'Value'
+      fast_start: 'Fast Start'
+      per_month: '/mo'
+      std_students: '%{count} Students'
+      price_per_student: '%{price} Per Student'
+      pro: 'Pro'
+      accelerate: 'Accelerate'
+      premium_students: '%{count} Students'
+      try_free: 'Try Free'
+      buy_now: 'Buy Now'
+      payment_status: 'Payment Status'
+      close: 'Close'
+      processing_payment: 'Processing payment...'
+      network_error: 'Network error'
+      features:
+        attendance: 'Attendance Tracker'
+        qr_scanner: 'QR Scanner Check In'
+        enrollment: 'Enrollment Code System'
+        invoice: 'Track Payment Invoice'
+
+  students:
+    student:
+      name_label: 'Name'
+      id_label: 'ID'
+      uid_label: 'UID'
+    dashboard:
+      page_title: 'Student Dashboard'
+      student_details: 'Student Details'
+      name: 'Name'
+      student_id: 'Student ID'
+      school_details: 'School Details'
+      qr_code: 'QR Code'
+      view_qr: 'View My QR'
+      attendance: 'Attendance'
+    edit:
+      page_title: 'Edit Student'
+      heading: 'Editing student'
+      show_link: 'Show this student'
+      back_link: 'Back to students'
+    index:
+      page_title: 'Students'
+      new_student: 'New student'
+      search_placeholder: 'Search by name'
+    show:
+      page_title: 'Student Details'
+      edit_student: 'Edit this student'
+      destroy_student: 'Destroy this student'
+      confirm_destroy: 'Are you sure you want to destroy this student?'
+
+  staffs:
+    dashboard:
+      page_title: 'Dashboard'
+      students: 'Students'
+      total_students: 'Total Students'
+      total_check_ins: 'Total Check Ins'
+      last_check_in: 'Last Check In:'
+      not_available: 'N/A'
+      staff_details: 'Staff Details'
+      name: 'Name'
+      staff_id: 'Staff ID'
+      school_details: 'School Details'
+      check_in: 'Check In'
+      scan_qr: 'Scan QR'
+      generate_codes: 'Generate Codes'
+      generate_code_button: 'Generate Code'
+      attendance: 'Attendance'
+    generate_code:
+      page_title: 'Code Generation'
+      student_code: 'Student Code'
+      number_of_accounts: 'Number of Accounts Required'
+      enter_number: 'Enter Number'
+      generate_button: 'Generate'
+
+  signup:
+    enter_information: 'Enter Your Information'
+    for: 'for'
+    name_placeholder: 'Name'
+    email_placeholder: 'Email'
+    password_placeholder: 'Password'
+    confirm_password_placeholder: 'Confirm Password'
+    enrollment_code_placeholder: 'Enrollment Code'
+    submit_button: 'Sign Up'
+    back_to_signin: 'Back to Sign In'
+    principal:
+      enter_information: 'Enter Your Information'
+      phone_placeholder: 'Phone Number'
+      enter_school_information: 'Enter School Your Information'
+      school_name_placeholder: 'School Name'
+      school_address_placeholder: 'School Address'
+      country_placeholder: 'Country'
+  sessions:
+    sign_in_heading: 'Sign in'
+    email_placeholder: 'Enter your email address'
+    password_placeholder: 'Enter your password'
+    submit_button: 'Sign in'
+    sign_up_link: 'Sign Up'
+    forgot_password_link: 'Forgot Password?'
+  qr:
+    page_title: 'QR Scanner'
+    attendance_logged: 'Attendance Logged'
+    scanned_student: 'Scanned Student'
+    timestamp: 'Timestamp'
+    scan_again: 'Scan Again'
+    go_to_dashboard: 'Go to Dashboard'
+    attendance_failed: 'Attendance Failed'
+    error: 'Error'
+    open_modal: 'Open Modal'
+    next_script_note: 'Next script must be included'
+  principals:
+    dashboard:
+      page_title: 'Dashboard'
+      students: 'Students'
+      total_students: 'Total Students'
+      total_check_ins: 'Total Check Ins'
+      last_check_in: 'Last Check In'
+      not_available: 'N/A'
+      principal_details: 'Principal Details'
+      name: 'Name'
+      principal_id: 'Principal ID'
+      school_details: 'School Details'
+      generate_codes: 'Generate Codes'
+      generate_enrollment_codes: 'Generate Enrollment Codes'
+      attendance: 'Attendance'
+      generate_code:
+        page_title: 'Code Generation'
+        staff_code_heading: 'Staff Code'
+        student_code_heading: 'Student Code'
+        number_of_accounts: 'Number of Accounts Required'
+        enter_number: 'Enter Number'
+        generate_button: 'Generate'
+  passwords_mailer:
+    reset:
+      instructions: 'You can reset your password within the next 15 minutes on'
+      reset_link_text: 'this password reset page'
+  passwords:
+    edit:
+      heading: 'Update your password'
+      new_password_placeholder: 'Enter new password'
+      confirm_password_placeholder: 'Repeat new password'
+      save_button: 'Save'
+    new:
+      heading: 'Forgot your password?'
+      email_placeholder: 'Enter your email address'
+      submit_button: 'Email reset instructions'
+      sign_in_link: 'Sign in'
+  home:
+    index:
+      page_title: 'Dashboard'
+      students: 'Students'
+      total_students: 'Total Students'
+      total_check_ins: 'Total Check Ins'
+      last_check_in: 'Last Check In'
+      not_available: 'N/A'
+  tables:
+    student:
+      name: 'Name'
+      date: 'Date'
+      check_in_time: 'Check In Time'
+  time:
+    formats:
+      date_only: '%Y-%m-%d'
+      time_only: '%H:%M:%S'
+      short: '%Y-%m-%d %H:%M'
+  charge:
+    fail_modal:
+      heading: 'Payment Failed!'
+      message: 'Unfortunately, your payment could not be processed.'
+      default_error: 'An error occurred during payment processing.'
+      retry_button: 'Retry Payment'
+    success_modal:
+      heading: 'Payment Successful!'
+      message: 'Thank you for your purchase.'
+      dashboard_button: 'Go to Dashboard'
+  attendances:
+    show:
+      edit_button: 'Edit attendance'
+      delete_button: 'Delete attendance'
+      confirm_delete: 'Are you sure?'
+      back_button: 'Back to attendances'
+    new:
+      page_title: 'New attendance'
+      search_placeholder: 'Search by student name...'
+    index:
+      page_title: 'Attendances'
+      new_attendance: 'New Attendance'
+      search_placeholder: 'Search by name'
+    edit:
+      page_title: 'Editing attendance'
+      heading: 'Editing attendance'
+      show_link: 'Show this attendance'
+      back_link: 'Back to attendances'
+    table:
+      student: 'Student'
+      timestamp: 'Timestamp'
+      user_id: 'User ID'
+      action: 'Action'
+      view: 'View'
+      edit: 'Edit'
+      view_title: 'Show'
+      edit_title: 'Edit'
+    form:
+      error_count:
+        one: '1 error prohibited this attendance from being saved:'
+        other: '%{count} errors prohibited this attendance from being saved:'
+      details_heading: 'Attendance Details'
+      student_id: 'Student ID'
+      timestamp: 'Timestamp'
+      user_id: 'User ID'
+      status: 'Status'
+      submit_button: 'Save Attendance'
+    attendance:
+      student: 'Student'
+      timestamp: 'Timestamp'
+      user: 'User'
+    scan_table:
+      students_heading: 'Students'
+      student_name: 'Student Name'
+      action: 'Action'
+      check_in_button: 'Check-in'
+      checked_in_heading: 'Checked-in Students'
+      name: 'Name'
+      time: 'Time'
+  drawer:
+    dashboard: 'Dashboard'
+    manage_students: 'Manage Students'
+    add_attendance: 'Add Attendance'
+    list_attendances: 'List Attendances'
+    logout: 'Logout'

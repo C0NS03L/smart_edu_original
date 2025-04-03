@@ -1,14 +1,16 @@
 <!-- Include the necessary libraries -->
 
 <head>
-  <title>QR Scanner</title>
+  <title><%= t('qr.page_title') %></title>
+  <meta name="turbo-visit-control" content="reload" />
   <meta name="csrf-token" content="<%= form_authenticity_token %>" />
+  <script
+    src="https://unpkg.com/html5-qrcode"
+    integrity="sha256-ZgsSQ3sddH4+aLi+BoXAjLcoFAEQrSE/FnsUtm+LHY4="
+    crossorigin="anonymous"
+    defer
+  ></script>
 </head>
-<script
-  src="https://unpkg.com/html5-qrcode"
-  integrity="sha256-ZgsSQ3sddH4+aLi+BoXAjLcoFAEQrSE/FnsUtm+LHY4="
-  crossorigin="anonymous"
-></script>
 
 <style>
   main {
@@ -56,9 +58,9 @@
     </div>
 
     <!-- Main Content -->
-    <h1 class="mb-6 text-4xl font-extrabold text-green-600">Attendance Logged</h1>
-    <p class="mb-8 text-xl text-gray-700">Scanned Student: <span id="studentName"></span><br /></p>
-    <p class="mb-8 text-xl text-gray-700">Timestamp: <span id="attendanceTimestamp"></span></p>
+    <h1 class="mb-6 text-4xl font-extrabold text-green-600"><%= t('qr.attendance_logged') %></h1>
+    <p class="mb-8 text-xl text-gray-700"><%= t('qr.scanned_student') %>: <span id="studentName"></span><br /></p>
+    <p class="mb-8 text-xl text-gray-700"><%= t('qr.timestamp') %>: <span id="attendanceTimestamp"></span></p>
 
     <!-- Back to Home Button -->
     <div class="mt-12">
@@ -66,13 +68,13 @@
         class="inline-block rounded-lg bg-gray-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
         onclick="restartScanner()"
       >
-        Scan Again
+        <%= t('qr.scan_again') %>
       </button>
       <a
         href="/home/index"
         class="inline-block rounded-lg bg-green-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
       >
-        Go to Dashboard
+        <%= t('qr.go_to_dashboard') %>
       </a>
     </div>
   </div>
@@ -89,8 +91,8 @@
     </div>
 
     <!-- Main Content -->
-    <h1 class="mb-6 text-4xl font-extrabold text-red-600">Attendance Failed</h1>
-    <p class="mb-8 text-xl text-gray-700">Error: <span id="errorMessage"></span><br /></p>
+    <h1 class="mb-6 text-4xl font-extrabold text-red-600"><%= t('qr.attendance_failed') %></h1>
+    <p class="mb-8 text-xl text-gray-700"><%= t('qr.error') %>: <span id="errorMessage"></span><br /></p>
 
     <!-- Back to Home Button -->
     <div class="mt-12">
@@ -98,14 +100,14 @@
         class="inline-block rounded-lg bg-gray-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
         onclick="restartScanner()"
       >
-        Scan Again
+        <%= t('qr.scan_again') %>
       </button>
       <a
         href="/home/index"
         class="inline-block rounded-lg bg-green-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
         onclick="goToDashboard()"
       >
-        Go to Dashboard
+        <%= t('qr.go_to_dashboard') %>
       </a>
     </div>
   </div>
@@ -114,17 +116,31 @@
 <script>
   let scanner
 
-  document.addEventListener('DOMContentLoaded', function () {
+  window.scanner = window.scanner || null
+
+  document.addEventListener('turbo:load', function () {
     initScanner()
   })
 
-  function initScanner() {
-    scanner = new Html5QrcodeScanner('reader', {
-      qrbox: { width: 250, height: 250 },
-      fps: 20
-    })
+  async function initScanner() {
+    try {
+      if (typeof Html5QrcodeScanner === 'undefined') {
+        await loadScript('https://unpkg.com/html5-qrcode')
+      }
 
-    scanner.render(onScanSuccess, onScanError)
+      if (!window.scanner) {
+        window.scanner = new Html5QrcodeScanner('reader', {
+          qrbox: { width: 250, height: 250 },
+          fps: 20
+        })
+        window.scanner.render(onScanSuccess, onScanError)
+      } else {
+        window.scanner.clear()
+        window.scanner.render(onScanSuccess, onScanError)
+      }
+    } catch (error) {
+      console.error('Failed to load Html5QrcodeScanner:', error)
+    }
   }
 
   function onScanSuccess(decodedText) {
@@ -179,5 +195,14 @@
 
   function goToDashboard() {
     window.location.href = '/home/index' // Change URL if necessary
+  }
+  async function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = src
+      script.onload = resolve
+      script.onerror = reject
+      document.head.appendChild(script)
+    })
   }
 </script>
