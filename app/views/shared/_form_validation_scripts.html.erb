@@ -1,0 +1,218 @@
+<script>
+  // Use a direct approach without trying to be too clever
+  document.addEventListener('turbolinks:load', function () {
+    console.log('Turbolinks loaded - initializing forms')
+    initializeForms()
+  })
+
+  document.addEventListener('DOMContentLoaded', function () {
+    console.log('DOM loaded - initializing forms')
+    initializeForms()
+  })
+
+  // If we're already loaded, initialize immediately
+  if (document.readyState === 'complete') {
+    console.log('Document already complete - initializing forms immediately')
+    initializeForms()
+  }
+
+  function initializeForms() {
+    initializeSignupForm()
+    initializePrincipalForm()
+  }
+
+  // SIGNUP FORM
+  function initializeSignupForm() {
+    const signupForm = document.getElementById('signup-form')
+    if (!signupForm) return
+
+    const emailField = document.getElementById('email-field')
+    const emailFeedback = document.getElementById('email-feedback')
+    const passwordField = document.getElementById('password-field')
+    const passwordFeedback = document.getElementById('password-feedback')
+    const passwordConfirmField = document.getElementById('password-confirmation-field')
+    const passwordMatchFeedback = document.getElementById('password-match-feedback')
+
+    // Email validation
+    if (emailField) {
+      emailField.addEventListener('input', function () {
+        validateEmail(emailField, emailFeedback)
+      })
+    }
+
+    // Password validation
+    if (passwordField) {
+      passwordField.addEventListener('input', function () {
+        validatePassword(passwordField, passwordFeedback)
+        if (passwordConfirmField?.value.length > 0) {
+          validatePasswordMatch(passwordField, passwordConfirmField, passwordMatchFeedback)
+        }
+      })
+    }
+
+    // Password confirmation validation
+    if (passwordConfirmField) {
+      passwordConfirmField.addEventListener('input', function () {
+        validatePasswordMatch(passwordField, passwordConfirmField, passwordMatchFeedback)
+      })
+    }
+
+    // Form submission
+    signupForm.addEventListener('submit', function (event) {
+      let formValid = true
+
+      if (emailField && emailField.value) {
+        if (!validateEmail(emailField, emailFeedback)) {
+          formValid = false
+        }
+      }
+
+      if (passwordField && passwordField.value) {
+        if (!validatePassword(passwordField, passwordFeedback)) {
+          formValid = false
+        }
+      }
+
+      if (passwordConfirmField && passwordConfirmField.value) {
+        if (!validatePasswordMatch(passwordField, passwordConfirmField, passwordMatchFeedback)) {
+          formValid = false
+        }
+      }
+
+      if (!formValid) {
+        event.preventDefault()
+      }
+    })
+  }
+
+  // PRINCIPAL FORM
+  function initializePrincipalForm() {
+    const principalForm = document.getElementById('principal-form')
+    if (!principalForm) return
+
+    const emailField = document.getElementById('principal-email-field')
+    const emailFeedback = document.getElementById('principal-email-feedback')
+    const passwordField = document.getElementById('principal-password-field')
+    const passwordFeedback = document.getElementById('principal-password-feedback')
+    const passwordConfirmField = document.getElementById('principal-password-confirmation-field')
+    const passwordMatchFeedback = document.getElementById('principal-password-match-feedback')
+    const phoneField = document.getElementById('principal-phone-field')
+    const phoneFeedback = document.getElementById('principal-phone-feedback')
+
+    // Email validation
+    if (emailField) {
+      emailField.addEventListener('input', function () {
+        validateEmail(emailField, emailFeedback)
+      })
+    }
+
+    // Password validation
+    if (passwordField) {
+      passwordField.addEventListener('input', function () {
+        validatePassword(passwordField, passwordFeedback)
+        if (passwordConfirmField?.value.length > 0) {
+          validatePasswordMatch(passwordField, passwordConfirmField, passwordMatchFeedback)
+        }
+      })
+    }
+
+    // Password confirmation validation
+    if (passwordConfirmField) {
+      passwordConfirmField.addEventListener('input', function () {
+        validatePasswordMatch(passwordField, passwordConfirmField, passwordMatchFeedback)
+      })
+    }
+
+    // Phone validation
+    if (phoneField) {
+      phoneField.addEventListener('input', function () {
+        validatePhone(phoneField, phoneFeedback)
+      })
+    }
+
+    // Form submission
+    principalForm.addEventListener('submit', function (event) {
+      let formValid = true
+
+      if (emailField && emailField.value) {
+        if (!validateEmail(emailField, emailFeedback)) {
+          formValid = false
+        }
+      }
+
+      if (passwordField && passwordField.value) {
+        if (!validatePassword(passwordField, passwordFeedback)) {
+          formValid = false
+        }
+      }
+
+      if (passwordConfirmField && passwordConfirmField.value) {
+        if (!validatePasswordMatch(passwordField, passwordConfirmField, passwordMatchFeedback)) {
+          formValid = false
+        }
+      }
+
+      if (phoneField && phoneField.value) {
+        if (!validatePhone(phoneField, phoneFeedback)) {
+          formValid = false
+        }
+      }
+
+      if (!formValid) {
+        event.preventDefault()
+      }
+    })
+  }
+
+  // SHARED VALIDATION FUNCTIONS
+  function validateEmail(field, feedback) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(field.value) && field.value.length > 0) {
+      feedback.classList.remove('hidden')
+      field.classList.add('input-error')
+      return false
+    } else {
+      feedback.classList.add('hidden')
+      field.classList.remove('input-error')
+      return true
+    }
+  }
+
+  function validatePassword(field, feedback) {
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+    if (!passwordRegex.test(field.value) && field.value.length > 0) {
+      feedback.classList.remove('hidden')
+      field.classList.add('input-error')
+      return false
+    } else {
+      feedback.classList.add('hidden')
+      field.classList.remove('input-error')
+      return true
+    }
+  }
+
+  function validatePasswordMatch(passwordField, confirmField, feedback) {
+    if (confirmField.value.length > 0 && passwordField.value !== confirmField.value) {
+      feedback.classList.remove('hidden')
+      confirmField.classList.add('input-error')
+      return false
+    } else {
+      feedback.classList.add('hidden')
+      confirmField.classList.remove('input-error')
+      return true
+    }
+  }
+
+  function validatePhone(field, feedback) {
+    const phoneRegex = /^\+?[\d\s\-()]{7,}$/
+    if (!phoneRegex.test(field.value) && field.value.length > 0) {
+      feedback.classList.remove('hidden')
+      field.classList.add('input-error')
+      return false
+    } else {
+      feedback.classList.add('hidden')
+      field.classList.remove('input-error')
+      return true
+    }
+  }
+</script>
