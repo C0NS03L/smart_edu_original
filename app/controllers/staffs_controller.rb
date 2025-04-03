@@ -1,4 +1,7 @@
 class StaffsController < ApplicationController
+  FLASH_PARTIAL = 'shared/flash'.freeze
+  DELETE_ERROR_MESSAGE = 'staffs.manage_codes.delete_error'.freeze
+
   def dashboard
     @staff_details = Current.user
     @school_details = Current.user.school
@@ -43,23 +46,26 @@ class StaffsController < ApplicationController
     when 'used_up'
       # Only show codes that have a limit and have reached it
       codes = codes.where('usage_limit IS NOT NULL AND usage_count >= usage_limit')
+    else
+      codes = codes
     end
 
     @enrollment_codes = codes.order(created_at: :desc)
   end
 
+  CODE_NOT_FOUND = 'staffs.manage_codes.not_found'.freeze
   def delete_code
     begin
       code = EnrollmentCode.where(school_id: Current.user.school.id, account_type: 'student', id: params[:id]).first
 
       if code.nil?
         respond_to do |format|
-          format.html { redirect_to staffs_manage_codes_path, alert: t('staffs.manage_codes.not_found') }
+          format.html { redirect_to staffs_manage_codes_path, alert: t(CODE_NOT_FOUND) }
           format.turbo_stream do
-            flash.now[:alert] = t('staffs.manage_codes.not_found')
-            render turbo_stream: turbo_stream.update('flash', partial: 'shared/flash')
+            flash.now[:alert] = t(CODE_NOT_FOUND)
+            render turbo_stream: turbo_stream.update('flash', partial: FLASH_PARTIAL)
           end
-          format.json { render json: { error: t('staffs.manage_codes.not_found') }, status: :not_found }
+          format.json { render json: { error: t(CODE_NOT_FOUND) }, status: :not_found }
         end
         return
       end
@@ -71,7 +77,7 @@ class StaffsController < ApplicationController
             flash.now[:notice] = t('staffs.manage_codes.delete_success')
             render turbo_stream: [
                      turbo_stream.remove("code-#{params[:id]}"),
-                     turbo_stream.update('flash', partial: 'shared/flash')
+                     turbo_stream.update('flash', partial: FLASH_PARTIAL)
                    ]
           end
           format.json { head :no_content }
@@ -81,7 +87,7 @@ class StaffsController < ApplicationController
           format.html { redirect_to staffs_manage_codes_path, alert: t('staffs.manage_codes.delete_error') }
           format.turbo_stream do
             flash.now[:alert] = t('staffs.manage_codes.delete_error')
-            render turbo_stream: turbo_stream.update('flash', partial: 'shared/flash')
+            render turbo_stream: turbo_stream.update('flash', partial: FLASH_PARTIAL)
           end
           format.json { render json: { error: t('staffs.manage_codes.delete_error') }, status: :unprocessable_entity }
         end
@@ -92,13 +98,15 @@ class StaffsController < ApplicationController
         format.html { redirect_to staffs_manage_codes_path, alert: t('staffs.manage_codes.delete_error') }
         format.turbo_stream do
           flash.now[:alert] = t('staffs.manage_codes.delete_error')
-          render turbo_stream: turbo_stream.update('flash', partial: 'shared/flash')
+          render turbo_stream: turbo_stream.update('flash', partial: FLASH_PARTIAL)
         end
         format.json { render json: { error: e.message }, status: :internal_server_error }
       end
     end
   end
 
+  NO_USED_CODES = 'staffs.manage_codes.no_used_codes'.freeze
+  DELETE_USED_ERROR = 'staffs.manage_codes.delete_used_error'.freeze
   def delete_used_codes
     begin
       # Find codes that are fully used
@@ -111,12 +119,12 @@ class StaffsController < ApplicationController
 
       if count == 0
         respond_to do |format|
-          format.html { redirect_to staffs_manage_codes_path, alert: t('staffs.manage_codes.no_used_codes') }
+          format.html { redirect_to staffs_manage_codes_path, alert: t(NO_USED_CODES) }
           format.turbo_stream do
-            flash.now[:alert] = t('staffs.manage_codes.no_used_codes')
-            render turbo_stream: turbo_stream.update('flash', partial: 'shared/flash')
+            flash.now[:alert] = t(NO_USED_CODES)
+            render turbo_stream: turbo_stream.update('flash', partial: FLASH_PARTIAL)
           end
-          format.json { render json: { message: t('staffs.manage_codes.no_used_codes') }, status: :not_found }
+          format.json { render json: { message: t(NO_USED_CODES) }, status: :not_found }
         end
         return
       end
@@ -135,7 +143,7 @@ class StaffsController < ApplicationController
             format.turbo_stream do
               flash.now[:notice] = t('staffs.manage_codes.deleted_used_codes', count: count)
               render turbo_stream: [
-                       turbo_stream.update('flash', partial: 'shared/flash'),
+                       turbo_stream.update('flash', partial: FLASH_PARTIAL),
                        turbo_stream.update(
                          'enrollment-codes-table',
                          partial: 'enrollment_codes_table',
@@ -155,18 +163,12 @@ class StaffsController < ApplicationController
     rescue => e
       Rails.logger.error("Error deleting used enrollment codes: #{e.message}")
       respond_to do |format|
-        format.html { redirect_to staffs_manage_codes_path, alert: t('staffs.manage_codes.delete_used_error') }
+        format.html { redirect_to staffs_manage_codes_path, alert: t(DELETE_USED_ERROR) }
         format.turbo_stream do
-          flash.now[:alert] = t('staffs.manage_codes.delete_used_error')
-          render turbo_stream: turbo_stream.update('flash', partial: 'shared/flash')
+          flash.now[:alert] = t(DELETE_USED_ERROR)
+          render turbo_stream: turbo_stream.update('flash', partial: FLASH_PARTIAL)
         end
-        format.json do
-          render json: {
-                   error: t('staffs.manage_codes.delete_used_error'),
-                   details: e.message
-                 },
-                 status: :internal_server_error
-        end
+        format.json { render json: { error: t(DELETE_USED_ERROR), details: e.message }, status: :internal_server_error }
       end
     end
   end
