@@ -5,10 +5,17 @@ Rails.application.routes.draw do
   get 'principal/dashboard', to: 'principals#dashboard', as: 'principal_dashboard'
   post 'principals/generate_staff_code', to: 'principals#generate_staff_code', as: 'generate_staff_code_principal'
   post 'principals/generate_student_code', to: 'principals#generate_student_code', as: 'generate_student_code_principal'
+  get 'principals/manage_codes', to: 'principals#manage_codes', as: 'manage_codes_principal'
+  delete 'principals/delete_code/:id', to: 'principals#delete_code', as: 'delete_code_principal'
+  delete 'principals/delete_used_codes', to: 'principals#delete_used_codes', as: 'delete_used_codes_principal'
+
   get 'student_dashboard', to: 'students#dashboard', as: 'student_dashboard'
   get 'staff_dashboard', to: 'staffs#dashboard', as: 'staff_dashboard'
   get 'staff/generate_code', to: 'staffs#generate_code', as: 'staffs_generate_code'
   post 'staff/create_code', to: 'staffs#create_code', as: 'staffs_create_code'
+  get 'staff/manage_codes', to: 'staffs#manage_codes', as: 'staffs_manage_codes'
+  delete 'staff/delete_code/:id', to: 'staffs#delete_code', as: 'staffs_delete_code'
+  delete 'staff/delete_used_codes', to: 'staffs#delete_used_codes', as: 'staffs_delete_used_codes'
   resources :attendances
 
   resources :attendances do

@@ -5,11 +5,15 @@
 #  id                  :integer          not null, primary key
 #  address             :string
 #  country             :string           default("Unknown"), not null
+#  custom_theme        :text
 #  name                :string           not null
 #  next_payment_date   :datetime
 #  student_limit       :integer          default(0)
 #  subscription_status :string           default("pending")
 #  subscription_type   :string
+#  theme               :string
+#  theme_mode          :string
+#  timezone            :string           default("Asia/Bangkok")
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #
