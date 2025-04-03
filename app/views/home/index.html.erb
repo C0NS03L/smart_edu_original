@@ -273,7 +273,7 @@
     let monthlyCost = 0
     let plan = 'trial'
 
-    if (studentCount <= 0) {
+    if (studentCount <= 0 || isNaN(studentCount)) {
       // Disable the "Get Started" button if student count is 0 or less
       document.getElementById('getStartedLink').innerHTML = '' // Clear the button
       document.getElementById('errorMessage').classList.remove('hidden') // Show error message
