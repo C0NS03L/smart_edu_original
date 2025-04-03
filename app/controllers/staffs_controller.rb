@@ -47,7 +47,6 @@ class StaffsController < ApplicationController
       # Only show codes that have a limit and have reached it
       codes = codes.where('usage_limit IS NOT NULL AND usage_count >= usage_limit')
     else
-      codes = codes
     end
 
     @enrollment_codes = codes.order(created_at: :desc)
@@ -84,20 +83,20 @@ class StaffsController < ApplicationController
         end
       else
         respond_to do |format|
-          format.html { redirect_to staffs_manage_codes_path, alert: t('staffs.manage_codes.delete_error') }
+          format.html { redirect_to staffs_manage_codes_path, alert: t(DELETE_ERROR_MESSAGE) }
           format.turbo_stream do
-            flash.now[:alert] = t('staffs.manage_codes.delete_error')
+            flash.now[:alert] = t(DELETE_ERROR_MESSAGE)
             render turbo_stream: turbo_stream.update('flash', partial: FLASH_PARTIAL)
           end
-          format.json { render json: { error: t('staffs.manage_codes.delete_error') }, status: :unprocessable_entity }
+          format.json { render json: { error: t(DELETE_ERROR_MESSAGE) }, status: :unprocessable_entity }
         end
       end
     rescue => e
       Rails.logger.error("Error deleting enrollment code: #{e.message}")
       respond_to do |format|
-        format.html { redirect_to staffs_manage_codes_path, alert: t('staffs.manage_codes.delete_error') }
+        format.html { redirect_to staffs_manage_codes_path, alert: t(DELETE_ERROR_MESSAGE) }
         format.turbo_stream do
-          flash.now[:alert] = t('staffs.manage_codes.delete_error')
+          flash.now[:alert] = t(DELETE_ERROR_MESSAGE)
           render turbo_stream: turbo_stream.update('flash', partial: FLASH_PARTIAL)
         end
         format.json { render json: { error: e.message }, status: :internal_server_error }

@@ -56,7 +56,6 @@ class PrincipalsController < ApplicationController
     when 'used_up'
       codes = codes.where('usage_limit IS NOT NULL AND usage_count >= usage_limit')
     else
-      codes = codes
     end
 
     @enrollment_codes = codes.order(created_at: :desc)
