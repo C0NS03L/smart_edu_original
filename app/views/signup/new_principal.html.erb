@@ -39,48 +39,37 @@
           }
         }
       ) do |form| %>
-    <h2 class="text-lg font-bold"><%= t('signup.principal.enter_information') %></h2>
-    <%= form.text_field :name,
-                        class: 'input input-bordered w-full mt-2',
-                        placeholder: t('signup.name_placeholder'),
-                        required: true,
-                        autofocus: true %>
+    <h2 class="text-lg font-bold">Enter Your Information</h2>
+    <%= form.text_field :name, class: 'input input-bordered w-full mt-2', placeholder: 'Name', required: true, autofocus: true %>
     <%= form.email_field :email_address,
                          class: 'input input-bordered w-full mt-2',
-                         placeholder: t('signup.email_placeholder'),
+                         placeholder: 'Email',
                          autocomplete: 'username' %>
     <%= form.password_field :password,
                             class: 'input input-bordered w-full mt-2',
-                            placeholder: t('signup.password_placeholder'),
+                            placeholder: 'Password',
                             autocomplete: 'new-password' %>
     <%= form.password_field :password_confirmation,
                             class: 'input input-bordered w-full mt-2',
-                            placeholder: t('signup.confirm_password_placeholder'),
+                            placeholder: 'Confirm Password',
                             autocomplete: 'new-password' %>
-    <%= form.text_field :phone_number,
-                        class: 'input input-bordered w-full mt-2',
-                        placeholder: t('signup.principal.phone_placeholder'),
-                        required: true %>
+    <%= form.text_field :phone_number, class: 'input input-bordered w-full mt-2', placeholder: 'Phone Number', required: true %>
 
-    <h2 class="mt-4 text-lg font-bold"><%= t('signup.principal.enter_school_information') %></h2>
+    <h2 class="mt-4 text-lg font-bold">Enter School Your Information</h2>
     <%= form.fields_for :school do |school_form| %>
-      <%= school_form.text_field :name,
-                                 class: 'input input-bordered w-full mt-2',
-                                 placeholder: t('signup.principal.school_name_placeholder'),
-                                 required: true %>
+      <%= school_form.text_field :name, class: 'input input-bordered w-full mt-2', placeholder: 'School Name', required: true %>
       <%= school_form.text_field :address,
                                  class: 'input input-bordered w-full mt-2',
-                                 placeholder: t('signup.principal.school_address_placeholder'),
+                                 placeholder: 'School Address',
                                  required: true %>
-      <%= school_form.text_field :country,
-                                 class: 'input input-bordered w-full mt-2',
-                                 placeholder: t('signup.principal.country_placeholder'),
-                                 required: true %>
+      <%= school_form.text_field :country, class: 'input input-bordered w-full mt-2', placeholder: 'Country', required: true %>
     <% end %>
     <%= hidden_field_tag :plan, params[:plan] %>
     <%= hidden_field_tag :amount, params[:amount] %>
     <%= form.submit 'Subscribe', class: 'btn btn-primary w-full mt-2', id: 'subscribeButton' %>
+    <%= form.submit 'Sign Up', class: 'btn btn-primary w-full mt-2' %>
   <% end %>
+  <%= link_to 'Back to Sign In', new_session_path, class: 'btn btn-ghost' %>
 <% end %>
 
 <script>

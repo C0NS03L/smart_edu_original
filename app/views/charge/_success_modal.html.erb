@@ -10,41 +10,21 @@
     </div>
 
     <!-- Main Content -->
-    <h1 class="mb-6 text-4xl font-extrabold text-green-600"><%= t('charge.success_modal.heading') %></h1>
-    <p class="mb-8 text-xl text-gray-700"><%= t('charge.success_modal.message') %></p>
+    <h1 class="mb-6 text-4xl font-extrabold text-green-600">Payment Successful!</h1>
+
+    <p class="mb-8 text-xl text-gray-700">Thank you for your purchase.</p>
 
     <!-- Redirect message -->
     <p class="text-md mb-4 italic text-gray-500">You will be redirected to your dashboard in a few seconds...</p>
 
     <!-- Dashboard Button -->
     <div class="mt-12">
-      <% if Current.user.present? %>
-        <% if Current.user.type == 'Principal' %>
-          <a
-            href="/principal/dashboard"
-            id="dashboardLink"
-            class="inline-block rounded-lg bg-green-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
-          >
-            Go to Principal Dashboard
-          </a>
-        <% else %>
-          <a
-            href="/"
-            id="dashboardLink"
-            class="inline-block rounded-lg bg-green-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
-          >
-            Continue to Dashboard
-          </a>
-        <% end %>
-      <% else %>
-        <a
-          href="/session/new"
-          id="dashboardLink"
-          class="inline-block rounded-lg bg-green-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
-        >
-          Sign In
-        </a>
-      <% end %>
+      <a
+        href="/principal/dashboard"
+        class="inline-block rounded-lg bg-green-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
+      >
+        Go to Dashboard
+      </a>
     </div>
   </div>
 </div>

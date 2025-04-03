@@ -1,16 +1,16 @@
-<div id="<%= dom_id attendance %>" class="attendance-details">
+<div id="<%= dom_id attendance %>">
   <p>
-    <strong><%= t('attendances.attendance.student') %>:</strong>
-    <%= attendance.student ? attendance.student.name : attendance.student_id %>
+    <strong>Student:</strong>
+    <%= attendance.student_id %>
   </p>
 
   <p>
-    <strong><%= t('attendances.attendance.timestamp') %>:</strong>
-    <%= l(attendance.timestamp, format: :long) if attendance.timestamp %>
+    <strong>Timestamp:</strong>
+    <%= attendance.timestamp %>
   </p>
 
   <p>
-    <strong><%= t('attendances.attendance.user') %>:</strong>
+    <strong>User:</strong>
     <%= attendance.user_id %>
   </p>
 </div>

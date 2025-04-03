@@ -10,32 +10,26 @@
     </div>
   <% end %>
   <%= form_with(url: signup_index_path, class: 'form-control mt-4', html: { autocomplete: 'on' }) do |form| %>
-    <h2 class="text-lg font-bold">
-      <%= t('signup.enter_information') %><%= @role ? " #{t('signup.for')} #{@role.capitalize}" : '' %>
-    </h2>
-    <%= form.text_field :name,
-                        class: 'input input-bordered w-full mt-2',
-                        placeholder: t('signup.name_placeholder'),
-                        required: true,
-                        autofocus: true %>
+    <h2 class="text-lg font-bold">Enter Your Information<%= @role ? " for #{@role.capitalize}" : '' %></h2>
+    <%= form.text_field :name, class: 'input input-bordered w-full mt-2', placeholder: 'Name', required: true, autofocus: true %>
     <%= form.email_field :email_address,
                          class: 'input input-bordered w-full mt-2',
-                         placeholder: t('signup.email_placeholder'),
+                         placeholder: 'Email',
                          autocomplete: 'username' %>
     <%= form.password_field :password,
                             class: 'input input-bordered w-full mt-2',
-                            placeholder: t('signup.password_placeholder'),
+                            placeholder: 'Password',
                             autocomplete: 'new-password' %>
     <%= form.password_field :password_confirmation,
                             class: 'input input-bordered w-full mt-2',
-                            placeholder: t('signup.confirm_password_placeholder'),
+                            placeholder: 'Confirm Password',
                             autocomplete: 'new-password' %>
     <%= form.text_field :enrollment_code,
                         class: 'input input-bordered w-full mt-2',
-                        placeholder: t('signup.enrollment_code_placeholder'),
+                        placeholder: 'Enrollment Code',
                         required: true %>
-    <%= form.submit t('signup.submit_button'), class: 'btn btn-primary w-full mt-2' %>
+    <%= form.submit 'Sign Up', class: 'btn btn-primary w-full mt-2' %>
     <%= form.hidden_field :role, value: @role %>
   <% end %>
-  <%= link_to t('signup.back_to_signin'), new_session_path, class: 'btn btn-ghost' %>
+  <%= link_to 'Back to Sign In', new_session_path, class: 'btn btn-ghost' %>
 <% end %>

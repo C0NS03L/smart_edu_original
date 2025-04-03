@@ -1,11 +1,11 @@
-<% content_for :title, t('attendances.new.page_title') %>
+<% content_for :title, 'New attendance' %>
 <% if notice.present? %>
   <div class="alert alert-info mx-auto mb-4 w-fit"><%= notice %></div>
 <% end %>
 <%= search_form_for @q, url: new_attendance_path, data: { controller: 'submit', turbo_frame: 'students' } do |f| %>
   <div class="flex justify-center bg-neutral-400 p-5">
     <%= f.text_field :name_cont,
-                     placeholder: t('attendances.new.search_placeholder'),
+                     placeholder: 'Search by student name...',
                      data: {
                        action: 'input->submit#submit'
                      },

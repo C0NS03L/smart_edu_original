@@ -10,9 +10,11 @@
     </div>
 
     <!-- Main Content -->
-    <h1 class="mb-6 text-4xl font-extrabold text-red-600"><%= t('charge.fail_modal.heading') %></h1>
-    <p class="mb-8 text-xl text-gray-700"><%= t('charge.fail_modal.message') %></p>
-    <p class="error-message mb-8 text-lg text-red-500"><%= @error_message || t('charge.fail_modal.default_error') %></p>
+    <h1 class="mb-6 text-4xl font-extrabold text-red-600">Payment Failed!</h1>
+    <p class="mb-8 text-xl text-gray-700">Unfortunately, your payment could not be processed.</p>
+    <p class="error-message mb-8 text-lg text-red-500">
+      <%= @error_message || 'An error occurred during payment processing.' %>
+    </p>
 
     <!-- Retry Payment Button -->
     <div class="mt-12">
@@ -20,7 +22,7 @@
         href="/subscriptions"
         class="inline-block rounded-lg bg-red-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-red-700"
       >
-        <%= t('charge.fail_modal.retry_button') %>
+        Retry Payment
       </a>
     </div>
   </div>
