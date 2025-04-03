@@ -4,12 +4,10 @@
     console.log('Turbolinks loaded - initializing forms')
     initializeForms()
   })
-
   document.addEventListener('DOMContentLoaded', function () {
     console.log('DOM loaded - initializing forms')
     initializeForms()
   })
-
   // If we're already loaded, initialize immediately
   if (document.readyState === 'complete') {
     console.log('Document already complete - initializing forms immediately')
@@ -17,146 +15,129 @@
   }
 
   function initializeForms() {
-    initializeSignupForm()
-    initializePrincipalForm()
+    // Form configurations
+    const formConfigs = [
+      {
+        formId: 'signup-form',
+        fields: [
+          { type: 'email', id: 'email-field', feedbackId: 'email-feedback' },
+          { type: 'password', id: 'password-field', feedbackId: 'password-feedback' },
+          {
+            type: 'passwordConfirm',
+            id: 'password-confirmation-field',
+            feedbackId: 'password-match-feedback',
+            passwordId: 'password-field'
+          }
+        ]
+      },
+      {
+        formId: 'principal-form',
+        fields: [
+          { type: 'email', id: 'principal-email-field', feedbackId: 'principal-email-feedback' },
+          { type: 'password', id: 'principal-password-field', feedbackId: 'principal-password-feedback' },
+          {
+            type: 'passwordConfirm',
+            id: 'principal-password-confirmation-field',
+            feedbackId: 'principal-password-match-feedback',
+            passwordId: 'principal-password-field'
+          },
+          { type: 'phone', id: 'principal-phone-field', feedbackId: 'principal-phone-feedback' }
+        ]
+      }
+    ]
+
+    // Initialize each form
+    formConfigs.forEach(initializeFormFromConfig)
   }
 
-  // SIGNUP FORM
-  function initializeSignupForm() {
-    const signupForm = document.getElementById('signup-form')
-    if (!signupForm) return
+  function initializeFormFromConfig(config) {
+    const form = document.getElementById(config.formId)
+    if (!form) return
 
-    const emailField = document.getElementById('email-field')
-    const emailFeedback = document.getElementById('email-feedback')
-    const passwordField = document.getElementById('password-field')
-    const passwordFeedback = document.getElementById('password-feedback')
-    const passwordConfirmField = document.getElementById('password-confirmation-field')
-    const passwordMatchFeedback = document.getElementById('password-match-feedback')
+    const fields = {}
 
-    // Email validation
-    if (emailField) {
-      emailField.addEventListener('input', function () {
-        validateEmail(emailField, emailFeedback)
-      })
-    }
+    // Set up field references and event listeners
+    config.fields.forEach((fieldConfig) => {
+      const field = document.getElementById(fieldConfig.id)
+      const feedback = document.getElementById(fieldConfig.feedbackId)
 
-    // Password validation
-    if (passwordField) {
-      passwordField.addEventListener('input', function () {
-        validatePassword(passwordField, passwordFeedback)
-        if (passwordConfirmField?.value.length > 0) {
-          validatePasswordMatch(passwordField, passwordConfirmField, passwordMatchFeedback)
+      if (field) {
+        fields[fieldConfig.type] = {
+          field,
+          feedback,
+          passwordField: fieldConfig.passwordId ? document.getElementById(fieldConfig.passwordId) : null
         }
-      })
-    }
 
-    // Password confirmation validation
-    if (passwordConfirmField) {
-      passwordConfirmField.addEventListener('input', function () {
-        validatePasswordMatch(passwordField, passwordConfirmField, passwordMatchFeedback)
-      })
-    }
-
-    // Form submission
-    signupForm.addEventListener('submit', function (event) {
-      let formValid = true
-
-      if (emailField && emailField.value) {
-        if (!validateEmail(emailField, emailFeedback)) {
-          formValid = false
+        // Add appropriate event listeners based on field type
+        switch (fieldConfig.type) {
+          case 'email':
+            field.addEventListener('input', () => validateEmail(field, feedback))
+            break
+          case 'password':
+            field.addEventListener('input', () => {
+              validatePassword(field, feedback)
+              const confirmField = fields.passwordConfirm
+              if (confirmField && confirmField.field.value.length > 0) {
+                validatePasswordMatch(field, confirmField.field, confirmField.feedback)
+              }
+            })
+            break
+          case 'passwordConfirm':
+            field.addEventListener('input', () => {
+              const passwordField = fields.password
+                ? fields.password.field
+                : fieldConfig.passwordId
+                  ? document.getElementById(fieldConfig.passwordId)
+                  : null
+              if (passwordField) {
+                validatePasswordMatch(passwordField, field, feedback)
+              }
+            })
+            break
+          case 'phone':
+            field.addEventListener('input', () => validatePhone(field, feedback))
+            break
         }
-      }
-
-      if (passwordField && passwordField.value) {
-        if (!validatePassword(passwordField, passwordFeedback)) {
-          formValid = false
-        }
-      }
-
-      if (passwordConfirmField && passwordConfirmField.value) {
-        if (!validatePasswordMatch(passwordField, passwordConfirmField, passwordMatchFeedback)) {
-          formValid = false
-        }
-      }
-
-      if (!formValid) {
-        event.preventDefault()
       }
     })
-  }
 
-  // PRINCIPAL FORM
-  function initializePrincipalForm() {
-    const principalForm = document.getElementById('principal-form')
-    if (!principalForm) return
-
-    const emailField = document.getElementById('principal-email-field')
-    const emailFeedback = document.getElementById('principal-email-feedback')
-    const passwordField = document.getElementById('principal-password-field')
-    const passwordFeedback = document.getElementById('principal-password-feedback')
-    const passwordConfirmField = document.getElementById('principal-password-confirmation-field')
-    const passwordMatchFeedback = document.getElementById('principal-password-match-feedback')
-    const phoneField = document.getElementById('principal-phone-field')
-    const phoneFeedback = document.getElementById('principal-phone-feedback')
-
-    // Email validation
-    if (emailField) {
-      emailField.addEventListener('input', function () {
-        validateEmail(emailField, emailFeedback)
-      })
-    }
-
-    // Password validation
-    if (passwordField) {
-      passwordField.addEventListener('input', function () {
-        validatePassword(passwordField, passwordFeedback)
-        if (passwordConfirmField?.value.length > 0) {
-          validatePasswordMatch(passwordField, passwordConfirmField, passwordMatchFeedback)
-        }
-      })
-    }
-
-    // Password confirmation validation
-    if (passwordConfirmField) {
-      passwordConfirmField.addEventListener('input', function () {
-        validatePasswordMatch(passwordField, passwordConfirmField, passwordMatchFeedback)
-      })
-    }
-
-    // Phone validation
-    if (phoneField) {
-      phoneField.addEventListener('input', function () {
-        validatePhone(phoneField, phoneFeedback)
-      })
-    }
-
-    // Form submission
-    principalForm.addEventListener('submit', function (event) {
+    // Form submission handler
+    form.addEventListener('submit', function (event) {
       let formValid = true
 
-      if (emailField && emailField.value) {
-        if (!validateEmail(emailField, emailFeedback)) {
-          formValid = false
-        }
-      }
+      // Validate all fields
+      config.fields.forEach((fieldConfig) => {
+        const field = document.getElementById(fieldConfig.id)
+        const feedback = document.getElementById(fieldConfig.feedbackId)
 
-      if (passwordField && passwordField.value) {
-        if (!validatePassword(passwordField, passwordFeedback)) {
-          formValid = false
-        }
-      }
+        if (field && field.value) {
+          let isValid = true
 
-      if (passwordConfirmField && passwordConfirmField.value) {
-        if (!validatePasswordMatch(passwordField, passwordConfirmField, passwordMatchFeedback)) {
-          formValid = false
-        }
-      }
+          switch (fieldConfig.type) {
+            case 'email':
+              isValid = validateEmail(field, feedback)
+              break
+            case 'password':
+              isValid = validatePassword(field, feedback)
+              break
+            case 'passwordConfirm':
+              const passwordField = fields.password
+                ? fields.password.field
+                : fieldConfig.passwordId
+                  ? document.getElementById(fieldConfig.passwordId)
+                  : null
+              if (passwordField) {
+                isValid = validatePasswordMatch(passwordField, field, feedback)
+              }
+              break
+            case 'phone':
+              isValid = validatePhone(field, feedback)
+              break
+          }
 
-      if (phoneField && phoneField.value) {
-        if (!validatePhone(phoneField, phoneFeedback)) {
-          formValid = false
+          if (!isValid) formValid = false
         }
-      }
+      })
 
       if (!formValid) {
         event.preventDefault()
