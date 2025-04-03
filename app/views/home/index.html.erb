@@ -301,9 +301,7 @@
 
     // Generate link based on plan and cost
     const link = document.createElement('a')
-    link.href = '<%= new_principal_signup_path(plan: 'TEMP_PLAN', amount: 'TEMP_AMOUNT') %>'
-      .replace('TEMP_PLAN', plan)
-      .replace('TEMP_AMOUNT', monthlyCost)
+    link.href = `/signup/new_principal?plan=${plan}&amount=${monthlyCost}`
     link.className = 'btn btn-primary w-full'
     link.textContent = 'Get Started'
 
