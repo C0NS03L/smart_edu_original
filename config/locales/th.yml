@@ -83,7 +83,6 @@ th:
     generate_code:
       page_title: 'การสร้างรหัส'
       student_code: 'รหัสนักเรียน'
-      number_of_accounts: 'จำนวนบัญชีที่ต้องการ'
       enter_number: 'ใส่จำนวน'
       generate_button: 'สร้าง'
     manage_codes:
@@ -154,7 +153,6 @@ th:
       page_title: 'การสร้างรหัส'
       staff_code_heading: 'รหัสเจ้าหน้าที่'
       student_code_heading: 'รหัสนักเรียน'
-      number_of_accounts: 'จำนวนบัญชีที่ต้องการ'
       enter_number: 'ใส่จำนวน'
       generate_button: 'สร้าง'
     manage_codes:
@@ -285,3 +283,8 @@ th:
       used_up_filter: 'ใช้หมดแล้ว'
       delete_used_codes: 'ลบรหัสที่ใช้หมดแล้วทั้งหมด'
       delete_used_confirm: 'คุณแน่ใจหรือไม่ว่าต้องการลบรหัสที่ใช้หมดแล้วทั้งหมด? การกระทำนี้ไม่สามารถยกเลิกได้'
+      number_of_accounts: 'จำนวนบัญชี'
+      enter_number: 'ใส่จำนวนบัญชี'
+      generate_button: 'สร้างรหัส'
+      copy_code: 'คัดลอกรหัส'
+      copied: 'คัดลอกแล้ว!'

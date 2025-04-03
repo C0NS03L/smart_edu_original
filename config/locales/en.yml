@@ -314,3 +314,8 @@ en:
       used_up_filter: 'Used up'
       delete_used_codes: 'Delete all used codes'
       delete_used_confirm: 'Are you sure you want to delete all used up codes? This action cannot be undone.'
+      number_of_accounts: 'Number of Accounts'
+      enter_number: 'Enter number of accounts'
+      generate_button: 'Generate Code'
+      copy_code: 'Copy Code'
+      copied: 'Copied!'

@@ -1,0 +1,50 @@
+<% if flash[:notice] %>
+  <div class="alert alert-success flex items-center justify-between">
+    <span id="flash-notice"><%= flash[:notice] %></span>
+    <button
+      onclick="copyCodeFromMessage('flash-notice')"
+      class="btn btn-sm btn-outline ml-3"
+      title="<%= t('common.enrollment_codes.copy_tooltip') %>"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+        />
+      </svg>
+      <%= t('common.enrollment_codes.copy_code') %>
+    </button>
+  </div>
+<% elsif flash[:alert] %>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
+<% end %>
+
+<script>
+  function copyCodeFromMessage(elementId) {
+    const element = document.getElementById(elementId)
+    const fullText = element.textContent
+
+    // Extract just the code (format: "XXX-YYYYYYYY")
+    const codeMatch = fullText.match(/([A-Z]{3}-[0-9A-F]{8})/)
+    const textToCopy = codeMatch ? codeMatch[0] : fullText
+
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        // Create a temporary alert to show the copy was successful
+        const alertDiv = document.createElement('div')
+        alertDiv.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg'
+        alertDiv.textContent = '<%= t('common.enrollment_codes.copied_message') %>'
+        document.body.appendChild(alertDiv)
+
+        setTimeout(() => {
+          alertDiv.remove()
+        }, 2000)
+      })
+      .catch((err) => {
+        console.error('Failed to copy text: ', err)
+      })
+  }
+</script>

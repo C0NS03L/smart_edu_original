@@ -1,67 +1,13 @@
 <% content_for :title, t('staffs.generate_code.page_title') %>
 <div class="flex min-h-[calc(100vh-64px)] flex-col items-center justify-center space-y-8">
-  <% if flash[:notice] %>
-    <div class="alert alert-success flex items-center justify-between">
-      <span id="flash-notice"><%= flash[:notice] %></span>
-      <button
-        onclick="copyCodeFromMessage('flash-notice')"
-        class="btn btn-sm btn-outline ml-3"
-        title="Copy to clipboard"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
-          />
-        </svg>
-        Copy Code
-      </button>
-    </div>
-  <% elsif flash[:alert] %>
-    <div class="alert alert-danger"><%= flash[:alert] %></div>
-  <% end %>
+  <%= render 'shared/copy_code_flash' %>
+
   <div class="text-center">
-    <div class="rounded p-4 shadow-lg">
-      <h2 class="mb-4 text-3xl font-bold"><%= t('staffs.generate_code.student_code') %></h2>
-      <%= form_with url: staffs_create_code_path, method: :post, local: true do |form| %>
-        <label for="student_uses" class="mb-2 block text-lg font-medium"
-          ><%= t('staffs.generate_code.number_of_accounts') %></label
-        >
-        <%= form.number_field :usage_limit,
-                              id: 'student_uses',
-                              class: 'input input-bordered mb-4 w-full',
-                              placeholder: t('staffs.generate_code.enter_number') %>
-        <%= form.submit t('staffs.generate_code.generate_button'), class: 'btn btn-primary w-full' %>
-      <% end %>
-    </div>
+    <%= render 'shared/code_generation_form',
+               heading: t('staffs.generate_code.student_code'),
+               form_url: staffs_create_code_path,
+               id_prefix: 'student' %>
   </div>
+
   <%= render 'shared/back_to_dashboard_button' %>
 </div>
-
-<script>
-  function copyCodeFromMessage(elementId) {
-    const element = document.getElementById(elementId)
-    const fullText = element.textContent
-
-    // Extract just the code (format: "XXX-YYYYYYYY")
-    const codeMatch = fullText.match(/([A-Z]{3}-[0-9A-F]{8})/)
-    const textToCopy = codeMatch ? codeMatch[0] : fullText
-
-    navigator.clipboard
-      .writeText(textToCopy)
-      .then(() => {
-        const button = element.nextElementSibling
-        button.textContent = 'Copied!'
-
-        setTimeout(() => {
-          button.innerHTML =
-            '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg> Copy Code'
-        }, 1500)
-      })
-      .catch((err) => {
-        console.error('Failed to copy text: ', err)
-      })
-  }
-</script>

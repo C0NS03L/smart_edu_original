@@ -13,7 +13,13 @@
       <% enrollment_codes.each do |code| %>
         <tr id="code-<%= code.id %>" class="<%= code.fully_used? ? 'bg-gray-100' : '' %>">
           <td><span id="code-text-<%= code.id %>"><%= code.code %></span></td>
-          <td><%= t('common.enrollment_codes.student_type') %></td>
+          <td>
+            <% if defined?(show_type) && show_type %>
+              <%= code.account_type == 'student' ? t('common.enrollment_codes.student_type') : t('common.enrollment_codes.staff_type') %>
+            <% else %>
+              <%= t('common.enrollment_codes.student_type') %>
+            <% end %>
+          </td>
           <td>
             <% if code.fully_used? %>
               <span class="badge badge-error text-white">
@@ -48,7 +54,7 @@
                 />
               </svg>
             </button>
-            <%= button_to staffs_delete_code_path(code),
+            <%= button_to delete_path.call(code),
                           method: :delete,
                           class: 'btn btn-sm btn-error',
                           form: {
@@ -84,3 +90,31 @@
     <% end %>
   </tbody>
 </table>
+
+<script>
+  function copyCodeFromMessage(elementId) {
+    const element = document.getElementById(elementId)
+    const fullText = element.textContent
+
+    // Extract just the code (format: "XXX-YYYYYYYY")
+    const codeMatch = fullText.match(/([A-Z]{3}-[0-9A-F]{8})/)
+    const textToCopy = codeMatch ? codeMatch[0] : fullText
+
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        // Create a temporary alert to show the copy was successful
+        const alertDiv = document.createElement('div')
+        alertDiv.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg'
+        alertDiv.textContent = '<%= t('common.enrollment_codes.copied_message') %>'
+        document.body.appendChild(alertDiv)
+
+        setTimeout(() => {
+          alertDiv.remove()
+        }, 2000)
+      })
+      .catch((err) => {
+        console.error('Failed to copy text: ', err)
+      })
+  }
+</script>

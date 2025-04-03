@@ -1,0 +1,13 @@
+<div class="rounded p-4 shadow-lg">
+  <h2 class="mb-4 text-3xl font-bold"><%= heading %></h2>
+  <%= form_with url: form_url, method: :post, local: true do |form| %>
+    <label for="<%= id_prefix %>_uses" class="mb-2 block text-lg font-medium">
+      <%= t('common.enrollment_codes.number_of_accounts') %>
+    </label>
+    <%= form.number_field :usage_limit,
+                          id: "#{id_prefix}_uses",
+                          class: 'input input-bordered mb-4 w-full',
+                          placeholder: t('common.enrollment_codes.enter_number') %>
+    <%= form.submit t('common.enrollment_codes.generate_button'), class: 'btn btn-primary w-full' %>
+  <% end %>
+</div>

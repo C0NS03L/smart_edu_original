@@ -9,55 +9,12 @@
 
   <div class="overflow-x-auto">
     <div id="flash"><%= render 'shared/flash' %></div>
-    <% if @enrollment_codes.any?(&:fully_used?) %>
-      <div class="mb-2 flex justify-end">
-        <%= button_to staffs_delete_used_codes_path,
-                      method: :delete,
-                      class: 'btn btn-sm btn-error',
-                      data: {
-                        turbo_confirm: t('common.enrollment_codes.delete_used_confirm')
-                      } do %>
-          <%= t('common.enrollment_codes.delete_used_codes') %>
-        <% end %>
-      </div>
-    <% end %>
-    <div class="mb-4 flex items-center space-x-2">
-      <span><%= t('common.enrollment_codes.filter') %>:</span>
-      <%= link_to t('common.enrollment_codes.all'),
-                  staffs_manage_codes_path,
-                  class: "btn btn-sm #{params[:filter].blank? ? 'btn-primary' : 'btn-outline'}" %>
-      <%= link_to t('common.enrollment_codes.active'),
-                  staffs_manage_codes_path(filter: 'active'),
-                  class: "btn btn-sm #{params[:filter] == 'active' ? 'btn-primary' : 'btn-outline'}" %>
-      <%= link_to t('common.enrollment_codes.used_up'),
-                  staffs_manage_codes_path(filter: 'used_up'),
-                  class: "btn btn-sm #{params[:filter] == 'used_up' ? 'btn-primary' : 'btn-outline'}" %>
-    </div>
 
-    <%= render 'enrollment_codes_table', enrollment_codes: @enrollment_codes %>
+    <%= render 'shared/delete_used_codes_button', codes: @enrollment_codes, delete_path: staffs_delete_used_codes_path %>
+    <%= render 'shared/enrollment_code_filters', base_path: staffs_manage_codes_path %>
+    <%= render 'shared/enrollment_codes_table',
+               enrollment_codes: @enrollment_codes,
+               show_type: false,
+               delete_path: ->(code) { staffs_delete_code_path(code) } %>
   </div>
 </div>
-
-<script>
-  function copyCodeFromMessage(elementId) {
-    const element = document.getElementById(elementId)
-    const textToCopy = element.textContent
-
-    navigator.clipboard
-      .writeText(textToCopy)
-      .then(() => {
-        // Create a temporary alert to show the copy was successful
-        const alertDiv = document.createElement('div')
-        alertDiv.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg'
-        alertDiv.textContent = '<%= t('common.enrollment_codes.copied_message') %>'
-        document.body.appendChild(alertDiv)
-
-        setTimeout(() => {
-          alertDiv.remove()
-        }, 2000)
-      })
-      .catch((err) => {
-        console.error('Failed to copy text: ', err)
-      })
-  }
-</script>
