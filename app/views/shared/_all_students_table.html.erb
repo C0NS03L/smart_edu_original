@@ -1,12 +1,10 @@
 <table class="table-zebra table">
   <thead>
     <tr>
-      <th><%= sort_link(@q, :name, 'Name') %></th>
-      <th><%= sort_link(@q, :date, 'Date') %></th>
-      <th><%= sort_link(@q, :check_in_time, 'Check In Time') %></th>
-      <th><%= sort_link(@q, :email_address, 'Email') %></th>
-      <th><%= sort_link(@q, :phone_number, 'Phone Number') %></th>
-      <th>Actions</th>
+      <th><%= sort_link(@q, :name, t('tables.student.name')) %></th>
+      <th><%= sort_link(@q, :date, t('tables.student.date')) %></th>
+      <th><%= sort_link(@q, :check_in_time, t('tables.student.check_in_time')) %></th>
+      <th><%= t('attendances.table.action') %></th>
     </tr>
   </thead>
   <tbody>
@@ -21,17 +19,17 @@
       <% if latest_attendance %>
         <tr class="hover">
           <td><%= student.name %></td>
-          <td><%= latest_attendance.timestamp.strftime('%Y-%m-%d') %></td>
-          <td><%= latest_attendance.timestamp.strftime('%H:%M:%S') %></td>
-          <td><%= student.email_address %></td>
-          <td><%= student.phone_number %></td>
+          <td><%= l(attendance.timestamp, format: :date_only) %></td>
+          <td><%= l(attendance.timestamp, format: :time_only) %></td>
           <td>
             <div class="flex space-x-2">
               <%= link_to student, class: 'hover:text-blue-500 text-blue-700' do %>
-                <i class="fas fa-eye" title="Show"></i> View
+                <i class="fas fa-eye" title="<%= t('attendances.table.view_title') %>"></i>
+                <%= t('attendances.table.view') %>
               <% end %>
               <%= link_to edit_student_path(student), class: 'hover:text-yellow-500 text-yellow-700' do %>
-                <i class="fas fa-edit" title="Edit"></i> Edit
+                <i class="fas fa-edit" title="<%= t('attendances.table.edit_title') %>"></i>
+                <%= t('attendances.table.edit') %>
               <% end %>
             </div>
           </td>

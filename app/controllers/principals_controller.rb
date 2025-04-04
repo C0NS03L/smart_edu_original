@@ -193,9 +193,48 @@ class PrincipalsController < ApplicationController
     pdf.table(data, header: true, row_colors: %w[F0F0F0 FFFFFF], position: :center)
 
     send_data pdf.render, filename: 'principal_report.pdf', type: 'application/pdf', disposition: 'inline'
+
+  def settings
+    @school = Current.user.school
+  end
+
+  # app/controllers/principals_controller.rb
+  def update_settings
+    @school = Current.user.school
+
+    # Process custom theme if present
+    if params[:school][:custom_theme].present?
+      custom_theme = params[:school][:custom_theme]
+
+      # If it contains @plugin or name:, extract just the CSS variables
+      if custom_theme.include?('@plugin') || custom_theme.include?('name:')
+        css_var_lines = custom_theme.split("\n").select { |line| line.strip.start_with?('--') }.join("\n")
+
+        params[:school][:custom_theme] = css_var_lines if css_var_lines.present?
+      end
+    end
+
+    if @school.update(school_settings_params)
+      flash[:notice] = t('principals.settings.update_success')
+      redirect_to principal_settings_path(refresh: true)
+    else
+      render :settings, status: :unprocessable_entity
+    end
+
   end
 
   private
+
+  def require_principal
+    unless Current.principal?
+      flash[:alert] = t('controllers.access_denied')
+      redirect_to root_path
+    end
+  end
+
+  def school_settings_params
+    params.require(:school).permit(:timezone, :theme, :custom_theme)
+  end
 
   def principal_params
     params.require(:principal).permit(

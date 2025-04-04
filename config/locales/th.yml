@@ -135,6 +135,8 @@ th:
       generate_codes: 'สร้างรหัส'
       generate_enrollment_codes: 'สร้างรหัสลงทะเบียน'
       attendance: 'การเข้าเรียน'
+      settings: 'การตั้งค่า'
+      settings_button: 'การตั้งค่าโรงเรียน'
     generate_code:
       page_title: 'การสร้างรหัส'
       staff_code_heading: 'รหัสเจ้าหน้าที่'
@@ -142,6 +144,30 @@ th:
       number_of_accounts: 'จำนวนบัญชีที่ต้องการ'
       enter_number: 'ใส่จำนวน'
       generate_button: 'สร้าง'
+    settings:
+      page_title: 'การตั้งค่าโรงเรียน'
+      heading: 'การตั้งค่าโรงเรียน'
+      timezone_label: 'เขตเวลาของโรงเรียน'
+      timezone_help: 'เลือกเขตเวลาสำหรับโรงเรียนของคุณ ซึ่งมีผลต่อการแสดงเวลาทั้งหมดในระบบ'
+      save_button: 'บันทึกการตั้งค่า'
+      update_success: 'อัปเดตการตั้งค่าเรียบร้อยแล้ว'
+      theme_section: 'การตั้งค่าธีม'
+      timezone_section: 'การตั้งค่าเขตเวลา'
+      theme_label: 'ธีม'
+      theme_help: 'เลือกธีมที่ออกแบบไว้ล่วงหน้าสำหรับอินเทอร์เฟซของโรงเรียนของคุณ'
+      theme_mode_label: 'โหมดธีม'
+      light_mode: 'โหมดสว่าง'
+      dark_mode: 'โหมดมืด'
+      primary_color: 'สีหลัก'
+      secondary_color: 'สีรอง'
+      accent_color: 'สีเน้น'
+      predefined_themes: 'ธีมที่กำหนดไว้ล่วงหน้า'
+      custom_theme: 'ธีมที่กำหนดเอง'
+      custom_theme_label: 'ธีม CSS ที่กำหนดเอง'
+      custom_theme_placeholder: 'วางธีม CSS ของ DaisyUI ที่นี่...'
+      custom_theme_help: 'วางธีมจาก DaisyUI Theme Generator หรือเขียน CSS ของคุณเอง'
+      preview_theme_button: 'ดูตัวอย่างธีมที่กำหนดเอง'
+      clear_custom_theme: 'ล้าง'
   passwords_mailer:
     reset:
       instructions: 'คุณสามารถรีเซ็ตรหัสผ่านได้ภายใน 15 นาทีถัดไปที่'
@@ -175,6 +201,8 @@ th:
       date_only: '%Y-%m-%d'
       time_only: '%H:%M:%S'
       short: '%Y-%m-%d %H:%M'
+      time: '%H:%M'
+      long: '%Y-%m-%d %H:%M:%S'
   charge:
     fail_modal:
       heading: 'การชำระเงินล้มเหลว!'
@@ -194,6 +222,7 @@ th:
     new:
       page_title: 'สร้างการเข้าเรียนใหม่'
       search_placeholder: 'ค้นหาตามชื่อนักเรียน...'
+      heading: 'สร้างการเข้าเรียนใหม่'
     index:
       page_title: 'การเข้าเรียน'
       new_attendance: 'สร้างการเข้าเรียนใหม่'
@@ -240,3 +269,48 @@ th:
     add_attendance: 'เพิ่มการเข้าเรียน'
     list_attendances: 'รายการการเข้าเรียน'
     logout: 'ออกจากระบบ'
+  datetime:
+    distance_in_words:
+      half_a_minute: 'ครึ่งนาที'
+      less_than_x_seconds:
+        one: 'น้อยกว่า 1 วินาที'
+        other: 'น้อยกว่า %{count} วินาที'
+      x_seconds:
+        one: '1 วินาที'
+        other: '%{count} วินาที'
+      less_than_x_minutes:
+        one: 'น้อยกว่า 1 นาที'
+        other: 'น้อยกว่า %{count} นาที'
+      x_minutes:
+        one: '1 นาที'
+        other: '%{count} นาที'
+      about_x_hours:
+        one: 'ประมาณ 1 ชั่วโมง'
+        other: 'ประมาณ %{count} ชั่วโมง'
+      x_days:
+        one: '1 วัน'
+        other: '%{count} วัน'
+      about_x_months:
+        one: 'ประมาณ 1 เดือน'
+        other: 'ประมาณ %{count} เดือน'
+      x_months:
+        one: '1 เดือน'
+        other: '%{count} เดือน'
+      about_x_years:
+        one: 'ประมาณ 1 ปี'
+        other: 'ประมาณ %{count} ปี'
+      over_x_years:
+        one: 'มากกว่า 1 ปี'
+        other: 'มากกว่า %{count} ปี'
+      almost_x_years:
+        one: 'เกือบ 1 ปี'
+        other: 'เกือบ %{count} ปี'
+    prompts:
+      year: 'ปี'
+      month: 'เดือน'
+      day: 'วัน'
+      hour: 'ชั่วโมง'
+      minute: 'นาที'
+      second: 'วินาที'
+  controllers:
+    access_denied: 'การเข้าถึงถูกปฏิเสธ คุณต้องเป็นผู้อำนวยการเพื่อดูหน้านี้'

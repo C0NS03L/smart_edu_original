@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get 'principal/dashboard', to: 'principals#dashboard', as: 'principal_dashboard'
   post 'principals/generate_staff_code', to: 'principals#generate_staff_code', as: 'generate_staff_code_principal'
   post 'principals/generate_student_code', to: 'principals#generate_student_code', as: 'generate_student_code_principal'
+  get 'principal/settings', to: 'principals#settings', as: 'principal_settings'
+  patch 'principal/settings', to: 'principals#update_settings', as: 'update_principal_settings'
   get 'student_dashboard', to: 'students#dashboard', as: 'student_dashboard'
   get 'staff_dashboard', to: 'staffs#dashboard', as: 'staff_dashboard'
   get 'staff/generate_code', to: 'staffs#generate_code', as: 'staffs_generate_code'
