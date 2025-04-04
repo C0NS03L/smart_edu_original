@@ -3,20 +3,6 @@
     <%= render 'shared/logo_text' %> <span class="inline-block"></span>
   </h1>
 
-  <!-- Display plan information -->
-  <div class="mb-4 rounded-lg bg-blue-50 p-4">
-    <h3 class="font-bold">Selected Plan: <%= params[:plan]&.capitalize || 'Unknown' %></h3>
-    <p>
-      <% if params[:plan] == 'free_trial' %>
-        Free Trial - 30 days
-      <% elsif params[:plan] == 'standard' %>
-        Standard Plan - $500/month
-      <% elsif params[:plan] == 'premium' %>
-        Premium Plan - $800/month
-      <% end %>
-    </p>
-  </div>
-
   <% if @principal.errors.any? %>
     <div class="alert alert-error mt-4">
       <ul>

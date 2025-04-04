@@ -77,7 +77,7 @@ class School < ApplicationRecord
   def set_plan_limits(tier)
     case tier
     when 'free_trial'
-      self.student_limit = 200
+      self.student_limit = 20
       self.subscription_type = 'trial'
       self.subscription_status = 'active'
     when '500_students'

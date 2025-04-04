@@ -114,13 +114,17 @@
       document.getElementById('errorMessage').classList.add('hidden')
     }
 
-    if (studentCount <= 200) {
+    if (studentCount <= 20) {
       monthlyCost = 0
       plan = 'trial'
       document.getElementById('freeTierMessage').classList.remove('hidden')
+    } else if (studentCount < 800) {
+      monthlyCost = studentCount * 0.5
+      plan = 'standard'
+      document.getElementById('freeTierMessage').classList.add('hidden')
     } else {
-      monthlyCost = studentCount * 2
-      plan = studentCount < 800 ? 'standard' : 'premium'
+      monthlyCost = studentCount * 0.4
+      plan = 'premium'
       document.getElementById('freeTierMessage').classList.add('hidden')
     }
 

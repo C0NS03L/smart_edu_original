@@ -30,7 +30,7 @@ class ChargeController < ApplicationController
     Rails.logger.error(
       "Handling payment for school: #{school.id}, tier: #{tier}, amount: #{amount}, omise_token: #{omise_token}, omise_source: #{omise_source}"
     )
-    if amount == 0 && tier == 'trial'
+    if amount == 0
       handle_free_trial(school, tier)
     else
       handle_paid_subscription(school, tier, amount, omise_token, omise_source)
