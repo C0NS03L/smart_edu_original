@@ -4,7 +4,7 @@
 #
 #  id           :integer          not null, primary key
 #  account_type :string
-#  hashed_code  :string
+#  code         :string
 #  role         :string
 #  usage_count  :integer
 #  usage_limit  :integer
@@ -28,5 +28,15 @@ class EnrollmentCode < ApplicationRecord
   # Increment the usage count
   def increment_usage_count!
     increment!(:usage_count)
+  end
+
+  def fully_used?
+    return false if usage_limit.nil?
+    usage_count >= usage_limit
+  end
+
+  def usage_percentage
+    return 0 if usage_limit.nil? || usage_limit == 0
+    (usage_count.to_f / usage_limit) * 100
   end
 end

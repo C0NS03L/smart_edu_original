@@ -27,6 +27,13 @@
           <% end %>
         </li>
       <% end %>
+      <% if Current.principal? %>
+        <li>
+          <%= link_to principal_settings_path do %>
+            <i class="fas fa-cog"></i> <%= t('drawer.settings') %>
+          <% end %>
+        </li>
+      <% end %>
       <li>
         <%= link_to session_path, data: { turbo_method: :delete } do %>
           <i class="fas fa-sign-out-alt"></i> Logout

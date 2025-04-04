@@ -24,7 +24,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_03_161852) do
   end
 
   create_table 'enrollment_codes', force: :cascade do |t|
-    t.string 'hashed_code'
+    t.string 'code'
     t.string 'role'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
@@ -63,6 +63,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_03_161852) do
     t.integer 'student_limit', default: 0
     t.integer 'principal_id'
     t.index ['principal_id'], name: 'index_schools_on_principal_id'
+    t.string 'timezone', default: 'Asia/Bangkok'
+    t.string 'theme'
+    t.string 'theme_mode'
+    t.text 'custom_theme'
   end
 
   create_table 'sessions', force: :cascade do |t|

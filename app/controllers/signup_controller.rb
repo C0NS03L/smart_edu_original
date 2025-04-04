@@ -18,17 +18,16 @@ class SignupController < ApplicationController
     @enrollment_code = params[:enrollment_code] || ''
     user_password = params[:password]
 
-    hashed_code = Digest::SHA256.hexdigest(@enrollment_code)
-    code_object = EnrollmentCode.find_by(hashed_code: hashed_code)
+    code_object = EnrollmentCode.find_by(code: @enrollment_code)
 
     if code_object.nil?
-      flash[:alert] = 'Invalid enrollment code.'
+      flash.now[:alert] = 'Invalid enrollment code.'
       render :new, status: :unprocessable_entity
       return
     end
 
     unless code_object.can_be_used?
-      flash[:alert] = 'Enrollment code has reached its usage limit.'
+      flash.now[:alert] = 'Enrollment code has reached its usage limit.'
       render :new, status: :unprocessable_entity
       return
     end
@@ -44,7 +43,8 @@ class SignupController < ApplicationController
           name: params[:name],
           password: user_password,
           school_id: school_id,
-          uid: SecureRandom.uuid
+          uid: SecureRandom.uuid,
+          phone_number: params[:phone_number]
         )
 
       if student.save
@@ -52,7 +52,8 @@ class SignupController < ApplicationController
         start_new_session_for(student)
         redirect_to student_dashboard_path, notice: 'Student account created successfully.'
       else
-        flash[:alert] = 'Failed to create student account.'
+        Rails.logger.error(student.errors.full_messages)
+        flash.now[:alert] = 'Failed to create student account.'
         render :new, status: :unprocessable_entity
       end
     when 'staff'
@@ -62,7 +63,8 @@ class SignupController < ApplicationController
           name: params[:name],
           password: user_password,
           school_id: school_id,
-          uid: SecureRandom.uuid
+          uid: SecureRandom.uuid,
+          phone_number: params[:phone_number]
         )
 
       if staff.save
@@ -70,11 +72,13 @@ class SignupController < ApplicationController
         start_new_session_for(staff)
         redirect_to staff_dashboard_path, notice: 'Staff account created successfully.'
       else
-        flash[:alert] = 'Failed to create staff account.'
+        Rails.logger.error(staff.errors.full_messages)
+        flash.now[:alert] = 'Failed to create staff account.'
         render :new, status: :unprocessable_entity
       end
     else
-      flash[:alert] = 'Invalid account type.'
+      flash.now[:alert] = 'Invalid account type.'
+      @schools = School.order(:name)
       render :new, status: :unprocessable_entity
     end
   end
@@ -91,7 +95,7 @@ class SignupController < ApplicationController
       redirect_to subscriptions_path, notice: 'Principal was successfully created.'
     else
       Rails.logger.debug "Principal creation failed: #{@principal.errors.full_messages.to_sentence}"
-      flash[:alert] = @principal.errors.full_messages.to_sentence
+      flash.now[:alert] = @principal.errors.full_messages.to_sentence
       render :new_principal
     end
   end
@@ -161,11 +165,27 @@ class SignupController < ApplicationController
   end
 
   def student_params
-    params.require(:student).permit(:name, :school_id, :email_address, :password, :password_confirmation, :uid)
+    params.require(:student).permit(
+      :name,
+      :school_id,
+      :email_address,
+      :password,
+      :password_confirmation,
+      :uid,
+      :phone_number
+    )
   end
 
   def staff_params
-    params.require(:staff).permit(:name, :school_id, :email_address, :password, :password_confirmation, :uid)
+    params.require(:staff).permit(
+      :name,
+      :school_id,
+      :email_address,
+      :password,
+      :password_confirmation,
+      :uid,
+      :phone_number
+    )
   end
 
   def principal_params

@@ -1,7 +1,7 @@
 <% content_for :title, 'Dashboard' %>
 <div class="flex min-h-[calc(100vh-64px)] flex-col">
   <div class="flex flex-grow flex-col items-center justify-center">
-    <div class="stats stats-vertical lg:stats-horizontal mt-8 p-4 text-2xl shadow-lg lg:w-1/2">
+    <div class="stats stats-vertical lg:stats-horizontal mt-8 p-4 text-2xl lg:w-3/4">
       <div class="stat">
         <div class="stat-figure text-secondary">
           <i class="fa-solid fa-chalkboard-teacher"></i>
@@ -36,7 +36,7 @@
         <div class="stat-desc"><%= @school_details.country %></div>
       </div>
     </div>
-    <div class="stats stats-vertical lg:stats-horizontal mt-2 p-4 text-center text-2xl shadow-lg lg:w-1/2">
+    <div class="stats stats-vertical lg:stats-horizontal mt-2 p-4 text-center text-2xl shadow-lg lg:w-3/4">
       <div class="stat">
         <div class="stat-figure text-secondary">
           <i class="fa-solid fa-qrcode"></i>
@@ -50,11 +50,20 @@
           <%= link_to 'Generate Codes', staffs_generate_code_path, class: 'btn btn-primary' %>
         </div>
       </div>
+      <div class="stat">
+        <div class="stat-figure text-secondary">
+          <i class="fa-solid fa-key"></i>
+        </div>
+        <div class="stat-title text-xl font-bold"><%= t('staffs.dashboard.manage_codes') %></div>
+        <div class="stat-value">
+          <%= link_to t('staffs.dashboard.manage_student_codes'), staffs_manage_codes_path, class: 'btn btn-secondary' %>
+        </div>
+      </div>
     </div>
   </div>
   <div class="mt-4 flex flex-grow flex-col items-center">
-    <div class="w-full rounded-lg bg-white p-6 shadow-lg lg:w-3/4">
-      <div class="stat-title p-4 text-xl font-bold">Attendance</div>
+    <div class="bg-base-100 w-full rounded-lg p-6 shadow-lg lg:w-3/4">
+      <div class="stat-title p-4 text-xl font-bold"><%= t('staffs.dashboard.attendance') %></div>
       <div class="overflow-x-auto"><%= render 'shared/all_students_table', q: @q %></div>
     </div>
   </div>

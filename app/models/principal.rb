@@ -42,8 +42,6 @@ class Principal < User
       else
         'GEN'
       end
-    raw_code = "#{prefix}-#{SecureRandom.hex(4).upcase}"
-    hashed_code = Digest::SHA256.hexdigest(raw_code)
-    { raw_code: raw_code, hashed_code: hashed_code }
+    "#{prefix}-#{SecureRandom.hex(4).upcase}"
   end
 end

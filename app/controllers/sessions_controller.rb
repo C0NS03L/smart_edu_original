@@ -1,5 +1,8 @@
 class SessionsController < ApplicationController
   allow_unauthenticated_access only: %i[new create]
+  skip_before_action :authorize_principal!, raise: false
+  skip_before_action :authorize_staff!, raise: false
+  skip_before_action :authorize_student!, raise: false
   rate_limit to: 10,
              within: 3.minutes,
              only: :create,

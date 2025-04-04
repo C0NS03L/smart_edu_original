@@ -1,10 +1,9 @@
 class PaymentHistoryController < ApplicationController
-  before_action :require_authentication
-  before_action :ensure_principal
+  before_action :authorize_principal!
   before_action :ensure_payment_schema
 
   def index
-    @school = Current.user.school
+    @school = Current.school
     @payments = @school.payment_histories.order(payment_date: :desc)
   end
 

@@ -1,5 +1,6 @@
 class AttendancesController < ApplicationController
   include SchoolScopable
+  before_action :authorize_school_staff!
   before_action :set_attendance, only: %i[show edit update destroy]
   include Pagy::Backend
 

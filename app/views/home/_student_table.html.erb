@@ -10,8 +10,8 @@
     <% @attendance_history.each do |attendance| %>
       <tr class="hover">
         <td><%= attendance.student.name %></td>
-        <td><%= attendance.timestamp.strftime('%Y-%m-%d') %></td>
-        <td><%= attendance.timestamp.strftime('%H:%M:%S') %></td>
+        <td><%= l(attendance.timestamp, format: :date_only) %></td>
+        <td><%= l(attendance.timestamp, format: :time) %></td>
       </tr>
     <% end %>
   </tbody>
