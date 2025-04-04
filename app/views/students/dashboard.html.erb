@@ -1,4 +1,4 @@
-<% content_for :title, 'Student Dashboard' %>
+<% content_for :title, t('students.dashboard.page_title') %>
 <div class="flex min-h-[calc(100vh-64px)] flex-col">
   <div class="flex flex-grow flex-col items-center justify-center lg:flex-row">
     <div class="stats stats-vertical lg:stats-horizontal w-full-200 m-8 p-4 text-2xl shadow-lg lg:w-1/2">
@@ -6,15 +6,15 @@
         <div class="stat-figure text-secondary">
           <i class="fa-solid fa-user"></i>
         </div>
-        <div class="stat-title text-xl font-bold">Student Details</div>
-        <div class="stat-desc">Name: <%= @student_details.name %></div>
-        <div class="stat-desc">Student ID: <%= @student_details.id %></div>
+        <div class="stat-title text-xl font-bold"><%= t('students.dashboard.student_details') %></div>
+        <div class="stat-desc"><%= t('students.dashboard.name') %>: <%= @student_details.name %></div>
+        <div class="stat-desc"><%= t('students.dashboard.student_id') %>: <%= @student_details.id %></div>
       </div>
       <div class="stat">
         <div class="stat-figure text-secondary">
           <i class="fa-solid fa-school"></i>
         </div>
-        <div class="stat-title text-xl font-bold">School Details</div>
+        <div class="stat-title text-xl font-bold"><%= t('students.dashboard.school_details') %></div>
         <div class="stat-desc"><%= @school_details.name %></div>
         <div class="stat-desc"><%= @school_details.address %></div>
         <div class="stat-desc"><%= @school_details.country %></div>
@@ -23,9 +23,9 @@
         <div class="stat-figure text-secondary">
           <i class="fa-solid fa-qrcode"></i>
         </div>
-        <div class="stat-title text-xl font-bold">QR Code</div>
+        <div class="stat-title text-xl font-bold"><%= t('students.dashboard.qr_code') %></div>
         <div class="stat-value">
-          <%= link_to 'View My QR', student_path(@student_details), class: 'btn btn-primary' %>
+          <%= link_to t('students.dashboard.view_qr'), student_path(@student_details), class: 'btn btn-primary' %>
         </div>
       </div>
     </div>

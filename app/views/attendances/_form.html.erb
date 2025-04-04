@@ -17,7 +17,7 @@
         </svg>
         <div class="">
           <h3 class="font-bold">
-            <%= pluralize(attendance.errors.count, 'error') %> prohibited this attendance from being saved:
+            <h3 class="font-bold"><%= t('attendances.form.error_count', count: attendance.errors.count) %></h3>
           </h3>
           <ul class="list-inside list-disc">
             <% attendance.errors.each do |error| %>
@@ -29,23 +29,25 @@
     </div>
   <% end %>
   <fieldset class="fieldset w-xs bg-base-200 border-base-300 rounded-box border p-4">
-    <%# <legend class="fieldset-legend">Attendance Details</legend> %>
+    <%# <legend class="fieldset-legend"><%= t('attendances.form.details_heading') </legend> %>
     <div class="form-control mb-4 w-full">
-      <%= form.label :student_id, class: 'fieldset-label' %>
+      <%= form.label :student_id, t('attendances.form.student_id'), class: 'fieldset-label' %>
       <%= form.text_field :student_id, class: 'input input-bordered w-full' %>
     </div>
     <div class="form-control mb-4 w-full">
-      <%= form.label :timestamp, class: 'fieldset-label' %>
+      <%= form.label :timestamp, t('attendances.form.timestamp'), class: 'fieldset-label' %>
       <%= form.datetime_field :timestamp, class: 'input input-bordered w-full' %>
     </div>
     <div class="form-control mb-4 w-full">
-      <%= form.label :user_id, class: 'fieldset-label' %>
+      <%= form.label :user_id, t('attendances.form.user_id'), class: 'fieldset-label' %>
       <%= form.text_field :user_id, class: 'input input-bordered w-full' %>
     </div>
     <div class="form-control mb-4 w-full">
-      <%= form.label :status, class: 'fieldset-label' %>
+      <%= form.label :status, t('attendances.form.status'), class: 'fieldset-label' %>
       <%= form.text_field :status, class: 'input input-bordered w-full' %>
     </div>
-    <div class="form-control mt-6"><%= form.submit class: 'btn btn-primary w-full' %></div>
+    <div class="form-control mt-6">
+      <%= form.submit t('attendances.form.submit_button'), class: 'btn btn-primary w-full' %>
+    </div>
   </fieldset>
 <% end %>
