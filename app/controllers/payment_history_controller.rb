@@ -1,6 +1,5 @@
 class PaymentHistoryController < ApplicationController
-  before_action :request_authentication!
-  before_action :ensure_principal
+  before_action :authorize_principal!
   before_action :ensure_payment_schema
 
   def index
