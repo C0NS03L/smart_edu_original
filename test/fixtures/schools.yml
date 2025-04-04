@@ -4,7 +4,7 @@
 #
 #  id                  :integer          not null, primary key
 #  address             :string
-#  country             :string           not null
+#  country             :string           default("Unknown"), not null
 #  custom_theme        :text
 #  name                :string           not null
 #  next_payment_date   :datetime
