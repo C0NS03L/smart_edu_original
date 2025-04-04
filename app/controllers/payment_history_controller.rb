@@ -1,17 +1,17 @@
 class PaymentHistoryController < ApplicationController
-  before_action :request_authentication!
+  before_action :require_authentication
   before_action :ensure_principal
   before_action :ensure_payment_schema
 
   def index
-    @school = current_user.school
+    @school = Current.user.school
     @payments = @school.payment_histories.order(payment_date: :desc)
   end
 
   private
 
   def ensure_principal
-    unless current_user && current_user.is_a?(Principal)
+    unless Current.user && Current.user.is_a?(Principal)
       redirect_to root_path, alert: 'You must be logged in as a principal to view this page.'
       false
     end

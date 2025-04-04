@@ -86,73 +86,13 @@ class SignupController < ApplicationController
 
   def create_principal
     @principal = Principal.new(principal_params)
-
     if @principal.save
       start_new_session_for(@principal)
-
-      # Get payment details
-      plan = params[:plan]
-      amount = params[:amount].to_i
-      omise_token = params[:omiseToken]
-
-      # Process payment
-      if plan == 'free_trial' || amount == 0
-        # Handle free trial
-        @principal.school.set_plan_limits('free_trial')
-        flash[:notice] = 'Your free trial has been activated!'
-        redirect_to principal_dashboard_path
-      else
-        # Process payment with Omise
-        begin
-          Omise.api_key = 'skey_test_62unknnkqf46swrwxyn'
-
-          charge =
-            Omise::Charge.create(
-              { amount: amount, currency: 'USD', card: omise_token, description: "Payment for #{plan} plan" }
-            )
-
-          if charge.paid
-            # Set plan limits based on plan
-            tier =
-              case plan
-              when 'standard'
-                '500_students'
-              when 'premium'
-                '1000_students'
-              else
-                'free_trial'
-              end
-
-            @principal.school.set_plan_limits(tier)
-
-            # Record payment details
-            card_details = {
-              last_digits: charge.card ? charge.card.last_digits : nil,
-              brand: charge.card ? charge.card.brand : nil
-            }
-
-            @principal.school.record_payment(
-              amount / 100.0,
-              'credit_card',
-              charge.id,
-              card_details[:last_digits],
-              card_details[:brand]
-            )
-
-            flash[:notice] = 'Your account has been created successfully!'
-            redirect_to principal_dashboard_path
-          else
-            flash[:alert] = "Payment failed: #{charge.failure_message || 'Unknown error'}"
-            render :new_principal, status: :unprocessable_entity
-          end
-        rescue => e
-          Rails.logger.error("Payment error: #{e.message}")
-          flash[:alert] = 'Payment system error: Please try again later'
-          render :new_principal, status: :unprocessable_entity
-        end
-      end
+      redirect_to subscriptions_path, notice: 'Principal was successfully created.'
     else
-      render :new_principal, status: :unprocessable_entity
+      Rails.logger.debug "Principal creation failed: #{@principal.errors.full_messages.to_sentence}"
+      flash[:alert] = @principal.errors.full_messages.to_sentence
+      render :new_principal
     end
   end
 

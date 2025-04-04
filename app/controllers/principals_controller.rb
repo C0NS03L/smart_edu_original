@@ -61,15 +61,16 @@ class PrincipalsController < ApplicationController
 
   def new
     @principal = Principal.new
-    @principal.build_school # This ensures the school object exists for fields_for
+    @principal.build_school
   end
 
   def create
     @principal = Principal.new(principal_params)
     if @principal.save
-      redirect_to @principal, notice: 'Principal was successfully created.'
+      start_new_session_for(@principal)
+      redirect_to subscriptions_path, notice: 'Principal account created successfully.'
     else
-      render :new, status: :unprocessable_entity
+      render :new
     end
   end
 

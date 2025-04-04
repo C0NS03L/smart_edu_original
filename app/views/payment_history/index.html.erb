@@ -4,9 +4,6 @@
   <div class="min-w-full">
     <div class="mb-6 flex items-center justify-between">
       <h1 class="text-[24px] font-bold text-[#00153B]">Payment History</h1>
-      <%= link_to 'Back to Subscription',
-                  subscriptions_path,
-                  class: 'rounded-md bg-[#006EF5] px-4 py-2 text-white hover:bg-blue-600' %>
     </div>
 
     <% if @payments.empty? %>
