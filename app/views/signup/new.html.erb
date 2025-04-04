@@ -18,7 +18,6 @@
                         placeholder: t('signup.name_placeholder'),
                         required: true,
                         autofocus: true %>
-
     <div class="relative mt-2">
       <%= form.email_field :email_address,
                            class: 'input input-bordered w-full',
@@ -47,7 +46,6 @@
                               id: 'password-confirmation-field' %>
       <div id="password-match-feedback" class="text-error mt-1 hidden text-sm">Passwords do not match</div>
     </div>
-
     <%= form.text_field :enrollment_code,
                         class: 'input input-bordered w-full mt-2',
                         placeholder: t('signup.enrollment_code_placeholder'),
