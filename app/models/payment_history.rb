@@ -17,6 +17,15 @@
 #  transaction_id    :string
 #
 # Indexes
+#
+#  index_payment_histories_on_school_id       (school_id)
+#  index_payment_histories_on_transaction_id  (transaction_id) UNIQUE
+#
+# Foreign Keys
+#
+#  school_id  (school_id => schools.id)
+#
+# Indexes
 #   #
 
 # Foreign Keys

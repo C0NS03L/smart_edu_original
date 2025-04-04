@@ -164,13 +164,39 @@ en:
       generate_codes: 'Generate Codes'
       generate_enrollment_codes: 'Generate Enrollment Codes'
       attendance: 'Attendance'
-      generate_code:
-        page_title: 'Code Generation'
-        staff_code_heading: 'Staff Code'
-        student_code_heading: 'Student Code'
-        number_of_accounts: 'Number of Accounts Required'
-        enter_number: 'Enter Number'
-        generate_button: 'Generate'
+      settings: 'Settings'
+      settings_button: 'School Settings'
+    generate_code:
+      page_title: 'Code Generation'
+      staff_code_heading: 'Staff Code'
+      student_code_heading: 'Student Code'
+      number_of_accounts: 'Number of Accounts Required'
+      enter_number: 'Enter Number'
+      generate_button: 'Generate'
+    settings:
+      page_title: 'School Settings'
+      heading: 'School Settings'
+      timezone_label: 'School Timezone'
+      timezone_help: 'Select the timezone for your school. This affects how times are displayed throughout the system.'
+      save_button: 'Save Settings'
+      update_success: 'Settings updated successfully'
+      theme_section: 'Theme Settings'
+      timezone_section: 'Timezone Settings'
+      theme_label: 'Theme'
+      theme_help: "Select a pre-designed theme for your school's interface."
+      theme_mode_label: 'Theme Mode'
+      light_mode: 'Light Mode'
+      dark_mode: 'Dark Mode'
+      primary_color: 'Primary Color'
+      secondary_color: 'Secondary Color'
+      accent_color: 'Accent Color'
+      predefined_themes: 'Predefined Themes'
+      custom_theme: 'Custom Theme'
+      custom_theme_label: 'Custom CSS Theme'
+      custom_theme_placeholder: 'Paste your DaisyUI theme CSS here...'
+      custom_theme_help: 'Paste a theme from DaisyUI Theme Generator or write your own custom CSS.'
+      preview_theme_button: 'Preview Custom Theme'
+      clear_custom_theme: 'Clear'
   passwords_mailer:
     reset:
       instructions: 'You can reset your password within the next 15 minutes on'
@@ -204,6 +230,8 @@ en:
       date_only: '%Y-%m-%d'
       time_only: '%H:%M:%S'
       short: '%Y-%m-%d %H:%M'
+      long: '%Y-%m-%d %H:%M:%S'
+      time: '%H:%M'
   charge:
     fail_modal:
       heading: 'Payment Failed!'
@@ -223,6 +251,7 @@ en:
     new:
       page_title: 'New attendance'
       search_placeholder: 'Search by student name...'
+      heading: 'New attendance'
     index:
       page_title: 'Attendances'
       new_attendance: 'New Attendance'
@@ -269,3 +298,5 @@ en:
     add_attendance: 'Add Attendance'
     list_attendances: 'List Attendances'
     logout: 'Logout'
+  controllers:
+    access_denied: 'Access denied. You must be a principal to view this page.'
