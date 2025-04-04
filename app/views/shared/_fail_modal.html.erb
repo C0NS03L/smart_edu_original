@@ -1,0 +1,29 @@
+<div class="flex min-h-screen items-center justify-center bg-gradient-to-b from-gray-50 to-gray-100">
+  <div
+    class="bg-base-100 mx-4 w-full max-w-2xl transform rounded-xl p-12 text-center shadow-lg transition-all hover:shadow-xl"
+  >
+    <!-- Failure Icon -->
+    <div class="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-full bg-red-100">
+      <svg class="h-12 w-12 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </div>
+
+    <!-- Main Content -->
+    <h1 class="mb-6 text-4xl font-extrabold text-red-600">Payment Failed!</h1>
+    <p class="mb-8 text-xl text-gray-700">Unfortunately, your payment could not be processed.</p>
+    <p class="error-message mb-8 text-lg text-red-500">
+      <%= @error_message || 'An error occurred during payment processing.' %>
+    </p>
+
+    <!-- Retry Payment Button -->
+    <div class="mt-12">
+      <a
+        href="/subscriptions"
+        class="inline-block rounded-lg bg-red-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-red-700"
+      >
+        Retry Payment
+      </a>
+    </div>
+  </div>
+</div>

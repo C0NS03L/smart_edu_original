@@ -1,0 +1,47 @@
+<div class="flex min-h-screen items-center justify-center bg-gradient-to-b from-gray-50 to-gray-100">
+  <div
+    class="bg-base-100 mx-4 w-full max-w-2xl transform rounded-xl p-12 text-center shadow-lg transition-all hover:shadow-xl"
+  >
+    <!-- Success Icon -->
+    <div class="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-full bg-green-100">
+      <svg class="h-12 w-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+    </div>
+
+    <!-- Main Content -->
+    <h1 class="mb-6 text-4xl font-extrabold text-green-600">Payment Successful!</h1>
+
+    <p class="mb-8 text-xl text-gray-700">Thank you for your purchase.</p>
+
+    <!-- Redirect message -->
+    <p class="text-md mb-4 italic text-gray-500">You will be redirected to your dashboard in a few seconds...</p>
+
+    <!-- Dashboard Button -->
+    <div class="mt-12">
+      <a
+        href="/principal/dashboard"
+        class="inline-block rounded-lg bg-green-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
+      >
+        Go to Dashboard
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Fetch CSRF token from meta tag for authenticated requests
+  const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+
+  // Wait a moment to show the success message before redirecting
+  setTimeout(() => {
+    // Get the dashboard link to redirect programmatically
+    const dashboardLink = document.getElementById('dashboardLink')
+    if (dashboardLink) {
+      window.location.href = dashboardLink.getAttribute('href')
+    } else {
+      // Fallback to root route if dashboard link isn't found
+      window.location.href = '/'
+    }
+  }, 5000) // 5 seconds
+</script>

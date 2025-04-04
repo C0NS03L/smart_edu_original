@@ -1,6 +1,14 @@
 <!DOCTYPE html>
-<html lang="html" data-theme="pastel">
+<html lang="<%= I18n.locale %>" data-theme="<%= Current.user&.school&.theme || 'pastel' %>">
   <head>
+    <% if Current.user&.school&.present? && Current.user.school.custom_theme.present? %>
+      <style id="custom-theme-style">
+        :root {
+          /* pretter-ignore */
+          <%= sanitize(Current.user.school.custom_theme) %>
+        }
+      </style>
+    <% end %>
     <title><%= content_for(:title) || 'Schooler' %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -8,13 +16,12 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= yield :head %>
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%# = tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
     <link rel="icon" href="/icon.png" type="image/png" />
     <link rel="icon" href="/icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/icon.png" />
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap" rel="stylesheet" />
     <%= stylesheet_link_tag :app, 'data-turbo-track': 'reload' %>
     <%= javascript_importmap_tags %>
     <link
@@ -26,6 +33,16 @@
     />
   </head>
   <body>
+  <% if Rails.env.development? %>
+    <div class="fixed bottom-0 right-0 bg-base-300 text-base-content p-2 text-xs z-50">
+      Theme: <%= Current.user&.school&.theme || 'default' %><br>
+      Custom Theme Present: <%= Current.user&.school&.custom_theme.present? ? 'Yes' : 'No' %><br>
+      <!-- Display a few characters of custom theme if present -->
+      <% if Current.user&.school&.custom_theme.present? %>
+        First 20 chars: <%= Current.user.school.custom_theme[0..20] %>...
+      <% end %>
+    </div>
+  <% end %>
     <% if authenticated? %>
       <%= render 'layouts/nav' %>
       <%= render 'layouts/drawer' do %>

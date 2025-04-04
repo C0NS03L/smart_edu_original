@@ -1,0 +1,199 @@
+<script>
+  // Use a direct approach without trying to be too clever
+  document.addEventListener('turbolinks:load', function () {
+    console.log('Turbolinks loaded - initializing forms')
+    initializeForms()
+  })
+  document.addEventListener('DOMContentLoaded', function () {
+    console.log('DOM loaded - initializing forms')
+    initializeForms()
+  })
+  // If we're already loaded, initialize immediately
+  if (document.readyState === 'complete') {
+    console.log('Document already complete - initializing forms immediately')
+    initializeForms()
+  }
+
+  function initializeForms() {
+    // Form configurations
+    const formConfigs = [
+      {
+        formId: 'signup-form',
+        fields: [
+          { type: 'email', id: 'email-field', feedbackId: 'email-feedback' },
+          { type: 'password', id: 'password-field', feedbackId: 'password-feedback' },
+          {
+            type: 'passwordConfirm',
+            id: 'password-confirmation-field',
+            feedbackId: 'password-match-feedback',
+            passwordId: 'password-field'
+          }
+        ]
+      },
+      {
+        formId: 'principal-form',
+        fields: [
+          { type: 'email', id: 'principal-email-field', feedbackId: 'principal-email-feedback' },
+          { type: 'password', id: 'principal-password-field', feedbackId: 'principal-password-feedback' },
+          {
+            type: 'passwordConfirm',
+            id: 'principal-password-confirmation-field',
+            feedbackId: 'principal-password-match-feedback',
+            passwordId: 'principal-password-field'
+          },
+          { type: 'phone', id: 'principal-phone-field', feedbackId: 'principal-phone-feedback' }
+        ]
+      }
+    ]
+
+    // Initialize each form
+    formConfigs.forEach(initializeFormFromConfig)
+  }
+
+  function initializeFormFromConfig(config) {
+    const form = document.getElementById(config.formId)
+    if (!form) return
+
+    const fields = {}
+
+    // Set up field references and event listeners
+    config.fields.forEach((fieldConfig) => {
+      const field = document.getElementById(fieldConfig.id)
+      const feedback = document.getElementById(fieldConfig.feedbackId)
+
+      if (field) {
+        fields[fieldConfig.type] = {
+          field,
+          feedback,
+          passwordField: fieldConfig.passwordId ? document.getElementById(fieldConfig.passwordId) : null
+        }
+
+        // Add appropriate event listeners based on field type
+        switch (fieldConfig.type) {
+          case 'email':
+            field.addEventListener('input', () => validateEmail(field, feedback))
+            break
+          case 'password':
+            field.addEventListener('input', () => {
+              validatePassword(field, feedback)
+              const confirmField = fields.passwordConfirm
+              if (confirmField && confirmField.field.value.length > 0) {
+                validatePasswordMatch(field, confirmField.field, confirmField.feedback)
+              }
+            })
+            break
+          case 'passwordConfirm':
+            field.addEventListener('input', () => {
+              const passwordField = fields.password
+                ? fields.password.field
+                : fieldConfig.passwordId
+                  ? document.getElementById(fieldConfig.passwordId)
+                  : null
+              if (passwordField) {
+                validatePasswordMatch(passwordField, field, feedback)
+              }
+            })
+            break
+          case 'phone':
+            field.addEventListener('input', () => validatePhone(field, feedback))
+            break
+        }
+      }
+    })
+
+    // Form submission handler
+    form.addEventListener('submit', function (event) {
+      let formValid = true
+
+      // Validate all fields
+      config.fields.forEach((fieldConfig) => {
+        const field = document.getElementById(fieldConfig.id)
+        const feedback = document.getElementById(fieldConfig.feedbackId)
+
+        if (field && field.value) {
+          let isValid = true
+
+          switch (fieldConfig.type) {
+            case 'email':
+              isValid = validateEmail(field, feedback)
+              break
+            case 'password':
+              isValid = validatePassword(field, feedback)
+              break
+            case 'passwordConfirm':
+              const passwordField = fields.password
+                ? fields.password.field
+                : fieldConfig.passwordId
+                  ? document.getElementById(fieldConfig.passwordId)
+                  : null
+              if (passwordField) {
+                isValid = validatePasswordMatch(passwordField, field, feedback)
+              }
+              break
+            case 'phone':
+              isValid = validatePhone(field, feedback)
+              break
+          }
+
+          if (!isValid) formValid = false
+        }
+      })
+
+      if (!formValid) {
+        event.preventDefault()
+      }
+    })
+  }
+
+  // SHARED VALIDATION FUNCTIONS
+  function validateEmail(field, feedback) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(field.value) && field.value.length > 0) {
+      feedback.classList.remove('hidden')
+      field.classList.add('input-error')
+      return false
+    } else {
+      feedback.classList.add('hidden')
+      field.classList.remove('input-error')
+      return true
+    }
+  }
+
+  function validatePassword(field, feedback) {
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+    if (!passwordRegex.test(field.value) && field.value.length > 0) {
+      feedback.classList.remove('hidden')
+      field.classList.add('input-error')
+      return false
+    } else {
+      feedback.classList.add('hidden')
+      field.classList.remove('input-error')
+      return true
+    }
+  }
+
+  function validatePasswordMatch(passwordField, confirmField, feedback) {
+    if (confirmField.value.length > 0 && passwordField.value !== confirmField.value) {
+      feedback.classList.remove('hidden')
+      confirmField.classList.add('input-error')
+      return false
+    } else {
+      feedback.classList.add('hidden')
+      confirmField.classList.remove('input-error')
+      return true
+    }
+  }
+
+  function validatePhone(field, feedback) {
+    const phoneRegex = /^\+?[\d\s\-()]{7,}$/
+    if (!phoneRegex.test(field.value) && field.value.length > 0) {
+      feedback.classList.remove('hidden')
+      field.classList.add('input-error')
+      return false
+    } else {
+      feedback.classList.add('hidden')
+      field.classList.remove('input-error')
+      return true
+    }
+  }
+</script>

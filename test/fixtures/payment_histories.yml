@@ -1,0 +1,68 @@
+# Test data for payment histories
+
+# == Schema Information
+#
+# Table name: payment_histories
+#
+#  id                :integer          not null, primary key
+#  amount            :decimal(10, 2)   not null
+#  card_last_digits  :string
+#  card_type         :string
+#  notes             :text
+#  payment_date      :datetime         not null
+#  payment_method    :string           not null
+#  status            :string           not null
+#  subscription_plan :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  school_id         :integer          not null
+#  transaction_id    :string
+#
+# Indexes
+#
+#  index_payment_histories_on_school_id       (school_id)
+#  index_payment_histories_on_transaction_id  (transaction_id) UNIQUE
+#
+# Foreign Keys
+#
+#  school_id  (school_id => schools.id)
+#
+payment_one:
+  school: school_one
+  amount: 99.99
+  payment_date: <%= 1.month.ago %>
+  payment_method: "credit_card"
+  transaction_id: "txn_123456789"
+  status: "completed"
+  card_last_digits: "4242"
+  card_type: "Visa"
+  subscription_plan: "premium"
+  notes: "Annual subscription payment"
+  created_at: <%= 1.month.ago %>
+  updated_at: <%= 1.month.ago %>
+
+payment_two:
+  school: school_two
+  amount: 49.99
+  payment_date: <%= 2.weeks.ago %>
+  payment_method: "paypal"
+  transaction_id: "txn_987654321"
+  status: "completed"
+  subscription_plan: "basic"
+  notes: "Monthly subscription payment"
+  created_at: <%= 2.weeks.ago %>
+  updated_at: <%= 2.weeks.ago %>
+
+payment_three:
+  school: school_one
+  amount: 99.99
+  payment_date: <%= 1.day.ago %>
+  payment_method: "credit_card"
+  transaction_id: "txn_abcdef123"
+  status: "failed"
+  card_last_digits: "1234"
+  card_type: "Mastercard"
+  subscription_plan: "premium"
+  notes: "Payment declined by issuer"
+  created_at: <%= 1.day.ago %>
+  updated_at: <%= 1.day.ago %>

@@ -1,0 +1,20 @@
+<% content_for :title, t('principals.dashboard.generate_enrollment_codes') %>
+<div class="flex min-h-[calc(100vh-64px)] flex-col items-center justify-center space-y-8">
+  <%= render 'shared/copy_code_flash' %>
+
+  <div class="text-center">
+    <%= render 'shared/code_generation_form',
+               heading: t('principals.generate_code.staff_code_heading'),
+               form_url: generate_staff_code_principal_path,
+               id_prefix: 'staff' %>
+  </div>
+
+  <div class="text-center">
+    <%= render 'shared/code_generation_form',
+               heading: t('principals.generate_code.student_code_heading'),
+               form_url: generate_student_code_principal_path,
+               id_prefix: 'student' %>
+  </div>
+
+  <%= render 'shared/back_to_dashboard_button' %>
+</div>

@@ -1,12 +1,13 @@
 class StudentsController < ApplicationController
-  before_action :set_student, only: %i[show edit update destroy]
+  before_action :authorize_student!, only: [:dashboard]
+  before_action :authorize_school_staff!, except: [:dashboard]
   before_action :set_student, only: %i[show edit update destroy]
   attr_reader :student # helps with testing
   attr_reader :students
   include Pagy::Backend
   # GET /students or /students.json
   def index
-    @q = Student.kept.ransack(params[:q])
+    @q = Student.kept.where(school: current_school).ransack(params[:q])
     @pagy, @students = pagy(@q.result(distinct: true))
     respond_to do |format|
       format.html
@@ -14,9 +15,16 @@ class StudentsController < ApplicationController
     end
   end
 
+  def dashboard
+    @student_details = Current.user
+    @school_details = Current.user.school
+    @attendance_history = Attendance.where(student: @student_details).order(timestamp: :desc)
+    @q = @school_details.students.ransack(params[:q])
+  end
+
   # GET /students/1 or /students/1.json
   def show
-    @student = Student.kept.find(params[:id]) # Fetch the student by ID from the database
+    @student = Student.kept.where(school: current_school).find(params[:id])
     respond_to do |format|
       format.html { render 'show' }
       format.js
@@ -79,12 +87,11 @@ class StudentsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_student
-    @student = Student.find(params.expect(:id))
-    @student = Student.find(params[:id])
+    @student = Student.where(school: current_school).find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
   def student_params
-    params.require(:student).permit(:name)
+    params.require(:student).permit(:name).merge(school_id: current_school.id)
   end
 end

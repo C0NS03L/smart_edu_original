@@ -1,0 +1,12 @@
+<% if flash[:notice] %>
+  <div class="alert alert-success mb-4 flex items-center justify-between">
+    <span><%= flash[:notice] %></span>
+    <button class="btn btn-sm btn-ghost" onclick="this.parentElement.remove()">×</button>
+  </div>
+<% end %>
+<% if flash[:alert] %>
+  <div class="alert alert-error mb-4 flex items-center justify-between">
+    <span><%= flash[:alert] %></span>
+    <button class="btn btn-sm btn-ghost" onclick="this.parentElement.remove()">×</button>
+  </div>
+<% end %>

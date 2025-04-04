@@ -26,11 +26,16 @@
   "lint-staged": {
     "*.js": "prettier --write",
     "*.rb": [
+      "prettier --write",
       "bun exec 'bundle exec rubocop --autocorrect'",
       "bun exec 'brakeman --skip-libs --output /dev/null'"
     ],
     "*.html.erb": "prettier --write"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "html5-qrcode": "^2.3.8",
+    "smart_edu": "file:"
+  }
 }

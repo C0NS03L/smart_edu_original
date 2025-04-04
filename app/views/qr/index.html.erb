@@ -1,0 +1,183 @@
+<!-- Include the necessary libraries -->
+
+<head>
+  <title>QR Scanner</title>
+  <meta name="csrf-token" content="<%= form_authenticity_token %>" />
+</head>
+<script
+  src="https://unpkg.com/html5-qrcode"
+  integrity="sha256-ZgsSQ3sddH4+aLi+BoXAjLcoFAEQrSE/FnsUtm+LHY4="
+  crossorigin="anonymous"
+></script>
+
+<style>
+  main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #reader {
+    width: 600px;
+  }
+
+  #result {
+    text-align: center;
+    font-size: 1.5rem;
+    color: red;
+  }
+
+  #attendanceModal,
+  #failModal {
+    display: none;
+    background-color: white;
+    border-color: black;
+  }
+</style>
+
+<main>
+  <div id="reader"></div>
+  <div id="result"></div>
+</main>
+
+<!-- Success Modal -->
+<div
+  id="attendanceModal"
+  class="flex min-h-screen items-center justify-center bg-gradient-to-b from-gray-50 to-gray-100"
+>
+  <div
+    class="bg-base-100 mx-4 w-full max-w-2xl transform rounded-xl p-12 text-center shadow-lg transition-all hover:shadow-xl"
+  >
+    <!-- Success Icon -->
+    <div class="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-full bg-green-100">
+      <svg class="h-12 w-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+    </div>
+
+    <!-- Main Content -->
+    <h1 class="mb-6 text-4xl font-extrabold text-green-600">Attendance Logged</h1>
+    <p class="mb-8 text-xl text-gray-700">Scanned Student: <span id="studentName"></span><br /></p>
+    <p class="mb-8 text-xl text-gray-700">Timestamp: <span id="attendanceTimestamp"></span></p>
+
+    <!-- Back to Home Button -->
+    <div class="mt-12">
+      <button
+        class="inline-block rounded-lg bg-gray-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
+        onclick="restartScanner()"
+      >
+        Scan Again
+      </button>
+      <a
+        href="/home/index"
+        class="inline-block rounded-lg bg-green-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
+      >
+        Go to Dashboard
+      </a>
+    </div>
+  </div>
+</div>
+<!-- Fail Modal -->
+<div id="failModal" class="flex min-h-screen items-center justify-center bg-gradient-to-b from-gray-50 to-gray-100">
+  <div
+    class="bg-base-100 mx-4 w-full max-w-2xl transform rounded-xl p-12 text-center shadow-lg transition-all hover:shadow-xl"
+  >
+    <div class="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-full bg-red-100">
+      <svg class="h-12 w-12 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </div>
+
+    <!-- Main Content -->
+    <h1 class="mb-6 text-4xl font-extrabold text-red-600">Attendance Failed</h1>
+    <p class="mb-8 text-xl text-gray-700">Error: <span id="errorMessage"></span><br /></p>
+
+    <!-- Back to Home Button -->
+    <div class="mt-12">
+      <button
+        class="inline-block rounded-lg bg-gray-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
+        onclick="restartScanner()"
+      >
+        Scan Again
+      </button>
+      <a
+        href="/home/index"
+        class="inline-block rounded-lg bg-green-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
+        onclick="goToDashboard()"
+      >
+        Go to Dashboard
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  let scanner
+
+  document.addEventListener('DOMContentLoaded', function () {
+    initScanner()
+  })
+
+  function initScanner() {
+    scanner = new Html5QrcodeScanner('reader', {
+      qrbox: { width: 250, height: 250 },
+      fps: 20
+    })
+
+    scanner.render(onScanSuccess, onScanError)
+  }
+
+  function onScanSuccess(decodedText) {
+    console.log('Decoded text:', decodedText)
+
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
+    if (!csrfToken) {
+      console.error('CSRF token not found!')
+      document.getElementById('result').innerText = 'Error: CSRF token missing.'
+      return
+    }
+
+    fetch('/attendances/qr_attendance', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken
+      },
+      body: JSON.stringify({ attendance: { student_uid: decodedText } })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === 'success') {
+          document.getElementById('studentName').innerText = data.student_name
+          document.getElementById('attendanceTimestamp').innerText = data.timestamp
+          document.getElementById('attendanceModal').style.display = 'grid'
+          scanner.clear() // Stop scanner
+          document.getElementById('reader').style.display = 'none'
+        } else {
+          throw new Error(data.message)
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error)
+        document.getElementById('errorMessage').innerText = error.message
+        document.getElementById('failModal').style.display = 'grid'
+        scanner.clear() // Stop scanner
+        document.getElementById('reader').style.display = 'none'
+      })
+  }
+
+  function onScanError(error) {
+    console.warn('Scan error:', error)
+  }
+
+  function restartScanner() {
+    document.getElementById('attendanceModal').style.display = 'none'
+    document.getElementById('failModal').style.display = 'none'
+    document.getElementById('reader').style.display = 'block'
+    initScanner()
+  }
+
+  function goToDashboard() {
+    window.location.href = '/home/index' // Change URL if necessary
+  }
+</script>

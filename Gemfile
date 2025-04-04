@@ -45,7 +45,7 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows], require: 'debug/prelude'
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
-  gem 'brakeman', require: false
+  gem 'brakeman', '7.0.1', require: false
 
   gem 'rails_best_practices', require: false
 
@@ -67,6 +67,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
   gem 'selenium-webdriver'
+  gem 'i18n-tasks'
 end
 
 gem 'annotaterb', '~> 4.13'
@@ -82,3 +83,9 @@ gem 'faker', '~> 3.5'
 gem 'discard', '~> 1.4'
 
 gem 'pry-byebug', '~> 3.10'
+
+gem 'omise'
+
+gem 'prawn'
+
+gem 'prawn-table'
