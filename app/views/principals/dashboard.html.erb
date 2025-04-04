@@ -1,7 +1,38 @@
+<%= javascript_include_tag 'https://cdn.jsdelivr.net/npm/chart.js', defer: true %>
+<%= javascript_include_tag 'attendance_charts', defer: true %>
 <% content_for :title, t('principals.dashboard.page_title') %>
+
+<div class="mt-8 flex flex-grow flex-col items-center">
+  <div class="flex w-full flex-col justify-between gap-4 lg:w-3/4 lg:flex-row">
+    <!-- First Graph Card -->
+    <div class="card bg-base-100 w-full shadow-xl lg:w-1/2">
+      <div class="card-body">
+        <h2 class="card-title"><%= t('principals.dashboard.today_attendance') %></h2>
+        <div class="p-2">
+          <canvas
+            id="attendancePieChart"
+            data-total-students="<%= @student_count %>"
+            data-attending-students="<%= @attending_students_count %>"
+          ></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Second Graph Card -->
+    <div class="card bg-base-100 w-full shadow-xl lg:w-1/2">
+      <div class="card-body">
+        <h2 class="card-title"><%= t('principals.dashboard.weekly_attendance') %></h2>
+        <div class="h-full p-2">
+          <canvas id="attendanceBarChart" data-attendance-data="<%= @weekly_attendance_data.to_json %>"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="flex min-h-[calc(100vh-64px)] flex-col">
-  <div class="flex flex-grow flex-col items-center justify-center lg:flex-row">
-    <div class="stats stats-vertical lg:stats-horizontal w-full-200 m-8 p-4 text-2xl shadow-lg lg:w-1/4">
+  <div class="flex flex-grow flex-col items-center justify-center">
+    <div class="stats stats-vertical lg:stats-horizontal mt-8 p-4 text-2xl lg:w-3/4">
       <div class="stat">
         <div class="stat-figure text-secondary">
           <i class="fa-solid fa-chalkboard-teacher"></i>
@@ -39,15 +70,21 @@
         <div class="stat-desc"><%= @school_details.country %></div>
       </div>
     </div>
-    <div class="stats stats-vertical lg:stats-horizontal w-full-200 m-8 p-4 text-2xl shadow-lg lg:w-1/4">
+    <div class="stats stats-vertical lg:stats-horizontal mt-2 p-4 text-center text-2xl shadow-lg lg:w-3/4">
       <div class="stat">
         <div class="stat-title text-xl font-bold"><%= t('principals.dashboard.generate_codes') %></div>
         <div class="stat-value">
           <%= link_to t('principals.dashboard.generate_enrollment_codes'), generate_code_principal_path, class: 'btn btn-primary' %>
         </div>
       </div>
+      <div class="stat">
+        <div class="stat-title text-xl font-bold"><%= t('principals.dashboard.generate_report') %></div>
+        <div class="stat-value">
+          <%= link_to t('principals.dashboard.download_report'), generate_report_principals_path, class: 'btn btn-primary' %>
+        </div>
+      </div>
     </div>
-    <div class="overflow-hidden rounded-lg bg-white shadow">
+    <div class="card bg-base-100 mt-2 w-full p-4 shadow-xl lg:w-3/4">
       <div class="px-4 py-5 sm:p-6">
         <div class="flex items-center">
           <div class="flex-shrink-0 rounded-md bg-blue-500 p-3">
@@ -67,14 +104,12 @@
             </svg>
           </div>
           <div class="ml-5">
-            <h3 class="text-lg font-medium leading-6 text-gray-900">Payment History</h3>
-            <p class="mt-1 text-sm text-gray-500">View your subscription payments</p>
+            <h3 class="text-lg font-medium leading-6">Payment History</h3>
+            <p class="mt-1 text-sm">View your subscription payments</p>
           </div>
         </div>
         <div class="mt-5">
-          <%= link_to payment_history_path,
-                      class:
-                        'inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700' do %>
+          <%= link_to payment_history_path, class: 'btn btn-primary' do %>
             View Payments
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +125,6 @@
       </div>
     </div>
   </div>
-
   <div class="mt-4 flex flex-grow flex-col items-center">
     <div class="bg-base-100 w-full rounded-lg p-6 shadow-lg lg:w-3/4">
       <div class="stat-title p-4 text-xl font-bold"><%= t('principals.dashboard.attendance') %></div>
