@@ -29,6 +29,9 @@ Rails.application.routes.draw do
   get 'signup/choose_role', as: 'choose_role'
   post 'set_role', to: 'signup#set_role', as: 'set_role'
 
+  # Add payment history routes
+  get 'payment_history', to: 'payment_history#index'
+
   root 'home#index'
   resources :charge
   get 'subscriptions', to: 'subscriptions#index'
