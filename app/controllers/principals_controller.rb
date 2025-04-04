@@ -193,7 +193,7 @@ class PrincipalsController < ApplicationController
     pdf.table(data, header: true, row_colors: %w[F0F0F0 FFFFFF], position: :center)
 
     send_data pdf.render, filename: 'principal_report.pdf', type: 'application/pdf', disposition: 'inline'
-
+  end
   def settings
     @school = Current.user.school
   end
@@ -220,7 +220,6 @@ class PrincipalsController < ApplicationController
     else
       render :settings, status: :unprocessable_entity
     end
-
   end
 
   private
