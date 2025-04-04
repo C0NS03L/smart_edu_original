@@ -103,6 +103,7 @@ th:
     for: 'สำหรับ'
     name_placeholder: 'ชื่อ'
     email_placeholder: 'อีเมล'
+    phone_number_placeholder: 'เบอร์โทรศัพท์'
     password_placeholder: 'รหัสผ่าน'
     confirm_password_placeholder: 'ยืนยันรหัสผ่าน'
     enrollment_code_placeholder: 'รหัสลงทะเบียน'
@@ -152,6 +153,10 @@ th:
       enrollment_codes: 'รหัสลงทะเบียน'
       settings: 'การตั้งค่า'
       settings_button: 'การตั้งค่าโรงเรียน'
+      download_report: 'ดาวน์โหลดรายงาน'
+      generate_report: 'สร้างรายงาน'
+      today_attendance: 'การเข้าเรียนวันนี้'
+      weekly_attendance: 'การเข้าเรียนรายสัปดาห์'
     generate_code:
       page_title: 'การสร้างรหัส'
       staff_code_heading: 'รหัสเจ้าหน้าที่'
@@ -193,6 +198,11 @@ th:
       custom_theme_help: 'วางธีมจาก DaisyUI Theme Generator หรือเขียน CSS ของคุณเอง'
       preview_theme_button: 'ดูตัวอย่างธีมที่กำหนดเอง'
       clear_custom_theme: 'ล้าง'
+      applying_theme: 'การใช้ธีม'
+      extract_variables: 'การดึงตัวแปร'
+      previewing_theme: 'การดูตัวอย่างธีม'
+      theme_generator_link: 'ลิงก์ไปยังตัวสร้างธีม'
+      variables_extracted: 'การดึงตัวแปรสำเร็จ'
   passwords_mailer:
     reset:
       instructions: 'คุณสามารถรีเซ็ตรหัสผ่านได้ภายใน 15 นาทีถัดไปที่'
@@ -294,6 +304,7 @@ th:
     add_attendance: 'เพิ่มการเข้าเรียน'
     list_attendances: 'รายการการเข้าเรียน'
     logout: 'ออกจากระบบ'
+    settings: 'การตั้งค่า'
   common:
     enrollment_codes:
       code: 'รหัส'

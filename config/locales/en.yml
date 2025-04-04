@@ -182,6 +182,10 @@ en:
       enrollment_codes: 'Enrollment Codes'
       settings: 'Settings'
       settings_button: 'School Settings'
+      download_report: 'Download Report'
+      generate_report: 'Generate Report'
+      today_attendance: 'Todays Attendance'
+      weekly_attendance: 'Weekly Attendance'
     generate_code:
       page_title: 'Code Generation'
       staff_code_heading: 'Staff Code'
@@ -223,6 +227,11 @@ en:
       custom_theme_help: 'Paste a theme from DaisyUI Theme Generator or write your own custom CSS.'
       preview_theme_button: 'Preview Custom Theme'
       clear_custom_theme: 'Clear'
+      applying_theme: 'Applying theme...'
+      extract_variables: 'Extracting variables...'
+      previewing_theme: 'Previewing theme...'
+      theme_generator_link: 'Theme Generator Link'
+      variables_extracted: 'Theme variables extracted successfully'
   passwords_mailer:
     reset:
       instructions: 'You can reset your password within the next 15 minutes on'
@@ -324,6 +333,7 @@ en:
     add_attendance: 'Add Attendance'
     list_attendances: 'List Attendances'
     logout: 'Logout'
+    settings: 'Settings'
   common:
     enrollment_codes:
       code: 'Code'
@@ -351,3 +361,46 @@ en:
       copied: 'Copied!'
   controllers:
     access_denied: 'Access denied. You must be a principal to view this page.'
+  datetime:
+    distance_in_words:
+      half_a_minute: 'half a minute'
+      less_than_x_seconds:
+        one: 'less than 1 second'
+        other: 'less than %{count} seconds'
+      x_seconds:
+        one: '1 second'
+        other: '%{count} seconds'
+      less_than_x_minutes:
+        one: 'less than 1 minute'
+        other: 'less than %{count} minutes'
+      x_minutes:
+        one: '1 minute'
+        other: '%{count} minutes'
+      about_x_hours:
+        one: 'about 1 hour'
+        other: 'about %{count} hours'
+      x_days:
+        one: '1 day'
+        other: '%{count} days'
+      about_x_months:
+        one: 'about 1 month'
+        other: 'about %{count} months'
+      x_months:
+        one: '1 month'
+        other: '%{count} months'
+      about_x_years:
+        one: 'about 1 year'
+        other: 'about %{count} years'
+      over_x_years:
+        one: 'over 1 year'
+        other: 'over %{count} years'
+      almost_x_years:
+        one: 'almost 1 year'
+        other: 'almost %{count} years'
+    prompts:
+      year: 'Year'
+      month: 'Month'
+      day: 'Day'
+      hour: 'Hour'
+      minute: 'Minute'
+      second: 'Second'
