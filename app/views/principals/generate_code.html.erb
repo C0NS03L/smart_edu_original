@@ -1,39 +1,20 @@
 <% content_for :title, t('principals.dashboard.generate_enrollment_codes') %>
 <div class="flex min-h-[calc(100vh-64px)] flex-col items-center justify-center space-y-8">
-  <% if flash[:notice] %>
-    <div class="alert alert-success"><%= flash[:notice] %></div>
-  <% elsif flash[:alert] %>
-    <div class="alert alert-danger"><%= flash[:alert] %></div>
-  <% end %>
+  <%= render 'shared/copy_code_flash' %>
+
   <div class="text-center">
-    <div class="rounded p-4 shadow-lg">
-      <h2 class="mb-4 text-3xl font-bold"><%= t('principals.dashboard.generate_code.staff_code_heading') %></h2>
-      <%= form_with url: generate_staff_code_principal_path, method: :post, local: true do |form| %>
-        <label for="staff_uses" class="mb-2 block text-lg font-medium"
-          ><%= t('principals.dashboard.generate_code.number_of_accounts') %></label
-        >
-        <%= form.number_field :usage_limit,
-                              id: 'staff_uses',
-                              class: 'input input-bordered mb-4 w-full',
-                              placeholder: t('principals.dashboard.generate_code.enter_number') %>
-        <%= form.submit t('principals.dashboard.generate_code.generate_button'), class: 'btn btn-primary w-full' %>
-      <% end %>
-    </div>
+    <%= render 'shared/code_generation_form',
+               heading: t('principals.generate_code.staff_code_heading'),
+               form_url: generate_staff_code_principal_path,
+               id_prefix: 'staff' %>
   </div>
+
   <div class="text-center">
-    <div class="rounded p-4 shadow-lg">
-      <h2 class="mb-4 text-3xl font-bold"><%= t('principals.dashboard.generate_code.student_code_heading') %></h2>
-      <%= form_with url: generate_student_code_principal_path, method: :post, local: true do |form| %>
-        <label for="student_uses" class="mb-2 block text-lg font-medium"
-          ><%= t('principals.dashboard.generate_code.number_of_accounts') %></label
-        >
-        <%= form.number_field :usage_limit,
-                              id: 'student_uses',
-                              class: 'input input-bordered mb-4 w-full',
-                              placeholder: t('principals.dashboard.generate_code.enter_number') %>
-        <%= form.submit t('principals.dashboard.generate_code.generate_button'), class: 'btn btn-primary w-full' %>
-      <% end %>
-    </div>
+    <%= render 'shared/code_generation_form',
+               heading: t('principals.generate_code.student_code_heading'),
+               form_url: generate_student_code_principal_path,
+               id_prefix: 'student' %>
   </div>
+
   <%= render 'shared/back_to_dashboard_button' %>
 </div>

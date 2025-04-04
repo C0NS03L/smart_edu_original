@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_02_115707) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_03_122739) do
   create_table 'attendances', force: :cascade do |t|
     t.integer 'student_id', null: false
     t.datetime 'timestamp'
@@ -24,7 +24,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_02_115707) do
   end
 
   create_table 'enrollment_codes', force: :cascade do |t|
-    t.string 'hashed_code'
+    t.string 'code'
     t.string 'role'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
@@ -56,7 +56,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_02_115707) do
     t.string 'address'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.string 'country', null: false
+    t.string 'country', default: 'Unknown', null: false
     t.string 'subscription_status', default: 'pending'
     t.string 'subscription_type'
     t.datetime 'next_payment_date'

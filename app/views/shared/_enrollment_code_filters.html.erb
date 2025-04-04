@@ -1,0 +1,12 @@
+<div class="mb-4 flex items-center space-x-2">
+  <span><%= t('common.enrollment_codes.filter') %>:</span>
+  <%= link_to t('common.enrollment_codes.all'),
+              base_path,
+              class: "btn btn-sm #{params[:filter].blank? ? 'btn-primary' : 'btn-outline'}" %>
+  <%= link_to t('common.enrollment_codes.active'),
+              "#{base_path}?filter=active",
+              class: "btn btn-sm #{params[:filter] == 'active' ? 'btn-primary' : 'btn-outline'}" %>
+  <%= link_to t('common.enrollment_codes.used_up'),
+              "#{base_path}?filter=used_up",
+              class: "btn btn-sm #{params[:filter] == 'used_up' ? 'btn-primary' : 'btn-outline'}" %>
+</div>

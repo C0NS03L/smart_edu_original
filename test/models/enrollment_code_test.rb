@@ -4,7 +4,7 @@
 #
 #  id           :integer          not null, primary key
 #  account_type :string
-#  hashed_code  :string
+#  code         :string
 #  role         :string
 #  usage_count  :integer
 #  usage_limit  :integer

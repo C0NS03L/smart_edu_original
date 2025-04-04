@@ -8,5 +8,6 @@ pin_all_from 'app/javascript/controllers', under: 'controllers'
 pin '@zxing/browser', to: 'https://ga.jspm.io/npm:@zxing/browser@0.1.5/esm/index.js'
 pin '@zxing/library', to: 'https://ga.jspm.io/npm:@zxing/library@0.21.3/esm/index.js'
 pin 'ts-custom-error', to: 'https://ga.jspm.io/npm:ts-custom-error@3.3.1/dist/custom-error.mjs'
+pin 'copy_code', to: 'copy_code.js'
 pin 'chart.js', to: 'https://cdn.jsdelivr.net/npm/chart.js'
 pin '@kurkle/color', to: '@kurkle--color.js' # @0.3.4

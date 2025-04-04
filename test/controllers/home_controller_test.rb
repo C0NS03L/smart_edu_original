@@ -10,18 +10,18 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
   test 'should redirect principal to principal dashboard' do
     sign_in_as(@principal)
     get root_url
-    assert_redirected_to principal_dashboard_path
+    assert_redirected_to principal_dashboard_path(locale: I18n.locale)
   end
 
   test 'should redirect student to student dashboard' do
     sign_in_as(@student)
     get root_url
-    assert_redirected_to student_dashboard_path
+    assert_redirected_to student_dashboard_path(locale: I18n.locale)
   end
 
   test 'should redirect staff to staff dashboard' do
     sign_in_as(@staff)
     get root_url
-    assert_redirected_to staff_dashboard_path
+    assert_redirected_to staff_dashboard_path(locale: I18n.locale)
   end
 end

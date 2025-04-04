@@ -42,10 +42,4 @@ class User < ApplicationRecord
   def self.ransackable_associations(auth_object = nil)
     %w[school sessions attendances]
   end
-
-  def self.generate_enrollment_code
-    raw_code = SecureRandom.hex(8) # Generates a random 16-character string
-    hashed_code = Digest::SHA256.hexdigest(raw_code)
-    { raw_code: raw_code, hashed_code: hashed_code }
-  end
 end

@@ -23,7 +23,7 @@ class PrincipalControllerTest < ActionDispatch::IntegrationTest
       post generate_staff_code_principal_path, params: { usage_limit: 5 }
     end
     # Fix the redirect expectation to match the controller
-    assert_redirected_to generate_code_principal_path
+    assert_redirected_to generate_code_principal_path(locale: I18n.locale)
     # Fix the flash notice expectation to match the controller
     assert_match /Staff Code Generated:/, flash[:notice]
   end
@@ -34,7 +34,7 @@ class PrincipalControllerTest < ActionDispatch::IntegrationTest
       post generate_student_code_principal_path, params: { usage_limit: 5 }
     end
     # Fix the redirect expectation
-    assert_redirected_to generate_code_principal_path
+    assert_redirected_to generate_code_principal_path(locale: I18n.locale)
     # Fix the flash notice expectation
     assert_match /Student Code Generated:/, flash[:notice]
   end
@@ -42,7 +42,7 @@ class PrincipalControllerTest < ActionDispatch::IntegrationTest
   test 'should not create staff enrollment code with invalid usage limit' do
     assert_no_difference('EnrollmentCode.count') { post generate_staff_code_principal_path, params: { usage_limit: 0 } }
     assert_equal 'Invalid number of accounts required.', flash[:alert]
-    assert_redirected_to generate_code_principal_path
+    assert_redirected_to generate_code_principal_path(locale: I18n.locale)
   end
 
   test 'should not create student enrollment code with invalid usage limit' do
@@ -50,13 +50,13 @@ class PrincipalControllerTest < ActionDispatch::IntegrationTest
       post generate_student_code_principal_path, params: { usage_limit: 0 }
     end
     assert_equal 'Invalid number of accounts required.', flash[:alert]
-    assert_redirected_to generate_code_principal_path
+    assert_redirected_to generate_code_principal_path(locale: I18n.locale)
   end
 
   test 'should deny access to non-principals' do
     sign_in_as(@student)
     get principal_dashboard_path
     # You might need to adjust this based on your actual authorization logic
-    assert_redirected_to root_path
+    assert_redirected_to student_dashboard_path(locale: I18n.locale)
   end
 end

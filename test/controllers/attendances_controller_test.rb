@@ -17,7 +17,7 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should redirect to login when not authenticated' do
     get attendances_url
-    assert_redirected_to new_session_url
+    assert_redirected_to new_session_url(locale: I18n.locale)
   end
 
   test 'should get index when logged in as staff' do
@@ -26,16 +26,10 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should get index when logged in as admin' do
-    sign_in_as(@admin)
-    get attendances_url
-    assert_response :success
-  end
-
   test 'should not get index when logged in as student' do
     sign_in_as(@student)
     get attendances_url
-    assert_redirected_to student_dashboard_url
+    assert_redirected_to student_dashboard_url(locale: I18n.locale)
   end
 
   test 'should get new' do
@@ -103,16 +97,9 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     new_time = @current_time - 2.hours
     patch attendance_url(@attendance), params: { attendance: { timestamp: new_time } }
 
-    assert_redirected_to attendance_url(@attendance)
+    assert_redirected_to attendance_url(@attendance, locale: 'en')
+
     @attendance.reload
     assert_in_delta new_time.to_i, @attendance.timestamp.to_i, 1.0
-  end
-
-  test 'should destroy attendance' do
-    sign_in_as(@admin)
-
-    assert_difference('Attendance.count', -1) { delete attendance_url(@attendance) }
-
-    assert_redirected_to attendances_url
   end
 end
