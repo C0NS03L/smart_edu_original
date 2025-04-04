@@ -19,8 +19,8 @@
       <% if latest_attendance %>
         <tr class="hover">
           <td><%= student.name %></td>
-          <td><%= l(attendance.timestamp, format: :date_only) %></td>
-          <td><%= l(attendance.timestamp, format: :time_only) %></td>
+          <td><%= l(latest_attendance.timestamp, format: :date_only) %></td>
+          <td><%= l(latest_attendance.timestamp, format: :time_only) %></td>
           <td>
             <div class="flex space-x-2">
               <%= link_to student, class: 'hover:text-blue-500 text-blue-700' do %>

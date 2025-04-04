@@ -3,7 +3,7 @@ class PaymentHistoryController < ApplicationController
   before_action :ensure_payment_schema
 
   def index
-    @school = current_user.school
+    @school = Current.school
     @payments = @school.payment_histories.order(payment_date: :desc)
   end
 

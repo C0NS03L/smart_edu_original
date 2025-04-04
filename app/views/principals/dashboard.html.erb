@@ -3,19 +3,29 @@
 <% content_for :title, t('principals.dashboard.page_title') %>
 
 <div class="mt-8 flex flex-grow flex-col items-center">
-  <div class="flex w-full flex-row justify-between rounded-lg bg-white p-6 shadow-lg lg:w-3/4">
-    <!-- First Graph -->
-    <div class="w-1/2 p-2">
-      <canvas
-        id="attendancePieChart"
-        data-total-students="<%= @student_count %>"
-        data-attending-students="<%= @attending_students_count %>"
-      ></canvas>
+  <div class="flex w-full flex-col justify-between gap-4 lg:w-3/4 lg:flex-row">
+    <!-- First Graph Card -->
+    <div class="card bg-base-100 w-full shadow-xl lg:w-1/2">
+      <div class="card-body">
+        <h2 class="card-title"><%= t('principals.dashboard.today_attendance') %></h2>
+        <div class="p-2">
+          <canvas
+            id="attendancePieChart"
+            data-total-students="<%= @student_count %>"
+            data-attending-students="<%= @attending_students_count %>"
+          ></canvas>
+        </div>
+      </div>
     </div>
 
-    <!-- Second Graph -->
-    <div class="w-1/2 p-2">
-      <canvas id="attendanceBarChart" data-attendance-data="<%= @weekly_attendance_data.to_json %>"></canvas>
+    <!-- Second Graph Card -->
+    <div class="card bg-base-100 w-full shadow-xl lg:w-1/2">
+      <div class="card-body">
+        <h2 class="card-title"><%= t('principals.dashboard.weekly_attendance') %></h2>
+        <div class="h-full p-2">
+          <canvas id="attendanceBarChart" data-attendance-data="<%= @weekly_attendance_data.to_json %>"></canvas>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -74,7 +84,7 @@
         </div>
       </div>
     </div>
-    <div class="overflow-hidden rounded-lg bg-white shadow">
+    <div class="card bg-base-100 mt-2 w-full p-4 shadow-xl lg:w-3/4">
       <div class="px-4 py-5 sm:p-6">
         <div class="flex items-center">
           <div class="flex-shrink-0 rounded-md bg-blue-500 p-3">
@@ -94,14 +104,12 @@
             </svg>
           </div>
           <div class="ml-5">
-            <h3 class="text-lg font-medium leading-6 text-gray-900">Payment History</h3>
-            <p class="mt-1 text-sm text-gray-500">View your subscription payments</p>
+            <h3 class="text-lg font-medium leading-6">Payment History</h3>
+            <p class="mt-1 text-sm">View your subscription payments</p>
           </div>
         </div>
         <div class="mt-5">
-          <%= link_to payment_history_path,
-                      class:
-                        'inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700' do %>
+          <%= link_to payment_history_path, class: 'btn btn-primary' do %>
             View Payments
             <svg
               xmlns="http://www.w3.org/2000/svg"
