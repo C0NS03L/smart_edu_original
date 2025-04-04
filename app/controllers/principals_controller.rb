@@ -1,4 +1,6 @@
 class PrincipalsController < ApplicationController
+  before_action :require_authentication
+  before_action :authorize_principal!
   def generate_code
   end
 
@@ -61,6 +63,8 @@ class PrincipalsController < ApplicationController
     }
 
     @q = @school_details.students.ransack(params[:q])
+
+    @recent_payments = Current.user.school.payment_histories.order(payment_date: :desc).limit(5) if Current.user.school
   end
 
   def new

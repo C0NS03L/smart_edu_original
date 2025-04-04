@@ -9,7 +9,7 @@
       </ul>
     </div>
   <% end %>
-  <%= form_with(url: signup_index_path, class: 'form-control mt-4', html: { autocomplete: 'on' }) do |form| %>
+  <%= form_with(url: signup_index_path, class: 'form-control mt-4', html: { autocomplete: 'on', id: 'signup-form' }) do |form| %>
     <h2 class="text-lg font-bold">
       <%= t('signup.enter_information') %><%= @role ? " #{t('signup.for')} #{@role.capitalize}" : '' %>
     </h2>
@@ -18,23 +18,34 @@
                         placeholder: t('signup.name_placeholder'),
                         required: true,
                         autofocus: true %>
-    <%= form.email_field :email_address,
-                         class: 'input input-bordered w-full mt-2',
-                         placeholder: t('signup.email_placeholder'),
-                         autocomplete: 'username' %>
-    <%= form.text_field :phone_number,
-                        class: 'input input-bordered w-full mt-2',
-                        placeholder: t('signup.phone_number_placeholder'),
-                        required: true,
-                        autofocus: true %>
-    <%= form.password_field :password,
-                            class: 'input input-bordered w-full mt-2',
-                            placeholder: t('signup.password_placeholder'),
-                            autocomplete: 'new-password' %>
-    <%= form.password_field :password_confirmation,
-                            class: 'input input-bordered w-full mt-2',
-                            placeholder: t('signup.confirm_password_placeholder'),
-                            autocomplete: 'new-password' %>
+    <div class="relative mt-2">
+      <%= form.email_field :email_address,
+                           class: 'input input-bordered w-full',
+                           placeholder: t('signup.email_placeholder'),
+                           autocomplete: 'username',
+                           id: 'email-field' %>
+      <div id="email-feedback" class="text-error mt-1 hidden text-sm">Please enter a valid email address</div>
+    </div>
+
+    <div class="relative mt-2">
+      <%= form.password_field :password,
+                              class: 'input input-bordered w-full',
+                              placeholder: t('signup.password_placeholder'),
+                              autocomplete: 'new-password',
+                              id: 'password-field' %>
+      <div id="password-feedback" class="text-error mt-1 hidden text-sm">
+        Password must be at least 8 characters with letters and numbers
+      </div>
+    </div>
+
+    <div class="relative mt-2">
+      <%= form.password_field :password_confirmation,
+                              class: 'input input-bordered w-full',
+                              placeholder: t('signup.confirm_password_placeholder'),
+                              autocomplete: 'new-password',
+                              id: 'password-confirmation-field' %>
+      <div id="password-match-feedback" class="text-error mt-1 hidden text-sm">Passwords do not match</div>
+    </div>
     <%= form.text_field :enrollment_code,
                         class: 'input input-bordered w-full mt-2',
                         placeholder: t('signup.enrollment_code_placeholder'),
@@ -43,4 +54,5 @@
     <%= form.hidden_field :role, value: @role %>
   <% end %>
   <%= link_to t('signup.back_to_signin'), new_session_path, class: 'btn btn-ghost' %>
+  <%= render 'shared/form_validation_scripts' %>
 <% end %>
