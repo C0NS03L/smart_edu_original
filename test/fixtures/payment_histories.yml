@@ -1,5 +1,32 @@
 # Test data for payment histories
 
+# == Schema Information
+#
+# Table name: payment_histories
+#
+#  id                :integer          not null, primary key
+#  amount            :decimal(10, 2)   not null
+#  card_last_digits  :string
+#  card_type         :string
+#  notes             :text
+#  payment_date      :datetime         not null
+#  payment_method    :string           not null
+#  status            :string           not null
+#  subscription_plan :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  school_id         :integer          not null
+#  transaction_id    :string
+#
+# Indexes
+#
+#  index_payment_histories_on_school_id       (school_id)
+#  index_payment_histories_on_transaction_id  (transaction_id) UNIQUE
+#
+# Foreign Keys
+#
+#  school_id  (school_id => schools.id)
+#
 payment_one:
   school: school_one
   amount: 99.99
