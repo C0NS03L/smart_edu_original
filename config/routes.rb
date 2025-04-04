@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'principal/generate_code', to: 'principals#generate_code', as: 'generate_code_principal'
   get 'principal/payment_plan'
-  resources :principals do
+  resources :principals, except: [:show] do
     collection { get :generate_report }
   end
   get 'principal/dashboard', to: 'principals#dashboard', as: 'principal_dashboard'
