@@ -33,7 +33,7 @@
 admin_user:
   email_address: "admin@example.com"
   password_digest: <%= BCrypt::Password.create('password') %>
-  school: school_one
+  school_id: <%= ActiveRecord::FixtureSet.identify(:school_one) %>
   type: "SystemAdmin"
   name: "Admin User"
   phone_number: "+15551234567"
@@ -41,7 +41,7 @@ admin_user:
 principal_user:
   email_address: "principal@example.com"
   password_digest: <%= BCrypt::Password.create('password') %>
-  school: school_one
+  school_id: <%= ActiveRecord::FixtureSet.identify(:school_one) %>
   type: "Principal"
   name: "Principal Smith"
   phone_number: "+15556789012"
@@ -50,7 +50,7 @@ principal_user:
 staff_user:
   email_address: "staff@example.com"
   password_digest: <%= BCrypt::Password.create('password') %>
-  school: school_one
+  school_id: <%= ActiveRecord::FixtureSet.identify(:school_one) %>
   type: "Staff"
   name: "Jane Smith"
   phone_number: "+15552345678"
@@ -59,7 +59,7 @@ staff_user:
 other_school_student:
   email_address: "studentschool2@example.com"
   password_digest: <%= BCrypt::Password.create('password') %>
-  school: school_two
+  school_id: <%= ActiveRecord::FixtureSet.identify(:school_two) %>
   type: "Student"
   name: "John Doey"
   phone_number: "+15553456789"
@@ -67,7 +67,7 @@ other_school_student:
 student_user:
   email_address: "student@example.com"
   password_digest: <%= BCrypt::Password.create('password') %>
-  school: school_one
+  school_id: <%= ActiveRecord::FixtureSet.identify(:school_one) %>
   type: "Student"
   name: "John Doe"
   phone_number: "+15553456789"
@@ -75,7 +75,7 @@ student_user:
 second_staff:
   email_address: "staff2@example.com"
   password_digest: <%= BCrypt::Password.create('password') %>
-  school: school_two
+  school_id: <%= ActiveRecord::FixtureSet.identify(:school_two) %>
   type: "Staff"
   name: "Robert Brown"
   phone_number: "+15554567890"
@@ -84,8 +84,26 @@ second_staff:
 discarded_user:
   email_address: "discarded@example.com"
   password_digest: <%= BCrypt::Password.create('password') %>
-  school: school_three
+  school_id: <%= ActiveRecord::FixtureSet.identify(:three) %>
   type: "Student"
   name: "Inactive Student"
   phone_number: "+15555678901"
   discarded_at: <%= 1.week.ago %>
+
+principal_user_two:
+  email_address: "principal2@example.com"
+  password_digest: <%= BCrypt::Password.create('password') %>
+  school_id: <%= ActiveRecord::FixtureSet.identify(:school_two) %>
+  type: "Principal"
+  name: "Principal Smith"
+  phone_number: "+15556789012"
+  uid: "PRIN001"
+
+principal_user_three:
+  email_address: "principal3@example.com"
+  password_digest: <%= BCrypt::Password.create('password') %>
+  school_id: <%= ActiveRecord::FixtureSet.identify(:three) %>
+  type: "Principal"
+  name: "Principal Smith"
+  phone_number: "+15556789012"
+  uid: "PRIN001"

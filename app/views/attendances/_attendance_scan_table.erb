@@ -1,20 +1,20 @@
 <div class="flex flex-col md:flex-row gap-4 p-4">
   <div class="card bg-base-200 shadow-xl flex-1">
     <div class="card-body">
-      <h2 class="card-title"><%= t('attendances.scan_table.students_heading') %></h2>
+      <h2 class="card-title">Students</h2>
       <div class="overflow-x-auto">
         <table class="table table-zebra w-full">
           <thead>
             <tr>
-              <th><%= t('attendances.scan_table.student_name') %></th>
-              <th><%= t('attendances.scan_table.action') %></th>
+              <th>Student Name</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <% @students.each do |student| %>
               <tr class="hover" data-content="<%= student.name %>">
                 <td><%= highlight(student.name, params.dig(:q, :name_cont)) %></td>
-                <td><%= submit_tag t('attendances.scan_table.check_in_button'), name: "check_in", 
+                <td><%= submit_tag "Check-in", name: "check_in", 
                   formaction: attendances_path(student_id: student.id),
                   formmethod: :post,
                   class: "btn btn-primary btn-sm",
@@ -28,20 +28,20 @@
   </div>
   <div class="card bg-base-200 shadow-xl flex-1">
     <div class="card-body">
-      <h2 class="card-title"><%= t('attendances.scan_table.checked_in_heading') %></h2>
+      <h2 class="card-title">Checked-in Students</h2>
       <div class="overflow-x-auto">
         <table id="latest-attendances" class="table table-zebra w-full">
           <thead>
             <tr>
-              <th><%= t('attendances.scan_table.name') %></th>
-              <th><%= t('attendances.scan_table.time') %></th>
+              <th>Name</th>
+              <th>Time</th>
             </tr>
           </thead>
           <tbody>
             <% @attendances.each do |attendance| %>
               <tr class="hover">
                 <td><%= attendance.student.name %></td>
-                <td><%= l(attendance.timestamp, format: :short) %></td>
+                <td><%= attendance.timestamp.strftime('%Y-%m-%d %H:%M') %></td>
               </tr>
             <% end %>
           </tbody>

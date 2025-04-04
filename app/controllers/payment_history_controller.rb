@@ -10,7 +10,7 @@ class PaymentHistoryController < ApplicationController
   private
 
   def ensure_principal
-    unless current_user && current_user.is_a?(Principal)
+    unless Current.user && Current.user.is_a?(Principal)
       redirect_to root_path, alert: 'You must be logged in as a principal to view this page.'
       false
     end

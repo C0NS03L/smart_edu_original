@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_03_122739) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_03_161852) do
   create_table 'attendances', force: :cascade do |t|
     t.integer 'student_id', null: false
     t.datetime 'timestamp'
@@ -65,6 +65,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_03_122739) do
     t.string 'theme'
     t.string 'theme_mode'
     t.text 'custom_theme'
+    t.integer 'principal_id'
+    t.index ['principal_id'], name: 'index_schools_on_principal_id'
   end
 
   create_table 'sessions', force: :cascade do |t|
@@ -96,6 +98,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_03_122739) do
   add_foreign_key 'attendances', 'schools'
   add_foreign_key 'attendances', 'users'
   add_foreign_key 'payment_histories', 'schools'
+  add_foreign_key 'schools', 'users', column: 'principal_id'
   add_foreign_key 'sessions', 'users'
   add_foreign_key 'users', 'schools'
 end

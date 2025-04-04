@@ -15,7 +15,20 @@ class SessionsController < ApplicationController
     user = User.find_by(email_address: params[:email_address])
     if user&.authenticate(params[:password])
       start_new_session_for(user)
-      redirect_to after_authentication_url
+
+      # Check if there's a pending payment to resume
+      if session[:pending_payment].present?
+        payment_params = session.delete(:pending_payment)
+
+        redirect_to charge_path(
+                      amount: payment_params[:amount],
+                      tier: payment_params[:tier],
+                      omiseToken: payment_params[:omise_token],
+                      omiseSource: payment_params[:omise_source]
+                    )
+      else
+        redirect_to after_authentication_url
+      end
     else
       flash[:alert] = 'Invalid email or password'
       render :new, status: :unprocessable_entity

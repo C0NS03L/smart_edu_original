@@ -3,28 +3,28 @@
 <div class="mt-8 flex flex-col justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
   <% if Current.principal? %>
     <%= link_to edit_student_path(@student), class: 'btn btn-primary' do %>
-      <i class="fas fa-edit"></i> <%= t('students.show.edit_student') %>
+      <i class="fas fa-edit"></i> Edit this student
     <% end %>
     <%= button_to student_path(@student),
                   method: :delete,
                   class: 'btn btn-error w-full',
                   data: {
-                    turbo_confirm: t('students.show.confirm_destroy')
+                    turbo_confirm: 'Are you sure you want to destroy this student?'
                   } do %>
-      <i class="fas fa-trash"></i> <%= t('students.show.destroy_student') %>
+      <i class="fas fa-trash"></i> Destroy this student
     <% end %>
   <% end %>
   <% if Current.staff? %>
     <%= link_to edit_student_path(@student), class: 'btn btn-primary' do %>
-      <i class="fas fa-edit"></i> <%= t('students.show.edit_student') %>
+      <i class="fas fa-edit"></i> Edit this student
     <% end %>
     <%= button_to student_path(@student),
                   method: :delete,
                   class: 'btn btn-error w-full',
                   data: {
-                    turbo_confirm: t('students.show.confirm_destroy')
+                    turbo_confirm: 'Are you sure you want to destroy this student?'
                   } do %>
-      <i class="fas fa-trash"></i> <%= t('students.show.destroy_student') %>
+      <i class="fas fa-trash"></i> Destroy this student
     <% end %>
   <% end %>
   <%= render 'shared/back_to_dashboard_button' %>

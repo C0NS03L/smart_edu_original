@@ -1,8 +1,8 @@
 <div class="card mx-auto max-w-sm bg-neutral-200 p-4 shadow-xl">
   <div class="card-body p-4">
-    <h2 class="card-title text-lg"><%= t('students.student.name_label') %>: <%= student.name %></h2>
-    <p class="text-sm"><%= t('students.student.id_label') %>: <%= student.id %></p>
-    <p class="text-sm"><%= t('students.student.uid_label') %>: <%= student.uid %></p>
+    <h2 class="card-title text-lg">Name: <%= student.name %></h2>
+    <p class="text-sm">ID: <%= student.id %></p>
+    <p class="text-sm">UID: <%= student.uid %></p>
   </div>
   <figure class="p-4"><%= raw RQRCode::QRCode.new(student.uid).as_svg(size: 120, viewbox: true) %></figure>
 </div>

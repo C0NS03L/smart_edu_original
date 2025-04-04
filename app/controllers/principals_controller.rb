@@ -1,4 +1,7 @@
 class PrincipalsController < ApplicationController
+  # Allow unauthenticated access to the new and create actions
+  allow_unauthenticated_access only: %i[new create]
+
   FLASH_PARTIAL = 'shared/flash'.freeze
   DELETE_ERROR_MESSAGE = 'principals.manage_codes.delete_error'.freeze
 
@@ -188,12 +191,13 @@ class PrincipalsController < ApplicationController
     @attendance_count = Attendance.where(school: @school_details).count
     @last_checkin = Attendance.where(school: @school_details).order(created_at: :desc).first&.created_at
 
-    @attending_students_count = Attendance.where(timestamp: Date.today.all_day).select(:student_id).distinct.count
+    @attending_students_count =
+      Attendance.where(school: @school_details, timestamp: Date.today.all_day).select(:student_id).distinct.count
     @weekly_attendance_data = {
       dates: (6.days.ago.to_date..Date.today).map { |date| date.strftime('%a') },
       counts:
         (6.days.ago.to_date..Date.today).map do |date|
-          Attendance.where(timestamp: date.all_day).select(:student_id).distinct.count
+          Attendance.where(school: @school_details, timestamp: date.all_day).select(:student_id).distinct.count
         end
     }
 
@@ -204,13 +208,14 @@ class PrincipalsController < ApplicationController
 
   def new
     @principal = Principal.new
+    @principal.build_school
   end
 
   def create
     @principal = Principal.new(principal_params)
     if @principal.save
       start_new_session_for(@principal)
-      redirect_to subscriptions_path, notice: 'Principal was successfully created.'
+      redirect_to subscriptions_path, notice: 'Principal account created successfully.'
     else
       render :new
     end
@@ -372,12 +377,11 @@ class PrincipalsController < ApplicationController
 
   def principal_params
     params.require(:principal).permit(
+      :name,
       :email_address,
       :password,
       :password_confirmation,
-      :name,
-      :phone_number,
-      :school_id
+      school_attributes: %i[name address]
     )
   end
 end
