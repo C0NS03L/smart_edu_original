@@ -23,17 +23,17 @@
     <div class="card-body">
       <%= render @attendance %>
       <div class="card-actions mt-4 justify-center md:justify-end">
-        <%= link_to t('attendances.show.edit_button'), edit_attendance_path(@attendance), class: 'btn btn-primary' %>
-        <%= button_to t('attendances.show.delete_button'),
+        <%= link_to 'Edit attendance', edit_attendance_path(@attendance), class: 'btn btn-primary' %>
+        <%= button_to 'Delete attendance',
                       @attendance,
                       method: :delete,
                       class: 'btn btn-error',
                       form: {
                         data: {
-                          turbo_confirm: t('attendances.show.confirm_delete')
+                          turbo_confirm: 'Are you sure?'
                         }
                       } %>
-        <%= link_to t('attendances.show.back_button'), attendances_path, class: 'btn btn-ghost' %>
+        <%= link_to 'Back to attendances', attendances_path, class: 'btn btn-ghost' %>
       </div>
     </div>
   </div>

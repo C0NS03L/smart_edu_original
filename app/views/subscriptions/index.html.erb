@@ -1,198 +1,72 @@
-<head>
-  <title>Subscriptions</title>
-  <script
-    src="https://cdn.omise.co/omise.js"
-    integrity="sha384-Ue+Uj0J/1ZGITiuYUvQgZGRWgS8ZuGIbVslPEqNh8EDJviXdDh2uWdudKLcFQBcm"
-    crossorigin="anonymous"
-    defer
-  ></script>
-</head>
+<% content_for :title, 'Subscriptions' %>
 
-<% content_for :title, t('subscriptions.index.page_title') %>
-<div class="flex min-h-screen px-[40px] pt-[30px]">
-  <div class="min-w-full">
-    <div>
-      <p class="text-[15px] font-medium leading-[27px] text-[#717F87]"><%= t('subscriptions.index.select_plan') %></p>
-    </div>
+<section class="py-12" id="pricing">
+  <%= render 'shared/flash' %>
+  <div class="container mx-auto px-6">
+    <h2 class="mb-8 text-center text-4xl font-bold">Subscription Plans</h2>
+    <p class="mb-12 text-center text-xl text-gray-600">Enter your student count to calculate your monthly cost</p>
 
-    <div class="mt-[20px] grid grid-cols-3 gap-[20px]">
-      <div
-        key="1"
-        class="shadow-[0px 1px 2px #E1E3E5] w-full divide-y rounded-[10px] border border-[#E1E3E5] bg-[#fff]"
-      >
-        <div class="px-[25px] pb-[25px] pt-[15px]">
-          <div class="flex justify-end">
-            <div class="align-center flex justify-center rounded-[20px] bg-[#F6F6F7] px-[12px]">
-              <p class="text-[12px] font-bold leading-[28px] text-[#00153B]"><%= t('subscriptions.index.starter') %></p>
-            </div>
-          </div>
-
-          <div>
-            <p class="text-[19px] font-bold leading-[24px] text-[#00153B]"><%= t('subscriptions.index.trial') %></p>
-            <p class="text-[50px] font-bold leading-[63px] text-[#00153B]"><%= t('subscriptions.index.free') %></p>
-          </div>
-
-          <div>
-            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">
-              <%= t('subscriptions.index.trial_students', count: 200) %>
-            </p>
-            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">
-              <%= t('subscriptions.index.trial_days', count: 30) %>
-            </p>
-          </div>
+    <div class="flex flex-col items-center justify-center space-y-8 md:space-y-0">
+      <div class="w-1/4 rounded-lg p-8 shadow-lg transition-all duration-200 hover:shadow-xl">
+        <div class="items-left flex flex-col justify-between">
+          <label for="studentCount" class="block text-sm font-medium text-gray-700">Number of Students:</label>
+          <p id="errorMessage" class="hidden text-red-600">Can not be 0 or less</p>
+          <input type="number" id="studentCount" class="w-full rounded-md px-4 py-2 text-xl font-bold" value="0" />
         </div>
-
-        <div class="px-[25px] pb-[35px] pt-[25px]">
-          <div>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
-              <%= t('subscriptions.index.features.attendance') %>
-            </p>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
-              <%= t('subscriptions.index.features.qr_scanner') %>
-            </p>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
-              <%= t('subscriptions.index.features.enrollment') %>
-            </p>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
-              <%= t('subscriptions.index.features.invoice') %>
-            </p>
-          </div>
-
-          <div class="mt-[25px]">
-            <button
-              class="select-tier rounded-[5px] bg-[#006EF5] px-[25px] py-[15px] text-[14px] font-semibold leading-[17px] text-[#fff] hover:bg-sky-700"
-              data-amount="0"
-              data-tier="trial"
-            >
-              <%= t('subscriptions.index.try_free') %>
-            </button>
-          </div>
+        <div class="mb-4">
+          <h3 class="text-accent-100 text-2xl font-bold">Monthly Cost:</h3>
+          <div id="monthlyCost" class="text-4xl font-bold">$0</div>
+          <p id="freeTierMessage" class="hidden text-green-600">Free Tier Applicable ( 200 Students or Fewer )</p>
         </div>
-      </div>
+        <ul class="mb-8 space-y-3">
+          <li class="flex items-center">
+            <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            Basic Attendance Tracking
+          </li>
+          <li class="flex items-center">
+            <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.093a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            QR Code Check-in
+          </li>
+          <li class="flex items-center">
+            <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            Advanced Reporting
+          </li>
+          <li class="flex items-center">
+            <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            Enrollment Management
+          </li>
+        </ul>
+        <div id="getStartedLink"></div>
 
-      <div
-        key="2"
-        class="shadow-[0px 1px 2px #E1E3E5] w-full divide-y rounded-[10px] border border-[#E1E3E5] bg-[#fff]"
-      >
-        <div class="px-[25px] pb-[25px] pt-[15px]">
-          <div class="flex justify-end">
-            <div class="align-center flex justify-center rounded-[20px] bg-[#F6F6F7] px-[12px]">
-              <p class="text-[12px] font-bold leading-[28px] text-[#00153B]"><%= t('subscriptions.index.value') %></p>
-            </div>
-          </div>
-
-          <div>
-            <p class="text-[19px] font-bold leading-[24px] text-[#00153B]">
-              <%= t('subscriptions.index.fast_start') %>
-            </p>
-            <div class="flex items-baseline">
-              <p class="text-[45px] font-bold leading-[63px] text-[#00153B]">$500</p>
-              <span class="text-[20px] font-medium leading-[25px] text-[#00153B]"
-                ><%= t('subscriptions.index.per_month') %></span
-              >
-            </div>
-          </div>
-
-          <div>
-            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">
-              <%= t('subscriptions.index.std_students', count: 500) %>
-            </p>
-            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">
-              <%= t('subscriptions.index.price_per_student', price: '$1.00') %>
-            </p>
-          </div>
-        </div>
-
-        <div class="px-[25px] pb-[35px] pt-[25px]">
-          <div>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
-              <%= t('subscriptions.index.features.attendance') %>
-            </p>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
-              <%= t('subscriptions.index.features.qr_scanner') %>
-            </p>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
-              <%= t('subscriptions.index.features.enrollment') %>
-            </p>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
-              <%= t('subscriptions.index.features.invoice') %>
-            </p>
-          </div>
-
-          <div class="mt-[25px]">
-            <button
-              class="select-tier rounded-[5px] bg-[#006EF5] px-[25px] py-[15px] text-[14px] font-semibold leading-[17px] text-[#fff] hover:bg-sky-700"
-              data-amount="50000"
-              data-tier="standard"
-            >
-              <%= t('subscriptions.index.buy_now') %>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div
-        key="3"
-        class="shadow-[0px 1px 2px #E1E3E5] w-full divide-y rounded-[10px] border border-[#E1E3E5] bg-[#fff]"
-      >
-        <div class="px-[25px] pb-[25px] pt-[15px]">
-          <div class="flex justify-end">
-            <div class="align-center flex justify-center rounded-[20px] bg-[#F6F6F7] px-[12px]">
-              <p class="text-[12px] font-bold leading-[28px] text-[#00153B]"><%= t('subscriptions.index.pro') %></p>
-            </div>
-          </div>
-
-          <div>
-            <p class="text-[19px] font-bold leading-[24px] text-[#00153B]">
-              <%= t('subscriptions.index.accelerate') %>
-            </p>
-            <div class="flex items-baseline">
-              <p class="text-[45px] font-bold leading-[63px] text-[#00153B]">$800</p>
-              <span class="text-[20px] font-medium leading-[25px] text-[#00153B]"
-                ><%= t('subscriptions.index.per_month') %></span
-              >
-            </div>
-          </div>
-
-          <div>
-            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">
-              <%= t('subscriptions.index.premium_students', count: 1000) %>
-            </p>
-            <p class="text-[18px] font-medium leading-[28px] text-[#717F87]">
-              <%= t('subscriptions.index.price_per_student', price: '$0.8') %>
-            </p>
-          </div>
-        </div>
-
-        <div class="px-[25px] pb-[35px] pt-[25px]">
-          <div>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
-              <%= t('subscriptions.index.features.attendance') %>
-            </p>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
-              <%= t('subscriptions.index.features.qr_scanner') %>
-            </p>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
-              <%= t('subscriptions.index.features.enrollment') %>
-            </p>
-            <p class="text-[14px] font-medium leading-[24px] text-[#717F87]">
-              <%= t('subscriptions.index.features.invoice') %>
-            </p>
-          </div>
-          <div class="mt-[25px]">
-            <button
-              class="select-tier rounded-[5px] bg-[#006EF5] px-[25px] py-[15px] text-[14px] font-semibold leading-[17px] text-[#fff] hover:bg-sky-700"
-              data-amount="80000"
-              data-tier="premium"
-            >
-              <%= t('subscriptions.index.buy_now') %>
-            </button>
-          </div>
-        </div>
+        <button id="subscribeButton" class="btn btn-primary mt-4 w-full">Subscribe Now</button>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <!-- Hidden checkout form -->
 <form id="checkoutForm" action="/charge" method="post" class="hidden">
@@ -213,65 +87,143 @@
         class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
         onclick="document.getElementById('paymentModal').classList.add('hidden')"
       >
-        <%= t('subscriptions.index.close') %>
+        Close
       </button>
     </div>
   </div>
 </div>
 
+<script
+  src="https://cdn.omise.co/omise.js"
+  integrity="sha384-Ue+Uj0J/1ZGITiuYUvQgZGRWgS8ZuGIbVslPEqNh8EDJviXdDh2uWdudKLcFQBcm"
+  crossorigin="anonymous"
+></script>
+
 <script>
-  async function loadOmiseAPI() {
-    return new Promise((resolve, reject) => {
-      if (typeof OmiseCard !== 'undefined') {
-        return resolve()
+  function updatePricing() {
+    const studentCount = parseInt(document.getElementById('studentCount').value)
+    let monthlyCost = 0
+    let plan = 'trial'
+
+    if (studentCount <= 0 || isNaN(studentCount)) {
+      document.getElementById('getStartedLink').innerHTML = ''
+      document.getElementById('errorMessage').classList.remove('hidden')
+      document.getElementById('freeTierMessage').classList.add('hidden')
+      return
+    } else {
+      document.getElementById('errorMessage').classList.add('hidden')
+    }
+
+    if (studentCount <= 200) {
+      monthlyCost = 0
+      plan = 'trial'
+      document.getElementById('freeTierMessage').classList.remove('hidden')
+    } else {
+      monthlyCost = studentCount * 2
+      plan = studentCount < 800 ? 'standard' : 'premium'
+      document.getElementById('freeTierMessage').classList.add('hidden')
+    }
+
+    document.getElementById('monthlyCost').innerText = '$' + monthlyCost
+    document.getElementById('amount').value = monthlyCost * 100
+    document.getElementById('getStartedLink').innerHTML = ''
+    // Create a button to trigger Omise
+    const btn = document.createElement('button')
+    btn.type = 'button'
+    btn.className = 'btn btn-primary w-full'
+    btn.textContent = 'Get Started'
+
+    btn.addEventListener('click', (event) => {
+      // Set hidden fields
+      document.getElementById('amount').value = monthlyCost
+      document.getElementById('tier').value = plan
+
+      // If amount is 0, just submit
+      if (monthlyCost === 0) {
+        document.getElementById('checkoutForm').submit()
+      } else {
+        // Otherwise use Omise
+        OmiseCard.open({
+          amount: monthlyCost,
+          currency: 'USD',
+          defaultPaymentMethod: 'credit_card',
+          onCreateTokenSuccess: (nonce) => {
+            if (nonce.startsWith('tokn_')) {
+              document.querySelector('input[name="omiseToken"]').value = nonce
+            } else {
+              document.querySelector('input[name="omiseSource"]').value = nonce
+            }
+            document.getElementById('checkoutForm').submit()
+          }
+        })
       }
-      const script = document.createElement('script')
-      script.src = 'https://cdn.omise.co/omise.js'
-      script.integrity = 'sha384-Ue+Uj0J/1ZGITiuYUvQgZGRWgS8ZuGIbVslPEqNh8EDJviXdDh2uWdudKLcFQBcm'
-      script.crossOrigin = 'anonymous'
-      script.onload = resolve
-      script.onerror = reject
-      document.head.appendChild(script)
     })
   }
-  async function initializePayment() {
-    await loadOmiseAPI()
-    OmiseCard.configure({ publicKey: 'pkey_test_62unknn2ef7aol8k7nm' })
 
-    document.querySelectorAll('.select-tier').forEach((button) => {
-      button.addEventListener('click', (event) => {
-        const amount = event.target.getAttribute('data-amount')
-        const tier = event.target.getAttribute('data-tier')
+  document.getElementById('studentCount').addEventListener('input', updatePricing)
+  updatePricing()
 
-        document.getElementById('amount').value = amount
-        document.getElementById('tier').value = tier
+  document.getElementById('subscribeButton').addEventListener('click', function (event) {
+    event.preventDefault()
+    updatePricing() // Make sure pricing is recalculated before submit
 
-        if (amount === '0') {
+    const amount = parseInt(document.getElementById('amount').value)
+    const tier = document.getElementById('tier').value
+
+    if (amount === 0) {
+      document.getElementById('checkoutForm').submit()
+    } else {
+      OmiseCard.open({
+        amount,
+        currency: 'USD',
+        defaultPaymentMethod: 'credit_card',
+        onCreateTokenSuccess: (nonce) => {
+          if (nonce.startsWith('tokn_')) {
+            document.querySelector('input[name="omiseToken"]').value = nonce
+          } else {
+            document.querySelector('input[name="omiseSource"]').value = nonce
+          }
           document.getElementById('checkoutForm').submit()
-        } else {
-          OmiseCard.open({
-            amount: parseInt(amount),
-            currency: 'USD',
-            defaultPaymentMethod: 'credit_card',
-            onCreateTokenSuccess: (nonce) => {
-              if (nonce.startsWith('tokn_')) {
-                document.querySelector('input[name="omiseToken"]').value = nonce
-                // redirect to success modal
-              } else {
-                document.querySelector('input[name="omiseSource"]').value = nonce
-              }
-              document.getElementById('checkoutForm').submit()
-            }
-          })
         }
       })
+    }
+  })
+
+  OmiseCard.configure({ publicKey: 'pkey_test_62unknn2ef7aol8k7nm' })
+
+  document.querySelectorAll('.select-tier').forEach((button) => {
+    button.addEventListener('click', (event) => {
+      const amount = document.getElementById('')
+      const tier = event.target.getAttribute('data-tier')
+
+      document.getElementById('amount').value = amount
+      document.getElementById('tier').value = tier
+
+      if (amount === '0') {
+        document.getElementById('checkoutForm').submit()
+      } else {
+        OmiseCard.open({
+          amount: parseInt(amount),
+          currency: 'USD',
+          defaultPaymentMethod: 'credit_card',
+          onCreateTokenSuccess: (nonce) => {
+            if (nonce.startsWith('tokn_')) {
+              document.querySelector('input[name="omiseToken"]').value = nonce
+              // redirect to success modal
+            } else {
+              document.querySelector('input[name="omiseSource"]').value = nonce
+            }
+            document.getElementById('checkoutForm').submit()
+          }
+        })
+      }
     })
-  }
+  })
 
   document.getElementById('checkoutForm').addEventListener('submit', (event) => {
     event.preventDefault()
 
-    document.getElementById('paymentModalBody').innerText = '<%= t('subscriptions.index.processing_payment') %>'
+    document.getElementById('paymentModalBody').innerText = 'Processing payment...'
     document.getElementById('paymentModal').classList.remove('hidden')
 
     fetch(event.target.action, {
@@ -293,11 +245,7 @@
       })
       .catch((error) => {
         document.getElementById('paymentModal').classList.add('hidden')
-        alert('<%= t('subscriptions.index.network_error') %>: ' + error.message)
+        alert('Network error: ' + error.message)
       })
-  })
-
-  document.addEventListener('turbo:load', function () {
-    initializePayment()
   })
 </script>

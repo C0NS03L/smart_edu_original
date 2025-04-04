@@ -34,10 +34,13 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', :as => :rails_health_check
   get 'signup/new_principal', to: 'signup#new_principal', as: 'new_principal_signup'
   post 'signup/create_principal', to: 'signup#create_principal', as: 'create_principal_signup'
+  patch 'signup/create_principal', to: 'signup#create_principal' # Add this line
 
   get 'signup/choose_role', as: 'choose_role'
   post 'set_role', to: 'signup#set_role', as: 'set_role'
 
+  resources :principals, only: %i[new create]
+  resource :charge, only: [:create], controller: 'charge'
   # Add payment history routes
   get 'payment_history', to: 'payment_history#index'
 
@@ -46,4 +49,6 @@ Rails.application.routes.draw do
   get 'subscriptions', to: 'subscriptions#index'
   post 'charge', to: 'charge#create'
   get 'qr', to: 'qr#index', as: 'qr_index'
+
+  post 'select_plan', to: 'signup#select_plan', as: 'select_plan'
 end

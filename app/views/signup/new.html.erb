@@ -48,9 +48,9 @@
     </div>
     <%= form.text_field :enrollment_code,
                         class: 'input input-bordered w-full mt-2',
-                        placeholder: t('signup.enrollment_code_placeholder'),
+                        placeholder: 'Enrollment Code',
                         required: true %>
-    <%= form.submit t('signup.submit_button'), class: 'btn btn-primary w-full mt-2' %>
+    <%= form.submit 'Sign Up', class: 'btn btn-primary w-full mt-2' %>
     <%= form.hidden_field :role, value: @role %>
   <% end %>
   <%= link_to t('signup.back_to_signin'), new_session_path, class: 'btn btn-ghost' %>

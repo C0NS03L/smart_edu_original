@@ -1,8 +1,6 @@
 <p style="color: green"><%= notice %></p>
-<% content_for :title, t('attendances.index.page_title') %>
-<div class="flex justify-end p-2">
-  <%= link_to t('attendances.index.new_attendance'), new_attendance_path, class: 'btn btn-primary' %>
-</div>
+<% content_for :title, 'Attendances' %>
+<div class="flex justify-end p-2"><%= link_to 'New Attendance', new_attendance_path, class: 'btn btn-primary' %></div>
 <div data-controller="search">
   <div class="flex items-center justify-center"><%== pagy_nav(@pagy) %></div>
   <div id="attendances" class="m-2 overflow-x-auto">
@@ -18,7 +16,7 @@
                           }
                         } do |f| %>
       <div class="flex items-center space-x-2">
-        <%= f.search_field :student_name_cont, class: 'input', placeholder: t('attendances.index.search_placeholder') %>
+        <%= f.search_field :student_name_cont, class: 'input', placeholder: 'Search by name' %>
       </div>
     <% end %>
     <div data-search-target="results"><%= render 'table', attendances: @attendances, q: @q %></div>

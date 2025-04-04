@@ -1,6 +1,6 @@
 <%= render 'shared/single_box' do %>
   <div class="card-body">
-    <h1 class="card-title mb-4 text-2xl"><%= t('passwords.new.heading') %></h1>
+    <h1 class="card-title mb-4 text-2xl">Forgot your password?</h1>
     <% if flash[:alert] %>
       <div class="alert alert-error"><%= flash[:alert] %></div>
     <% end %>
@@ -10,14 +10,14 @@
                              required: true,
                              autofocus: true,
                              autocomplete: 'username',
-                             placeholder: t('passwords.new.email_placeholder'),
+                             placeholder: 'Enter your email address',
                              value: params[:email_address],
                              class: 'input input-bordered w-full' %>
       </div>
       <div class="form-control mt-6">
-        <%= form.submit t('passwords.new.submit_button'), class: 'btn btn-primary w-full' %>
+        <%= form.submit 'Email reset instructions', class: 'btn btn-primary w-full' %>
       </div>
-      <div class=""><%= link_to t('passwords.new.sign_in_link'), new_session_path, class: 'btn btn-ghost' %></div>
+      <div class=""><%= link_to 'Sign in', new_session_path, class: 'btn btn-ghost' %></div>
     <% end %>
   </div>
 <% end %>

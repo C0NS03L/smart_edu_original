@@ -23,7 +23,5 @@ module SmartEdu
     #
     config.time_zone = 'Asia/Bangkok'
     # config.eager_load_paths << Rails.root.join("extras")
-    #
-    config.i18n.available_locales = %i[en th]
   end
 end

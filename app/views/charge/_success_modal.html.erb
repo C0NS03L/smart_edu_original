@@ -10,17 +10,38 @@
     </div>
 
     <!-- Main Content -->
-    <h1 class="mb-6 text-4xl font-extrabold text-green-600"><%= t('charge.success_modal.heading') %></h1>
-    <p class="mb-8 text-xl text-gray-700"><%= t('charge.success_modal.message') %></p>
+    <h1 class="mb-6 text-4xl font-extrabold text-green-600">Payment Successful!</h1>
 
-    <!-- Back to Home Button -->
+    <p class="mb-8 text-xl text-gray-700">Thank you for your purchase.</p>
+
+    <!-- Redirect message -->
+    <p class="text-md mb-4 italic text-gray-500">You will be redirected to your dashboard in a few seconds...</p>
+
+    <!-- Dashboard Button -->
     <div class="mt-12">
       <a
         href="/principal/dashboard"
         class="inline-block rounded-lg bg-green-600 px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-green-700"
       >
-        <%= t('charge.success_modal.dashboard_button') %>
+        Go to Dashboard
       </a>
     </div>
   </div>
 </div>
+
+<script>
+  // Fetch CSRF token from meta tag for authenticated requests
+  const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+
+  // Wait a moment to show the success message before redirecting
+  setTimeout(() => {
+    // Get the dashboard link to redirect programmatically
+    const dashboardLink = document.getElementById('dashboardLink')
+    if (dashboardLink) {
+      window.location.href = dashboardLink.getAttribute('href')
+    } else {
+      // Fallback to root route if dashboard link isn't found
+      window.location.href = '/'
+    }
+  }, 5000) // 5 seconds
+</script>

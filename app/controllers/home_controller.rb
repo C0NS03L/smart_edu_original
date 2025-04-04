@@ -1,6 +1,10 @@
 class HomeController < ApplicationController
   def index
-    redirect_to_dashboard
+    if Current.user
+      redirect_to_dashboard
+    else
+      render :index
+    end
   end
 
   private

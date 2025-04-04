@@ -1,11 +1,10 @@
-<% content_for :title, t('students.edit.page_title') %>
 <div class="flex min-h-[calc(100vh-64px)] items-center justify-center p-4">
   <div class="w-full max-w-[32rem] bg-neutral-100 p-4">
-    <h1 class="mb-4 text-3xl font-bold"><%= t('students.edit.heading') %></h1>
+    <h1 class="mb-4 text-3xl font-bold">Editing student</h1>
     <%= render 'form', student: @student %>
     <div class="mt-4">
-      <%= link_to t('students.edit.show_link'), @student, class: 'btn btn-primary w-full mb-2' %>
-      <%= link_to t('students.edit.back_link'), students_path, class: 'btn btn-secondary w-full' %>
+      <%= link_to 'Show this student', @student, class: 'btn btn-primary w-full mb-2' %>
+      <%= link_to 'Back to students', students_path, class: 'btn btn-secondary w-full' %>
     </div>
   </div>
 </div>
