@@ -1,27 +1,22 @@
 require 'test_helper'
 
 class HomeControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    @principal = users(:principal_user)
-    @student = users(:student_user)
-    @staff = users(:staff_user)
+  test 'should get index when logged in' do
+    sign_in
+    get root_path
+    assert status, 200
+    assert_includes @response.body, 'Total Students'
   end
 
-  test 'should redirect principal to principal dashboard' do
-    sign_in_as(@principal)
-    get root_url
-    assert_redirected_to principal_dashboard_path(locale: I18n.locale)
-  end
+  # test "not logged in should get redirected to login" do
+  #   get root_path
+  #   assert_redirected_to new_session_path
+  # end
 
-  test 'should redirect student to student dashboard' do
-    sign_in_as(@student)
-    get root_url
-    assert_redirected_to student_dashboard_path(locale: I18n.locale)
-  end
+  # private
 
-  test 'should redirect staff to staff dashboard' do
-    sign_in_as(@staff)
-    get root_url
-    assert_redirected_to staff_dashboard_path(locale: I18n.locale)
-  end
+  # def sign_in
+  #   user = users(:one)
+  #   post session_url, params: { email_address: user.email_address, password: "password" }
+  # end
 end

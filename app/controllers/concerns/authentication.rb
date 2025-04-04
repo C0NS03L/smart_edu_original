@@ -3,8 +3,7 @@ module Authentication
 
   included do
     before_action :require_authentication
-    before_action :set_current_school
-    helper_method :authenticated?, :current_school
+    helper_method :authenticated?
   end
 
   class_methods do
@@ -15,16 +14,8 @@ module Authentication
 
   private
 
-  def set_current_school
-    Current.school = Current.user.school if authenticated? && Current.user.present?
-  end
-
-  def current_school
-    Current.school
-  end
-
   def authenticated?
-    resume_session.present?
+    resume_session
   end
 
   def require_authentication
@@ -32,14 +23,7 @@ module Authentication
   end
 
   def resume_session
-    return Current.session if Current.session
-
-    if (session = find_session_by_cookie)
-      Current.session = session
-      Current.user = session.user if session.user
-      set_current_school
-      session
-    end
+    Current.session ||= find_session_by_cookie
   end
 
   def find_session_by_cookie
@@ -47,44 +31,26 @@ module Authentication
   end
 
   def request_authentication
-    redirect_to new_session_path unless Current.user || (controller_name == 'home' && action_name == 'index')
+    session[:return_to_after_authenticating] = request.url
+    redirect_to new_session_path
   end
 
   def after_authentication_url
-    case Current.user&.type
-    when 'Principal'
-      principal_dashboard_path
-    when 'Staff'
-      staff_dashboard_path
-    when 'Student'
-      student_dashboard_path
-    when 'SystemAdmin'
-      admin_dashboard_path
-    else
-      root_url
-    end
+    session.delete(:return_to_after_authenticating) || root_url
   end
 
   def start_new_session_for(user)
-    # Create the session directly with only the required attributes
-    session = Session.new(user_agent: request.user_agent, ip_address: request.remote_ip)
-
-    # Explicitly set the user association to avoid automatic setting of type-specific columns
-    session.user = user
-    session.save!
-
-    Current.session = session
-    Current.user = user
-
-    # Set current school
-    set_current_school
-
-    cookies.signed.permanent[:session_id] = { value: session.id, httponly: true, same_site: :lax }
+    user
+      .sessions
+      .create!(user_agent: request.user_agent, ip_address: request.remote_ip)
+      .tap do |session|
+        Current.session = session
+        cookies.signed.permanent[:session_id] = { value: session.id, httponly: true, same_site: :lax }
+      end
   end
 
   def terminate_session
-    Current.session&.destroy
-    Current.reset
+    Current.session.destroy
     cookies.delete(:session_id)
   end
 end

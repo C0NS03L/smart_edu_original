@@ -7,7 +7,7 @@
 #  user_agent :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  user_id    :integer
+#  user_id    :integer          not null
 #
 # Indexes
 #
@@ -19,6 +19,4 @@
 #
 class Session < ApplicationRecord
   belongs_to :user
-
-  validates :user_agent, :ip_address, presence: true
 end

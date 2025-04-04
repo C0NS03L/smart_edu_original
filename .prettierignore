@@ -2,4 +2,3 @@ node_modules/
 tmp/
 test/fixtures/
 vendor/
-app/views/layouts/application.html.erb

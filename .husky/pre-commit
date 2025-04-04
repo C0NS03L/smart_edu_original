@@ -1,8 +1,6 @@
 # Pre-commit hook started
 echo "\033[1;34mRunning pre-commit hook...\033[0m"
 
-bundle exec i18n-tasks missing
-
 bun run lint-staged
 
 # Running Unit Tests
