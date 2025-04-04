@@ -32,7 +32,7 @@
 
 <div class="flex min-h-[calc(100vh-64px)] flex-col">
   <div class="flex flex-grow flex-col items-center justify-center">
-    <div class="stats stats-vertical lg:stats-horizontal mt-8 p-4 text-2xl lg:w-3/4">
+    <div class="stats stats-vertical lg:stats-horizontal mt-8 overflow-visible p-4 text-2xl lg:w-3/4">
       <div class="stat">
         <div class="stat-figure text-secondary">
           <i class="fa-solid fa-chalkboard-teacher"></i>
@@ -124,13 +124,9 @@
     </div>
   </div>
   <div class="mt-4 flex flex-grow flex-col items-center">
-    <<<<<<< HEAD
-    <div class="w-full rounded-lg bg-white p-6 shadow-lg lg:w-3/4">
-      <div class="stat-title p-4 text-xl font-bold">Attendance</div>
-      =======
+    <div class="w-full rounded-lg p-6 shadow-lg lg:w-3/4">
       <div class="bg-base-100 w-full rounded-lg p-6 shadow-lg lg:w-3/4">
         <div class="stat-title p-4 text-xl font-bold"><%= t('principals.dashboard.attendance') %></div>
-        >>>>>>> dev
         <div class="overflow-x-auto"><%= render 'shared/all_students_table', q: @q %></div>
       </div>
     </div>

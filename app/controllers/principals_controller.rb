@@ -191,12 +191,13 @@ class PrincipalsController < ApplicationController
     @attendance_count = Attendance.where(school: @school_details).count
     @last_checkin = Attendance.where(school: @school_details).order(created_at: :desc).first&.created_at
 
-    @attending_students_count = Attendance.where(timestamp: Date.today.all_day).select(:student_id).distinct.count
+    @attending_students_count =
+      Attendance.where(school: @school_details, timestamp: Date.today.all_day).select(:student_id).distinct.count
     @weekly_attendance_data = {
       dates: (6.days.ago.to_date..Date.today).map { |date| date.strftime('%a') },
       counts:
         (6.days.ago.to_date..Date.today).map do |date|
-          Attendance.where(timestamp: date.all_day).select(:student_id).distinct.count
+          Attendance.where(school: @school_details, timestamp: date.all_day).select(:student_id).distinct.count
         end
     }
 

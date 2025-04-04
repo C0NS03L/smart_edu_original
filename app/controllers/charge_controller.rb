@@ -99,16 +99,16 @@ class ChargeController < ApplicationController
       else
         @error_message = "Payment failed: #{charge.failure_message || 'Unknown error'}"
         Rails.logger.error("Payment failed: #{charge.failure_message}")
-        render 'charge/fail_modal', layout: nil
+        flash[:alert] = @error_message
       end
     rescue Omise::Error => e
       Rails.logger.error("Omise Error: #{e.message}")
       @error_message = "Payment failed: #{e.message}"
-      render 'charge/fail_modal', layout: nil
+      flash[:alert] = @error_message
     rescue StandardError => e
       Rails.logger.error("Payment processing error: #{e.message}")
       @error_message = 'Payment system error: Please try again later'
-      render 'charge/fail_modal', layout: nil
+      flash[:alert] = @error_message
     end
   end
 
