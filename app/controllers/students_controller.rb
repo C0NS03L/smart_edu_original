@@ -1,5 +1,5 @@
 class StudentsController < ApplicationController
-  before_action :authorize_student!, only: [:dashboard]
+  before_action :authorize_student!, only: %i[dashboard show]
   before_action :authorize_school_staff!, except: [:dashboard]
   before_action :set_student, only: %i[show edit update destroy]
   attr_reader :student # helps with testing
@@ -25,6 +25,13 @@ class StudentsController < ApplicationController
   # GET /students/1 or /students/1.json
   def show
     @student = Student.kept.where(school: current_school).find(params[:id])
+
+    # Ensure students can only access their own QR code
+    if current_user.is_a?(Student) && current_user.id != @student.id
+      redirect_to dashboard_students_path, alert: 'You can only access your own QR code'
+      return
+    end
+
     respond_to do |format|
       format.html { render 'show' }
       format.js
