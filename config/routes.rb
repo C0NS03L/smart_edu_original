@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   delete 'principals/delete_code/:id', to: 'principals#delete_code', as: 'delete_code_principal'
   delete 'principals/delete_used_codes', to: 'principals#delete_used_codes', as: 'delete_used_codes_principal'
 
+  get 'principal/settings', to: 'principals#settings', as: 'principal_settings'
+  patch 'principal/settings', to: 'principals#update_settings', as: 'update_principal_settings'
   get 'student_dashboard', to: 'students#dashboard', as: 'student_dashboard'
   get 'staff_dashboard', to: 'staffs#dashboard', as: 'staff_dashboard'
   get 'staff/generate_code', to: 'staffs#generate_code', as: 'staffs_generate_code'
@@ -33,6 +35,9 @@ Rails.application.routes.draw do
 
   get 'signup/choose_role', as: 'choose_role'
   post 'set_role', to: 'signup#set_role', as: 'set_role'
+
+  # Add payment history routes
+  get 'payment_history', to: 'payment_history#index'
 
   root 'home#index'
   resources :charge

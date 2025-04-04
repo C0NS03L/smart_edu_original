@@ -11,10 +11,6 @@
 <% content_for :title, t('subscriptions.index.page_title') %>
 <div class="flex min-h-screen px-[40px] pt-[30px]">
   <div class="min-w-full">
-    <p class="text-[20px] font-semibold leading-[40px] text-[#00153B]">
-      <%= t('subscriptions.index.your_subscription') %>
-    </p>
-
     <div>
       <p class="text-[15px] font-medium leading-[27px] text-[#717F87]"><%= t('subscriptions.index.select_plan') %></p>
     </div>
@@ -209,7 +205,7 @@
 
 <!-- Payment Result Modal -->
 <div id="paymentModal" class="fixed inset-0 z-50 flex hidden items-center justify-center bg-gray-900 bg-opacity-50">
-  <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
+  <div class="bg-base-100 w-full max-w-md rounded-lg p-6 shadow-lg">
     <h2 class="mb-4 text-xl font-bold"><%= t('subscriptions.index.payment_status') %></h2>
     <p id="paymentModalBody" class="text-gray-700"></p>
     <div class="mt-6 flex justify-end">

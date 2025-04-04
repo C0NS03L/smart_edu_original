@@ -2,6 +2,8 @@ class PrincipalsController < ApplicationController
   FLASH_PARTIAL = 'shared/flash'.freeze
   DELETE_ERROR_MESSAGE = 'principals.manage_codes.delete_error'.freeze
 
+  before_action :require_authentication
+  before_action :authorize_principal!
   def generate_code
   end
 
@@ -187,6 +189,8 @@ class PrincipalsController < ApplicationController
     @last_checkin = Attendance.where(school: @school_details).order(created_at: :desc).first&.created_at
 
     @q = @school_details.students.ransack(params[:q])
+
+    @recent_payments = Current.user.school.payment_histories.order(payment_date: :desc).limit(5) if Current.user.school
   end
 
   def new
@@ -203,7 +207,46 @@ class PrincipalsController < ApplicationController
     end
   end
 
+  def settings
+    @school = Current.user.school
+  end
+
+  # app/controllers/principals_controller.rb
+  def update_settings
+    @school = Current.user.school
+
+    # Process custom theme if present
+    if params[:school][:custom_theme].present?
+      custom_theme = params[:school][:custom_theme]
+
+      # If it contains @plugin or name:, extract just the CSS variables
+      if custom_theme.include?('@plugin') || custom_theme.include?('name:')
+        css_var_lines = custom_theme.split("\n").select { |line| line.strip.start_with?('--') }.join("\n")
+
+        params[:school][:custom_theme] = css_var_lines if css_var_lines.present?
+      end
+    end
+
+    if @school.update(school_settings_params)
+      flash[:notice] = t('principals.settings.update_success')
+      redirect_to principal_settings_path(refresh: true)
+    else
+      render :settings, status: :unprocessable_entity
+    end
+  end
+
   private
+
+  def require_principal
+    unless Current.principal?
+      flash[:alert] = t('controllers.access_denied')
+      redirect_to root_path
+    end
+  end
+
+  def school_settings_params
+    params.require(:school).permit(:timezone, :theme, :custom_theme)
+  end
 
   def principal_params
     params.require(:principal).permit(

@@ -1,6 +1,7 @@
 class StaffsController < ApplicationController
   FLASH_PARTIAL = 'shared/flash'.freeze
   DELETE_ERROR_MESSAGE = 'staffs.manage_codes.delete_error'.freeze
+  before_action :authorize_staff!
 
   def dashboard
     @staff_details = Current.user

@@ -1,0 +1,41 @@
+# Test data for payment histories
+
+payment_one:
+  school: school_one
+  amount: 99.99
+  payment_date: <%= 1.month.ago %>
+  payment_method: "credit_card"
+  transaction_id: "txn_123456789"
+  status: "completed"
+  card_last_digits: "4242"
+  card_type: "Visa"
+  subscription_plan: "premium"
+  notes: "Annual subscription payment"
+  created_at: <%= 1.month.ago %>
+  updated_at: <%= 1.month.ago %>
+
+payment_two:
+  school: school_two
+  amount: 49.99
+  payment_date: <%= 2.weeks.ago %>
+  payment_method: "paypal"
+  transaction_id: "txn_987654321"
+  status: "completed"
+  subscription_plan: "basic"
+  notes: "Monthly subscription payment"
+  created_at: <%= 2.weeks.ago %>
+  updated_at: <%= 2.weeks.ago %>
+
+payment_three:
+  school: school_one
+  amount: 99.99
+  payment_date: <%= 1.day.ago %>
+  payment_method: "credit_card"
+  transaction_id: "txn_abcdef123"
+  status: "failed"
+  card_last_digits: "1234"
+  card_type: "Mastercard"
+  subscription_plan: "premium"
+  notes: "Payment declined by issuer"
+  created_at: <%= 1.day.ago %>
+  updated_at: <%= 1.day.ago %>

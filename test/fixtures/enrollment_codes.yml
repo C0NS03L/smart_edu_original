@@ -17,6 +17,19 @@
 #
 # Table name: enrollment_codes
 #
+#  id           :integer          not null, primary key
+#  account_type :string
+#  hashed_code  :string
+#  role         :string
+#  usage_count  :integer
+#  usage_limit  :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  school_id    :integer
+#
+#
+# Table name: enrollment_codes
+#
 #  id          :integer          not null, primary key
 #  hashed_code :string
 #  role        :string
@@ -26,10 +39,36 @@
 #  updated_at  :datetime         not null
 #  school_id   :integer
 #
-one:
-  hashed_code: MyString
-  role: MyString
+# Test data for enrollment codes
 
-two:
-  hashed_code: MyString
-  role: MyString
+# Test data for enrollment codes
+
+teacher_enrollment_code:
+  hashed_code: <%= Digest::SHA256.hexdigest('teacher_code_123') %>
+  role: "teacher"
+  school_id: <%= ActiveRecord::FixtureSet.identify(:school_one) %>
+  usage_limit: 10
+  usage_count: 3
+  account_type: "standard"
+  created_at: <%= 1.month.ago %>
+  updated_at: <%= 1.month.ago %>
+
+student_enrollment_code:
+  hashed_code: <%= Digest::SHA256.hexdigest('student_code_456') %>
+  role: "student"
+  school_id: <%= ActiveRecord::FixtureSet.identify(:school_one) %>
+  usage_limit: 100
+  usage_count: 45
+  account_type: "standard"
+  created_at: <%= 1.month.ago %>
+  updated_at: <%= 1.week.ago %>
+
+admin_enrollment_code:
+  hashed_code: <%= Digest::SHA256.hexdigest('admin_code_789') %>
+  role: "admin"
+  school_id: <%= ActiveRecord::FixtureSet.identify(:school_two) %>
+  usage_limit: 5
+  usage_count: 1
+  account_type: "admin"
+  created_at: <%= 2.months.ago %>
+  updated_at: <%= 2.months.ago %>
