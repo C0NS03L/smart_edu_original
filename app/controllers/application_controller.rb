@@ -13,6 +13,11 @@ class ApplicationController < ActionController::Base
   def default_url_options
     { locale: I18n.locale }
   end
+
+  def current_principal
+    Current.user if Current.user.is_a?(Principal)
+  end
+  helper_method :current_principal
 end
 
 module SchoolScopable
