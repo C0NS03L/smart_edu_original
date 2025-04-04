@@ -30,6 +30,8 @@ Rails.application.routes.draw do
 
   resources :principals, only: %i[new create]
   resource :charge, only: [:create], controller: 'charge'
+  # Add payment history routes
+  get 'payment_history', to: 'payment_history#index'
 
   root 'home#index'
   resources :charge
