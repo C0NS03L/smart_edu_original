@@ -8,18 +8,21 @@
                            required: true,
                            autofocus: true,
                            autocomplete: 'username',
-                           placeholder: 'Enter your email address',
+                           placeholder: t('sessions.email_placeholder'),
                            value: params[:email_address],
                            class: 'input input-bordered input-primary w-full mt-2' %><br />
       <%= form.password_field :password,
                               required: true,
                               autocomplete: 'current-password',
-                              placeholder: 'Enter your password',
+                              placeholder: t('sessions.password_placeholder'),
                               class: 'input input-bordered input-primary w-full mt-2' %><br />
-      <%= form.submit 'Sign in', class: 'btn btn-primary btn-wide mt-4 w-full' %>
+      <%= form.submit t('sessions.submit_button'), class: 'btn btn-primary btn-wide mt-4 w-full' %>
     <% end %>
-    <div><%= link_to 'Sign Up', new_signup_path, method: :get, class: 'btn btn-secondary btn-wide w-full mt-4' %></div>
-    <div class="pt-4"><%= link_to 'Forgot Password?', new_password_path, class: 'link link-info' %></div>
-    <div class="pt-4"><%= link_to 'New Principal', new_principal_signup_path, class: 'link link-info' %></div>
+    <div>
+      <%= link_to t('sessions.sign_up_link'), new_signup_path, method: :get, class: 'btn btn-secondary btn-wide w-full mt-4' %>
+    </div>
+    <div class="pt-4">
+      <%= link_to t('sessions.forgot_password_link'), new_password_path, class: 'link link-info' %>
+    </div>
   </div>
 <% end %>

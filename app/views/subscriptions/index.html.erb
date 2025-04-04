@@ -1,4 +1,13 @@
-<% content_for :title, 'Subscriptions' %>
+<head>
+  <title>Subscriptions</title>
+  <script
+    src="https://cdn.omise.co/omise.js"
+    integrity="sha384-Ue+Uj0J/1ZGITiuYUvQgZGRWgS8ZuGIbVslPEqNh8EDJviXdDh2uWdudKLcFQBcm"
+    crossorigin="anonymous"
+    defer
+  ></script>
+</head>
+<% content_for :title, t('subscriptions.index.page_title') %>
 
 <section class="py-12" id="pricing">
   <%= render 'shared/flash' %>

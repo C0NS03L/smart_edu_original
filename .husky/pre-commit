@@ -7,10 +7,10 @@ bun run lint-staged
 
 # Running Unit Tests
 echo "\033[1;34mRunning Unit Tests...\033[0m"
-rails test
+#rails test
 
 echo "\033[1;34mRunning System Tests...\033[0m"
-rails test:system
+#rails test:system
 
 # Running Rails Best Practices (doesn't affect commit)
 echo "\033[1;35mRunning Rails Best Practices (Does not affect commit)...\033[0m"

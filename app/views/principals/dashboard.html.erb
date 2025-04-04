@@ -37,31 +37,34 @@
         <div class="stat-figure text-secondary">
           <i class="fa-solid fa-chalkboard-teacher"></i>
         </div>
-        <div class="stat-title text-xl font-bold">Students</div>
+        <div class="stat-title text-xl font-bold"><%= t('principals.dashboard.students') %></div>
         <div class="stat-value"><%= number_with_delimiter(@student_count) %></div>
-        <div class="stat-desc">Total Students</div>
+        <div class="stat-desc"><%= t('principals.dashboard.total_students') %></div>
       </div>
       <div class="stat">
         <div class="stat-figure text-accent">
           <i class="fa-solid fa-user-tie"></i>
         </div>
-        <div class="stat-title text-xl font-bold">Total Check Ins</div>
+        <div class="stat-title text-xl font-bold"><%= t('principals.dashboard.total_check_ins') %></div>
         <div class="stat-value"><%= number_with_delimiter(@attendance_count) %></div>
-        <div class="stat-desc">Last Check In <%= @last_checkin.nil? ? 'N/A' : time_ago_in_words(@last_checkin) %></div>
+        <div class="stat-desc">
+          <%= t('principals.dashboard.last_check_in') %>
+          <%= @last_checkin.nil? ? t('principals.dashboard.not_available') : time_ago_in_words(@last_checkin) %>
+        </div>
       </div>
       <div class="stat">
         <div class="stat-figure text-secondary">
           <i class="fa-solid fa-user"></i>
         </div>
-        <div class="stat-title text-xl font-bold">Principal Details</div>
-        <div class="stat-desc">Name: <%= @principal_details.name %></div>
-        <div class="stat-desc">Principal ID: <%= @principal_details.id %></div>
+        <div class="stat-title text-xl font-bold"><%= t('principals.dashboard.principal_details') %></div>
+        <div class="stat-desc"><%= t('principals.dashboard.name') %>: <%= @principal_details.name %></div>
+        <div class="stat-desc"><%= t('principals.dashboard.principal_id') %>: <%= @principal_details.id %></div>
       </div>
       <div class="stat">
         <div class="stat-figure text-secondary">
           <i class="fa-solid fa-school"></i>
         </div>
-        <div class="stat-title text-xl font-bold">School Details</div>
+        <div class="stat-title text-xl font-bold"><%= t('principals.dashboard.school_details') %></div>
         <div class="stat-desc"><%= @school_details.name %></div>
         <div class="stat-desc"><%= @school_details.address %></div>
         <div class="stat-desc"><%= @school_details.country %></div>
@@ -103,6 +106,7 @@
           </div>
           <div class="ml-5">
             <h3 class="text-lg font-medium leading-6">Payment History</h3>
+            <%# TODO: Add translation %>
             <p class="mt-1 text-sm">View your subscription payments</p>
           </div>
         </div>
