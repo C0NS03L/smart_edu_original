@@ -70,28 +70,21 @@ class School < ApplicationRecord
   end
 
   # Update student limit based on subscription type
-  def set_plan_limits(plan)
-    self.subscription_type = plan
-
-    # Set student limit based on the plan
-    self.student_limit =
-      case plan
-      when 'free_trial'
-        200
-      when '500_students'
-        500
-      when '1000_students'
-        1000
-      else
-        0
-      end
-
-    # Set the next payment date based on the plan
-    self.next_payment_date = plan == 'free_trial' ? 30.days.from_now : nil
-
-    # Set the status based on the plan
-    self.subscription_status = plan == 'free_trial' ? 'trial' : 'pending'
-
-    save!
+  def set_plan_limits(tier)
+    case tier
+    when 'free_trial'
+      self.student_limit = 200
+      self.subscription_type = 'trial'
+      self.subscription_status = 'active'
+    when '500_students'
+      self.student_limit = 500
+      self.subscription_type = 'standard'
+      self.subscription_status = 'active'
+    when '1000_students'
+      self.student_limit = 1000
+      self.subscription_type = 'premium'
+      self.subscription_status = 'active'
+    end
+    save
   end
 end
