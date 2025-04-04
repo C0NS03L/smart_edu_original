@@ -1,0 +1,55 @@
+<!-- At the beginning of the file, wrap everything in a turbo-frame -->
+<%= turbo_frame_tag 'students' do %>
+  <div class="flex flex-col gap-4 p-4 md:flex-row">
+    <div class="card bg-base-200 flex-1 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title"><%= t('attendances.scan_table.students_heading') %></h2>
+        <div class="overflow-x-auto">
+          <table class="table-zebra table w-full">
+            <thead>
+              <tr>
+                <th><%= t('attendances.scan_table.student_name') %></th>
+                <th><%= t('attendances.scan_table.action') %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @students.each do |student| %>
+                <tr class="hover" data-content="<%= student.name %>">
+                  <td><%= highlight(student.name, params.dig(:q, :name_cont)) %></td>
+                  <td>
+                    <%= form_with url: attendances_path(student_id: student.id), method: :post do |f| %>
+                      <%= f.submit t('attendances.scan_table.check_in_button'), class: 'btn btn-primary btn-sm' %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card bg-base-200 flex-1 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title"><%= t('attendances.scan_table.checked_in_heading') %></h2>
+        <div class="overflow-x-auto">
+          <table id="latest-attendances" class="table-zebra table w-full">
+            <thead>
+              <tr>
+                <th><%= t('attendances.scan_table.name') %></th>
+                <th><%= t('attendances.scan_table.time') %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @attendances.each do |attendance| %>
+                <tr class="hover">
+                  <td><%= attendance.student.name %></td>
+                  <td><%= l(attendance.timestamp, format: :short) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

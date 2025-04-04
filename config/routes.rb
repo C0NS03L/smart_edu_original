@@ -20,8 +20,6 @@ Rails.application.routes.draw do
   get 'staff/manage_codes', to: 'staffs#manage_codes', as: 'staffs_manage_codes'
   delete 'staff/delete_code/:id', to: 'staffs#delete_code', as: 'staffs_delete_code'
   delete 'staff/delete_used_codes', to: 'staffs#delete_used_codes', as: 'staffs_delete_used_codes'
-  resources :attendances
-
   resources :attendances do
     collection { post :qr_attendance }
   end

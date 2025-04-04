@@ -1,16 +1,16 @@
 <div id="<%= dom_id attendance %>">
   <p>
-    <strong>Student:</strong>
-    <%= attendance.student_id %>
+    <strong><%= t('attendances.attendance.student') %>:</strong>
+    <%= attendance.student ? attendance.student.name : attendance.student_id %>
   </p>
 
   <p>
-    <strong>Timestamp:</strong>
+    <strong><%= t('attendances.attendance.timestamp') %>:</strong>
     <%= attendance.timestamp %>
   </p>
 
   <p>
-    <strong>User:</strong>
+    <strong><%= t('attendances.attendance.user') %>:</strong>
     <%= attendance.user_id %>
   </p>
 </div>
