@@ -1,5 +1,6 @@
 class PrincipalsController < ApplicationController
   before_action :require_authentication
+  before_action :authorize_principal!
   def generate_code
   end
 
