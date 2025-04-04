@@ -285,7 +285,7 @@
       monthlyCost = 0
       plan = 'trial'
       document.getElementById('freeTierMessage').classList.remove('hidden')
-    } else if (studentCount < 800) {
+    } else if (studentCount < 500) {
       monthlyCost = studentCount * 0.5
       plan = 'standard'
       document.getElementById('freeTierMessage').classList.add('hidden')
@@ -310,60 +310,4 @@
   // Add event listener to update pricing dynamically
   document.getElementById('studentCount').addEventListener('input', updatePricing)
   updatePricing()
-
-  document.getElementById('subscribeButton').addEventListener('click', function (event) {
-    event.preventDefault()
-    OmiseCard.open({
-      amount: parseInt(document.getElementById('amount').value),
-      currency: 'USD',
-      defaultPaymentMethod: 'credit_card',
-      onCreateTokenSuccess: (nonce) => {
-        if (nonce.startsWith('tokn_')) {
-          document.querySelector('input[name="omiseToken"]').value = nonce
-          document.getElementById('checkoutForm').submit()
-        } else {
-          document.querySelector('input[name="omiseSource"]').value = nonce
-          document.getElementById('checkoutForm').submit()
-        }
-      }
-    })
-  })
-
-  document.getElementById('checkoutForm')?.addEventListener('submit', (event) => {
-    event.preventDefault()
-
-    document.getElementById('paymentModalBody').innerText = 'Processing payment...'
-    document.getElementById('paymentModal').classList.remove('hidden')
-
-    fetch(event.target.action, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'X-CSRF-Token': document.querySelector('input[name="authenticity_token"]').value
-      },
-      body: new URLSearchParams(new FormData(event.target)),
-      credentials: 'include',
-      redirect: 'follow' // Follow redirects automatically
-    })
-      .then((response) => {
-        document.getElementById('paymentModal').classList.add('hidden')
-
-        // Handle redirects by checking if response has a redirected flag
-        if (response.redirected) {
-          window.location.href = response.url
-          return null
-        }
-
-        return response.text()
-      })
-      .then((html) => {
-        if (html) {
-          document.body.innerHTML = html
-        }
-      })
-      .catch((error) => {
-        document.getElementById('paymentModal').classList.add('hidden')
-        alert('Error: ' + error.message)
-      })
-  })
 </script>

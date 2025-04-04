@@ -83,8 +83,6 @@
                                  required: true,
                                  id: 'school-country-field' %>
     <% end %>
-    <%= hidden_field_tag :plan, params[:plan] %>
-    <%= hidden_field_tag :amount, params[:amount] %>
     <%= form.submit 'Subscribe', class: 'btn btn-primary w-full mt-2', id: 'subscribeButton' %>
   <% end %>
   <%= link_to t('signup.back_to_signin'), new_session_path, class: 'btn btn-ghost' %>
