@@ -145,6 +145,30 @@ en:
       school_name_placeholder: 'School Name'
       school_address_placeholder: 'School Address'
       country_placeholder: 'Country'
+      amount: "Amount"
+      country: "Country"
+      email: "Email"
+      error_message: "There was an error during signup. Please try again."
+      free_tier: "Free"
+      name: "Name" 
+      per_month: "per month"
+      personal_information: "Personal Information"
+      phone: "Phone"
+      plan: "Plan"
+      review_information: "Review Your Information"
+      school_address: "School Address"
+      school_information: "School Information"
+      school_name: "School Name"
+      subscribe: "Subscribe"
+      subscription_details: "Subscription Details"
+      success_message: "Registration successful! Welcome to the system."
+      # Keep your existing translations here too
+      enter_information: "Enter Your Information"
+      phone_placeholder: "Phone Number"
+      enter_school_information: "Enter School Your Information"
+      school_name_placeholder: "School Name"
+      school_address_placeholder: "School Address"
+      country_placeholder: "Country"
   sessions:
     sign_in_heading: 'Sign in'
     email_placeholder: 'Enter your email address'
@@ -335,6 +359,7 @@ en:
     logout: 'Logout'
     settings: 'Settings'
   common:
+    back: 'Back'
     enrollment_codes:
       code: 'Code'
       type: 'Type'

@@ -1,0 +1,65 @@
+<%= render 'shared/single_box' do %>
+  <h1 class="mb-6 text-2xl font-bold"><%= t('signup.principal.review_information') %></h1>
+
+  <div class="bg-base-200 mb-6 rounded-lg p-4">
+    <h2 class="mb-2 text-lg font-semibold"><%= t('signup.principal.personal_information') %></h2>
+
+    <div class="grid grid-cols-2 gap-2">
+      <div class="font-medium"><%= t('signup.principal.name') %>:</div>
+      <div><%= @principal.name %></div>
+
+      <div class="font-medium"><%= t('signup.principal.email') %>:</div>
+      <div><%= @principal.email_address %></div>
+
+      <div class="font-medium"><%= t('signup.principal.phone') %>:</div>
+      <div><%= @principal.phone_number %></div>
+    </div>
+  </div>
+
+  <div class="bg-base-200 mb-6 rounded-lg p-4">
+    <h2 class="mb-2 text-lg font-semibold"><%= t('signup.principal.school_information') %></h2>
+
+    <div class="grid grid-cols-2 gap-2">
+      <div class="font-medium"><%= t('signup.principal.school_name') %>:</div>
+      <div><%= @principal.school.name %></div>
+
+      <div class="font-medium"><%= t('signup.principal.school_address') %>:</div>
+      <div><%= @principal.school.address %></div>
+
+      <div class="font-medium"><%= t('signup.principal.country') %>:</div>
+      <div><%= @principal.school.country %></div>
+    </div>
+  </div>
+
+  <div class="bg-base-200 mb-6 rounded-lg p-4">
+    <h2 class="mb-2 text-lg font-semibold"><%= t('signup.principal.subscription_details') %></h2>
+
+    <div class="grid grid-cols-2 gap-2">
+      <div class="font-medium"><%= t('signup.principal.plan') %>:</div>
+      <div class="capitalize"><%= @plan %></div>
+
+      <div class="font-medium"><%= t('signup.principal.amount') %>:</div>
+      <div>
+        <% if @amount.to_i > 0 %>
+          $<%= @amount %> <%= t('signup.principal.per_month') %>
+        <% else %>
+          <%= t('signup.principal.free_tier') %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6 flex flex-col space-y-3">
+    <%= button_to t('signup.principal.subscribe'),
+                  create_principal_signup_path,
+                  method: :post,
+                  class: 'btn btn-primary w-full',
+                  params: {
+                    principal: session[:principal_params],
+                    school: session[:school_params],
+                    plan: @plan,
+                    amount: @amount
+                  } %>
+    <%= link_to t('common.back'), new_session_path(plan: @plan, amount: @amount), class: 'btn btn-outline w-full' %>
+  </div>
+<% end %>

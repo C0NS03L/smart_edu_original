@@ -90,6 +90,7 @@ class SignupController < ApplicationController
 
   def create_principal
     @principal = Principal.new(principal_params)
+    @principal.school = School.new(school_params)
     if @principal.save
       start_new_session_for(@principal)
       redirect_to subscriptions_path, notice: 'Principal was successfully created.'
