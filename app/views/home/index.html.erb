@@ -34,76 +34,9 @@
   </section>
 
   <section class="bg-gradient-to-b from-white to-blue-50 py-12" id="pricing">
-    <div class="container mx-auto px-6">
-      <h2 class="mb-8 text-center text-4xl font-bold">Subscription Plans</h2>
-      <p class="mb-12 text-center text-xl text-gray-600">Enter your student count to calculate your monthly cost</p>
-
-      <div class="flex flex-col items-center justify-center space-y-8 md:space-y-0">
-        <div class="w-1/4 rounded-lg bg-white p-8 shadow-lg transition-all duration-200 hover:shadow-xl">
-          <div class="items-left flex flex-col justify-between">
-            <label for="studentCount" class="block text-sm font-medium text-gray-700">Number of Students:</label>
-            <p id="errorMessage" class="hidden text-red-600">Can not be 0 or less</p>
-            <input
-              type="number"
-              id="studentCount"
-              class="w-full rounded-md bg-gray-200 px-4 py-2 text-xl font-bold"
-              value="0"
-            />
-          </div>
-          <div class="mb-4">
-            <h3 class="text-2xl font-bold text-gray-800">Monthly Cost:</h3>
-            <div id="monthlyCost" class="text-4xl font-bold">$0</div>
-            <p id="freeTierMessage" class="hidden text-green-600">Free Tier Applicable ( 200 Students or Fewer )</p>
-          </div>
-          <ul class="mb-8 space-y-3">
-            <li class="flex items-center">
-              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              Basic Attendance Tracking
-            </li>
-            <li class="flex items-center">
-              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              QR Code Check-in
-            </li>
-            <li class="flex items-center">
-              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.093a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              Advanced Reporting
-            </li>
-            <li class="flex items-center">
-              <svg class="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              Enrollment Management
-            </li>
-          </ul>
-          <div id="getStartedLink"></div>
-        </div>
-      </div>
-
-      <div class="mt-12 text-center">
-        <a href="#" class="mt-4 inline-block text-blue-600 hover:underline">Contact our sales team</a>
-      </div>
+    <%= render 'shared/subscription_form', show_subscribe_button: false %>
+    <div class="mt-12 text-center">
+      <a href="#" class="mt-4 inline-block text-blue-600 hover:underline">Contact our sales team</a>
     </div>
   </section>
 
