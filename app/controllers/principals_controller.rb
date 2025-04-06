@@ -1,8 +1,8 @@
 class PrincipalsController < ApplicationController
-  allow_unauthenticated_access only: %i[new create review_signup display_review_signup confirm_signup]
-  skip_before_action :require_authentication, only: %i[new create review_signup display_review_signup confirm_signup]
-  before_action :require_principal, except: %i[new create review_signup display_review_signup confirm_signup]
-  before_action :authorize_principal!, except: %i[new create review_signup display_review_signup confirm_signup]
+  allow_unauthenticated_access only: %i[new create review_signup display_review_signup]
+  skip_before_action :require_authentication, only: %i[new create review_signup display_review_signup]
+  before_action :require_principal, except: %i[new create review_signup display_review_signup]
+  before_action :authorize_principal!, except: %i[new create review_signup display_review_signup]
 
   FLASH_PARTIAL = 'shared/flash'.freeze
   DELETE_ERROR_MESSAGE = 'principals.manage_codes.delete_error'.freeze
@@ -385,25 +385,10 @@ class PrincipalsController < ApplicationController
     render :review_signup
   end
 
-  def confirm_signup
-    @principal = Principal.new(session[:principal_params])
-    @principal.build_school(session[:school_params])
-
-    if @principal.save
-      # Start session for the new principal
-      start_new_session_for(@principal)
-
-      # Clear session data
-      session.delete(:principal_params)
-      session.delete(:school_params)
-      session.delete(:plan)
-      session.delete(:amount)
-
-      redirect_to principal_dashboard_path, notice: t('signup.principal.success_message')
-    else
-      flash[:alert] = t('signup.principal.error_message')
-      redirect_to display_review_signup_path
-    end
+  def payment_plan
+    @principal = Current.user
+    @school = Current.user.school
+    @payment_history = @school.payment_histories.order(payment_date: :desc)
   end
 
   private

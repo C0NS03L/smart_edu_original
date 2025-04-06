@@ -87,6 +87,6 @@
     <% end %>
     <%= form.submit 'Subscribe', class: 'btn btn-primary w-full mt-2', id: 'subscribeButton' %>
   <% end %>
-  <%= link_to t('signup.back_to_signin'), review_signup_path, class: 'btn btn-ghost' %>
+  <%= link_to t('signup.back_to_signin'), new_session_path, class: 'btn btn-ghost' %>
   <%= render 'shared/form_validation_scripts' %>
 <% end %>

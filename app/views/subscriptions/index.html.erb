@@ -161,6 +161,14 @@
               document.querySelector('input[name="omiseSource"]').value = nonce
             }
             document.getElementById('checkoutForm').submit()
+            onCreateTokenSuccess: (nonce) => {
+              if (nonce.startsWith('tokn_')) {
+                document.querySelector('input[name="omiseToken"]').value = nonce
+              } else {
+                document.querySelector('input[name="omiseSource"]').value = nonce
+              }
+              document.getElementById('checkoutForm').submit()
+            }
           }
         })
       }

@@ -89,77 +89,63 @@ class SignupController < ApplicationController
   end
 
   def create_principal
+    Rails.logger.debug "Creating principal with params: #{params.inspect}"
+    plan = session[:plan]
+    amount = session[:amount]
+
+    # The session keys should match what ChargeController is storing
+    principal_params = session[:principal_params]
+    school_params = session[:school_params]
+
+    if principal_params.nil? || school_params.nil?
+      flash[:alert] = 'Missing required information for principal signup'
+      redirect_to new_principal_signup_path
+      return
+    end
+
     @principal = Principal.new(principal_params)
-    @principal.school = School.new(school_params)
+    @principal.build_school(school_params)
+
     if @principal.save
+      # Set subscription details on the school
+      @principal.school.update(subscription_status: plan == 'free' ? 'free_trial' : 'active', subscription_type: plan)
+
+      # Record payment history if there was a payment
+      if session[:card_details].present?
+        Rails.logger.debug session[:card_details]
+        if @principal.school.respond_to?(:payment_histories)
+          @principal.school.payment_histories.create(
+            amount: amount,
+            payment_method: 'credit_card',
+            card_last_digits: session[:card_details][:last_digits],
+            subscription_plan: session[:plan],
+            card_type: session[:card_details][:brand],
+            transaction_id: session[:card_details][:transaction_id],
+            status: 'successful',
+            payment_date: Time.current
+          )
+        end
+      end
+
+      # Start session for the new user
       start_new_session_for(@principal)
-      redirect_to subscriptions_path, notice: 'Principal was successfully created.'
+
+      # Clear session data
+      session.delete(:principal_params)
+      session.delete(:school_params)
+      session.delete(:plan)
+      session.delete(:amount)
+      session.delete(:card_details)
+
+      redirect_to principal_dashboard_path, notice: 'Principal account was successfully created.'
     else
       Rails.logger.debug "Principal creation failed: #{@principal.errors.full_messages.to_sentence}"
-      flash.now[:alert] = @principal.errors.full_messages.to_sentence
-      render :new_principal
+      flash[:alert] = @principal.errors.full_messages.to_sentence
+      redirect_to new_principal_signup_path
     end
   end
 
   private
-
-  def process_payment(school, plan, amount, omise_token)
-    if plan == 'free_trial' || amount == 0
-      # Handle free trial
-      school.set_plan_limits('free_trial')
-      flash[:notice] = 'Your free trial has been activated!'
-      redirect_to principal_dashboard_path
-    else
-      # Process payment with Omise
-      begin
-        Omise.api_key = 'skey_test_62unknnkqf46swrwxyn'
-
-        charge =
-          Omise::Charge.create(
-            { amount: amount, currency: 'USD', card: omise_token, description: "Payment for #{plan} plan" }
-          )
-
-        if charge.paid
-          # Set plan limits based on the tier
-          tier =
-            case plan
-            when 'standard'
-              '500_students'
-            when 'premium'
-              '1000_students'
-            else
-              'free_trial'
-            end
-
-          school.set_plan_limits(tier)
-
-          # Record payment details
-          card_details = {
-            last_digits: charge.card ? charge.card.last_digits : nil,
-            brand: charge.card ? charge.card.brand : nil
-          }
-
-          school.record_payment(
-            amount / 100.0,
-            'credit_card',
-            charge.id,
-            card_details[:last_digits],
-            card_details[:brand]
-          )
-
-          flash[:notice] = 'Your account has been created successfully!'
-          redirect_to principal_dashboard_path
-        else
-          flash[:alert] = "Payment failed: #{charge.failure_message || 'Unknown error'}"
-          render :new_principal, status: :unprocessable_entity
-        end
-      rescue => e
-        Rails.logger.error("Payment error: #{e.message}")
-        flash[:alert] = 'Payment system error: Please try again later'
-        render :new_principal, status: :unprocessable_entity
-      end
-    end
-  end
 
   def user_params
     params.require(:user).permit(:email_address, :password, :password_confirmation, :school_id)
