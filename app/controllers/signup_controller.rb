@@ -153,10 +153,10 @@ class SignupController < ApplicationController
       session.delete(:card_details)
 
       flash[:notice] = t('signup.principal.success_message', default: 'Your account has been created successfully!')
-      redirect_to principal_dashboard_path
+      redirect_to payment_sucess_path
     else
       flash[:alert] = @principal.errors.full_messages.join(', ')
-      redirect_to new_principal_signup_path
+      redirect_to payment_failed_path
     end
   end
 

@@ -1,7 +1,7 @@
 require 'omise'
 
 class ChargeController < ApplicationController
-  skip_before_action :require_authentication, only: [:create]
+  skip_before_action :require_authentication, only: %i[create payment_failed]
   protect_from_forgery with: :exception
 
   def create
@@ -43,7 +43,7 @@ class ChargeController < ApplicationController
       if omise_token.blank? && omise_source.blank?
         # Missing payment token - send back with error
         flash[:alert] = 'Payment information is required. Please try again.'
-        redirect_to principals_display_review_signup_path
+        redirect_to display_review_signup_path
       else
         # Process payment with token
         handle_paid_subscription(plan, amount_int, omise_token, omise_source)
@@ -76,7 +76,7 @@ class ChargeController < ApplicationController
         error_message = "Payment failed: #{charge.failure_message || 'Unknown error'}"
         Rails.logger.error(error_message)
         flash[:alert] = error_message
-        redirect_to display_review_signup_path
+        redirect_to payment_failed_path
       end
     rescue => e
       # Error handling
@@ -84,6 +84,10 @@ class ChargeController < ApplicationController
       flash[:alert] = "Payment system error: #{e.message}"
       redirect_to display_review_signup_path
     end
+  end
+  def payment_failed
+    # Render the payment failed view
+    render 'payment_failed'
   end
 
   def create_omise_charge(amount, token, source)

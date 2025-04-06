@@ -47,6 +47,9 @@ Rails.application.routes.draw do
   # Add payment history routes
   get 'payment_history', to: 'payment_history#index'
 
+  get 'charge/payment_sucess', to: 'charge#payment_sucess', as: 'payment_sucess'
+  get 'charge/payment_failed', to: 'charge#payment_failed', as: 'payment_failed'
+
   root 'home#index'
   resources :charge
   get 'subscriptions', to: 'subscriptions#index'
