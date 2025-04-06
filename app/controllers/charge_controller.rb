@@ -67,6 +67,8 @@ class ChargeController < ApplicationController
       if charge.paid
         # Store charge details in session
         session[:card_details] = extract_card_details(charge)
+        Rails.logger.info "Payment successful. Transaction ID: #{charge.id}, Card: #{charge.card&.last_digits || 'N/A'}"
+
         flash[:notice] = 'Payment successful! Creating your account...'
         redirect_to signup_create_principal_path
       else
@@ -74,18 +76,13 @@ class ChargeController < ApplicationController
         error_message = "Payment failed: #{charge.failure_message || 'Unknown error'}"
         Rails.logger.error(error_message)
         flash[:alert] = error_message
-        redirect_to principals_display_review_signup_path
+        redirect_to display_review_signup_path
       end
-    rescue Omise::Error => e
-      # Omise API error
-      Rails.logger.error("Omise Error: #{e.message}")
-      flash[:alert] = "Payment failed: #{e.message}"
-      redirect_to principals_display_review_signup_path
-    rescue StandardError => e
-      # General error
+    rescue => e
+      # Error handling
       Rails.logger.error("Payment processing error: #{e.message}")
-      flash[:alert] = 'Payment system error: Please try again later'
-      redirect_to principals_display_review_signup_path
+      flash[:alert] = "Payment system error: #{e.message}"
+      redirect_to display_review_signup_path
     end
   end
 
@@ -150,17 +147,22 @@ class ChargeController < ApplicationController
   end
 
   def extract_card_details(charge)
+    details = {
+      transaction_id: charge.id, # Store the charge ID as transaction_id
+      last_digits: '0000',
+      brand: 'Unknown'
+    }
+
     if charge.card
-      {
+      details.update(
         last_digits: charge.card.last_digits,
         brand: charge.card.brand,
         name: charge.card.name,
         expiration_month: charge.card.expiration_month,
-        expiration_year: charge.card.expiration_year,
-        transaction_id: charge.id
-      }
-    else
-      { last_digits: '0000', brand: 'Unknown', transaction_id: charge.id }
+        expiration_year: charge.card.expiration_year
+      )
     end
+
+    details
   end
 end

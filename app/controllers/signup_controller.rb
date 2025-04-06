@@ -107,40 +107,55 @@ class SignupController < ApplicationController
     @principal.build_school(school_params)
 
     if @principal.save
-      # Set subscription details on the school
+      # Set the school's subscription status and type
       @principal.school.update(subscription_status: plan == 'free' ? 'free_trial' : 'active', subscription_type: plan)
 
-      # Record payment history if there was a payment
       if session[:card_details].present?
-        Rails.logger.debug session[:card_details]
+        Rails.logger.debug "Card details found in session: #{session[:card_details].inspect}"
+
+        # Get the card details from the session
+        card_details = session[:card_details]
+
         if @principal.school.respond_to?(:payment_histories)
-          @principal.school.payment_histories.create(
-            amount: amount,
-            payment_method: 'credit_card',
-            card_last_digits: session[:card_details][:last_digits],
-            subscription_plan: session[:plan],
-            card_type: session[:card_details][:brand],
-            transaction_id: session[:card_details][:transaction_id],
-            status: 'successful',
-            payment_date: Time.current
-          )
+          # Create a new payment history record
+          payment_history =
+            @principal.school.payment_histories.new(
+              amount: amount,
+              payment_date: Time.current,
+              payment_method: 'credit_card',
+              # Use the transaction_id directly from card_details
+              transaction_id: card_details['transaction_id'] || card_details[:transaction_id],
+              status: 'successful',
+              # Store the card details
+              card_last_digits: card_details['last_digits'] || card_details[:last_digits],
+              card_type: card_details['brand'] || card_details[:brand],
+              subscription_plan: plan
+            )
+
+          if payment_history.save
+            Rails.logger.info "Payment history created successfully: #{payment_history.id}"
+          else
+            Rails.logger.error "Failed to create payment history: #{payment_history.errors.full_messages.join(', ')}"
+          end
+        else
+          Rails.logger.warn "School model doesn't have payment_histories association"
         end
       end
 
-      # Start session for the new user
+      # Start session for the new principal
       start_new_session_for(@principal)
 
-      # Clear session data
+      # Clean up session data
       session.delete(:principal_params)
       session.delete(:school_params)
       session.delete(:plan)
       session.delete(:amount)
       session.delete(:card_details)
 
-      redirect_to principal_dashboard_path, notice: 'Principal account was successfully created.'
+      flash[:notice] = t('signup.principal.success_message', default: 'Your account has been created successfully!')
+      redirect_to principal_dashboard_path
     else
-      Rails.logger.debug "Principal creation failed: #{@principal.errors.full_messages.to_sentence}"
-      flash[:alert] = @principal.errors.full_messages.to_sentence
+      flash[:alert] = @principal.errors.full_messages.join(', ')
       redirect_to new_principal_signup_path
     end
   end
