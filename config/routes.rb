@@ -7,9 +7,13 @@ Rails.application.routes.draw do
   get 'principal/dashboard', to: 'principals#dashboard', as: 'principal_dashboard'
   post 'principals/generate_staff_code', to: 'principals#generate_staff_code', as: 'generate_staff_code_principal'
   post 'principals/generate_student_code', to: 'principals#generate_student_code', as: 'generate_student_code_principal'
+  post 'principals/review_signup', to: 'principals#review_signup', as: 'review_signup'
+  get 'principals/display_review_signup', to: 'principals#display_review_signup', as: 'display_review_signup'
   get 'principals/manage_codes', to: 'principals#manage_codes', as: 'manage_codes_principal'
   delete 'principals/delete_code/:id', to: 'principals#delete_code', as: 'delete_code_principal'
   delete 'principals/delete_used_codes', to: 'principals#delete_used_codes', as: 'delete_used_codes_principal'
+
+  post 'charge', to: 'charge#create', as: 'charge_create'
 
   get 'principal/settings', to: 'principals#settings', as: 'principal_settings'
   patch 'principal/settings', to: 'principals#update_settings', as: 'update_principal_settings'
@@ -33,6 +37,7 @@ Rails.application.routes.draw do
   get 'signup/new_principal', to: 'signup#new_principal', as: 'new_principal_signup'
   post 'signup/create_principal', to: 'signup#create_principal', as: 'create_principal_signup'
   patch 'signup/create_principal', to: 'signup#create_principal' # Add this line
+  get 'signup/create_principal', to: 'signup#create_principal' # Add this line
 
   get 'signup/choose_role', as: 'choose_role'
   post 'set_role', to: 'signup#set_role', as: 'set_role'
@@ -42,10 +47,12 @@ Rails.application.routes.draw do
   # Add payment history routes
   get 'payment_history', to: 'payment_history#index'
 
+  get 'charge/payment_sucess', to: 'charge#payment_sucess', as: 'payment_sucess'
+  get 'charge/payment_failed', to: 'charge#payment_failed', as: 'payment_failed'
+
   root 'home#index'
   resources :charge
   get 'subscriptions', to: 'subscriptions#index'
-  post 'charge', to: 'charge#create'
   get 'qr', to: 'qr#index', as: 'qr_index'
 
   post 'select_plan', to: 'signup#select_plan', as: 'select_plan'

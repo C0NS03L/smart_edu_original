@@ -1,0 +1,105 @@
+<%# filepath: /home/takeshibank/smart_edu_original/app/views/principals/review_signup.html.erb %>
+<script
+  src="https://cdn.omise.co/omise.js"
+  integrity="sha384-Ue+Uj0J/1ZGITiuYUvQgZGRWgS8ZuGIbVslPEqNh8EDJviXdDh2uWdudKLcFQBcm"
+  crossorigin="anonymous"
+  defer
+></script>
+
+<%= render 'shared/single_box' do %>
+  <h1 class="mb-6 text-2xl font-bold"><%= t('signup.principal.review_information') %></h1>
+
+  <div class="bg-base-200 mb-6 rounded-lg p-4">
+    <h2 class="mb-2 text-lg font-semibold"><%= t('signup.principal.personal_information') %></h2>
+
+    <div class="grid grid-cols-2 gap-2">
+      <div class="font-medium"><%= t('signup.principal.name') %>:</div>
+      <div><%= @principal.name %></div>
+      <div class="font-medium"><%= t('signup.principal.email') %>:</div>
+      <div><%= @principal.email_address %></div>
+      <div class="font-medium"><%= t('signup.principal.phone') %>:</div>
+      <div><%= @principal.phone_number %></div>
+    </div>
+  </div>
+
+  <div class="bg-base-200 mb-6 rounded-lg p-4">
+    <h2 class="mb-2 text-lg font-semibold"><%= t('signup.principal.school_information') %></h2>
+
+    <div class="grid grid-cols-2 gap-2">
+      <div class="font-medium"><%= t('signup.principal.school_name') %>:</div>
+      <div><%= @principal.school.name %></div>
+      <div class="font-medium"><%= t('signup.principal.school_address') %>:</div>
+      <div><%= @principal.school.address %></div>
+      <div class="font-medium"><%= t('signup.principal.country') %>:</div>
+      <div><%= @principal.school.country %></div>
+    </div>
+  </div>
+
+  <div class="bg-base-200 mb-6 rounded-lg p-4">
+    <h2 class="mb-2 text-lg font-semibold"><%= t('signup.principal.subscription_details') %></h2>
+
+    <div class="grid grid-cols-2 gap-2">
+      <div class="font-medium"><%= t('signup.principal.plan') %>:</div>
+      <div class="capitalize"><%= @plan %></div>
+      <div class="font-medium"><%= t('signup.principal.amount') %>:</div>
+      <div>
+        <% if @amount.to_i > 0 %>
+          $<%= @amount %> <%= t('signup.principal.per_month') %>
+        <% else %>
+          <%= t('signup.principal.free_tier') %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <%= form_with url: charge_create_path, method: :post, id: 'subscribeForm', local: true, data: { turbo: false } do |form| %>
+    <% session[:principal_params].each do |key, value| %>
+      <%= form.hidden_field "principal[#{key}]", value: value %>
+    <% end %>
+    <% session[:school_params].each do |key, value| %>
+      <%= form.hidden_field "school[#{key}]", value: value %>
+    <% end %>
+    <%= form.hidden_field :plan, value: @plan %>
+    <%= form.hidden_field :amount, value: @amount %>
+    <%= form.hidden_field :omiseToken %>
+    <%= form.hidden_field :omiseSource %>
+    <%= form.submit t('signup.principal.subscribe'), class: 'btn btn-primary w-full' %>
+    <%= link_to t('common.back'), new_principal_signup_path(plan: @plan, amount: @amount), class: 'btn btn-outline w-full mt-2' %>
+  <% end %>
+  <!-- prettier-ignore -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      OmiseCard.configure({ publicKey: 'pkey_test_62unknn2ef7aol8k7nm' });
+      
+      const form = document.querySelector('#subscribeForm');
+      const amount = parseInt(form.querySelector('input[name="amount"]').value, 10);
+      if (form && amount > 0) {
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+          
+          OmiseCard.open({
+            amount: amount * 100,
+            currency: 'usd',
+            defaultPaymentMethod: 'credit_card',
+            onCreateTokenSuccess: function(token) {
+              console.log('Token:', token);
+              
+              if (token.startsWith('tokn_')) {
+                document.querySelector('input[name="omiseToken"]').value = token;
+              } else {
+                document.querySelector('input[name="omiseSource"]').value = token;
+              }
+              
+              setTimeout(function() {
+                form.submit();
+              }, 500);
+            },
+            onFormClosed: function() {
+              console.log('Payment window closed');
+            }
+          });
+        });
+      }
+    });
+  </script>
+<% end %>

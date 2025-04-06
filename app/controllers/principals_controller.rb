@@ -1,12 +1,12 @@
 class PrincipalsController < ApplicationController
-  # Allow unauthenticated access to the new and create actions
-  allow_unauthenticated_access only: %i[new create]
+  allow_unauthenticated_access only: %i[new create review_signup display_review_signup]
+  skip_before_action :require_authentication, only: %i[new create review_signup display_review_signup]
+  before_action :require_principal, except: %i[new create review_signup display_review_signup]
+  before_action :authorize_principal!, except: %i[new create review_signup display_review_signup]
 
   FLASH_PARTIAL = 'shared/flash'.freeze
   DELETE_ERROR_MESSAGE = 'principals.manage_codes.delete_error'.freeze
 
-  before_action :require_authentication
-  before_action :authorize_principal!
   def generate_code
   end
 
@@ -118,6 +118,7 @@ class PrincipalsController < ApplicationController
 
   NO_USED_CODES = 'principals.manage_codes.no_used_codes'.freeze
   DELETE_USED_ERROR = 'principals.manage_codes.delete_used_error'.freeze
+
   def delete_used_codes
     begin
       # Find codes that are fully used, principals can delete both student and staff codes
@@ -213,9 +214,10 @@ class PrincipalsController < ApplicationController
 
   def create
     @principal = Principal.new(principal_params)
+    @principal.build_school(principal_params[:school_attributes])
     if @principal.save
       start_new_session_for(@principal)
-      redirect_to subscriptions_path, notice: 'Principal account created successfully.'
+      Rails.logger.info("Principal created: #{@principal.email_address}")
     else
       render :new
     end
@@ -334,6 +336,7 @@ class PrincipalsController < ApplicationController
 
     send_data pdf.render, filename: 'principal_report.pdf', type: 'application/pdf', disposition: 'inline'
   end
+
   def settings
     @school = Current.user.school
   end
@@ -362,6 +365,32 @@ class PrincipalsController < ApplicationController
     end
   end
 
+  def review_signup
+    session[:principal_params] = principal_params.except(:school_attributes)
+    session[:school_params] = principal_params[:school_attributes]
+    session[:plan] = params[:plan]
+    session[:amount] = params[:amount]
+
+    # Redirect to a display action instead of the same URL
+    redirect_to display_review_signup_path
+  end
+
+  # New action to display the review page
+  def display_review_signup
+    @principal = Principal.new(session[:principal_params])
+    @principal.build_school(session[:school_params])
+    @plan = session[:plan]
+    @amount = session[:amount]
+
+    render :review_signup
+  end
+
+  def payment_plan
+    @principal = Current.user
+    @school = Current.user.school
+    @payment_history = @school.payment_histories.order(payment_date: :desc)
+  end
+
   private
 
   def require_principal
@@ -379,9 +408,10 @@ class PrincipalsController < ApplicationController
     params.require(:principal).permit(
       :name,
       :email_address,
+      :phone_number,
       :password,
       :password_confirmation,
-      school_attributes: %i[name address]
+      school_attributes: %i[name address country]
     )
   end
 end
