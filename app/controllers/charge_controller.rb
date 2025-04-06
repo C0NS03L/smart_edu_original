@@ -28,7 +28,8 @@ class ChargeController < ApplicationController
   # Move the handle_payment method above the 'private' keyword
   def handle_payment(school, tier, amount, omise_token = nil, omise_source = nil)
     Rails.logger.error(
-      "Handling payment for school: #{school.id}, tier: #{tier}, amount: #{amount}, omise_token: #{omise_token}, omise_source: #{omise_source}"
+      "Handling payment for school: #{school.id}, tier: #{tier}, amount: #{amount}, 
+      omise_token: #{omise_token}, omise_source: #{omise_source}"
     )
     if amount == 0
       handle_free_trial(school, tier)
